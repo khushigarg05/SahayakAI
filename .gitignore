@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Node
+node_modules/
+.next/
+out/
+
+# Environment
+.env.local
+.env.*.local
+
+# ML
+*.pkl
+*.joblib
+
+# Data
+data/raw/*
+data/processed/*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
