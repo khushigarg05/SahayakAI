@@ -1,107 +1,130 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
-import 'leaflet/dist/leaflet.css';
-import { MapPin, Navigation, Phone, ExternalLink } from "lucide-react";
+import "leaflet/dist/leaflet.css";
+import { Navigation, Phone, ExternalLink, Building2, MapPin } from "lucide-react";
+import { Kiosk } from "@/lib/api";
 
-// Fix leaflet icon issue in Next.js
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-});
+// 100% Offline-Safe SVG Pin Icons (No external CDN image downloads needed!)
+const createSvgPin = (bgColor: string, symbol: string) => {
+  return L.divIcon({
+    className: "custom-map-pin",
+    html: `
+      <div style="
+        background-color: ${bgColor};
+        width: 32px;
+        height: 32px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      ">
+        <span style="
+          transform: rotate(45deg);
+          color: white;
+          font-weight: 800;
+          font-size: 13px;
+        ">${symbol}</span>
+      </div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
+};
 
-// Custom Icon for CSC Centers
-const cscIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+const cscPin = createSvgPin("#15803d", "🏛️");
+const citizenPin = createSvgPin("#1d4ed8", "📍");
 
-const userIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
-});
+interface DynamicMapProps {
+  kiosks?: Kiosk[];
+  onSelectKiosk?: (k: Kiosk) => void;
+}
 
-// Mock locations
-const CENTERS = [
-  { id: 1, name: "CSC Center Rampur", type: "Common Service Center", lat: 28.7041, lng: 77.1025, distance: "2.1 km", waitTime: "15 mins", phone: "+91 98765 43210" },
-  { id: 2, name: "Tehsil Office Janakpuri", type: "Govt Office", lat: 28.7150, lng: 77.0900, distance: "3.5 km", waitTime: "45 mins", phone: "+91 11 2345 6789" },
-  { id: 3, name: "Post Office CSC", type: "Post Office", lat: 28.6900, lng: 77.1200, distance: "4.2 km", waitTime: "5 mins", phone: "+91 11 9876 5432" },
-];
+export default function DynamicMap({ kiosks = [], onSelectKiosk }: DynamicMapProps) {
+  // Default coordinates centered on Varanasi, Uttar Pradesh
+  const defaultCenter: [number, number] = [25.3176, 82.9739];
 
-export default function DynamicMap() {
-  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
-
-  useEffect(() => {
-    // Simulate getting user location
-    const timer = setTimeout(() => {
-      setUserLocation([28.7000, 77.1000]); // Mock coordinates (Delhi)
-    }, 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!userLocation) return <div className="h-full w-full bg-secondary/20 animate-pulse flex items-center justify-center">Loading Map...</div>;
+  // Coordinates mapping for sample kiosks in Varanasi region
+  const kioskCoords: { [key: number]: [number, number] } = {
+    1: [25.3176, 82.9739],
+    2: [25.2677, 82.9090],
+    3: [25.5412, 82.8021],
+  };
 
   return (
-    <div className="h-full w-full rounded-2xl overflow-hidden border border-white/10 relative z-0">
-      <MapContainer 
-        center={userLocation} 
-        zoom={13} 
-        scrollWheelZoom={true} 
+    <div className="h-full w-full rounded-2xl overflow-hidden relative z-0 min-h-[480px]">
+      <MapContainer
+        center={defaultCenter}
+        zoom={12}
+        scrollWheelZoom={true}
         className="h-full w-full"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          // Optional: Dark mode tiles can be used here if needed, keeping standard OSM for clarity
         />
-        
-        {/* User Location */}
-        <Marker position={userLocation} icon={userIcon}>
+
+        {/* Citizen Current Location Pin */}
+        <Marker position={defaultCenter} icon={citizenPin}>
           <Popup>
-            <div className="font-semibold">Your Location</div>
+            <div className="p-1 text-xs">
+              <span className="font-bold text-blue-900 block">नागरिक का स्थान (Your Location)</span>
+              <span className="text-slate-500">Varanasi, Uttar Pradesh</span>
+            </div>
           </Popup>
         </Marker>
 
-        {/* Assistance Centers */}
-        {CENTERS.map(center => (
-          <Marker key={center.id} position={[center.lat, center.lng]} icon={cscIcon}>
-            <Popup className="custom-popup">
-              <div className="p-1 min-w-[200px]">
-                <h3 className="font-bold text-sm text-foreground mb-1">{center.name}</h3>
-                <p className="text-xs text-muted-foreground mb-3">{center.type}</p>
-                
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center text-xs">
-                    <Navigation className="w-3 h-3 mr-2 text-primary" /> {center.distance} away
-                  </div>
-                  <div className="flex items-center text-xs">
-                    <MapPin className="w-3 h-3 mr-2 text-primary" /> Est. wait: {center.waitTime}
-                  </div>
-                  <div className="flex items-center text-xs">
-                    <Phone className="w-3 h-3 mr-2 text-primary" /> {center.phone}
-                  </div>
-                </div>
+        {/* CSC Kendra Markers */}
+        {kiosks.map((kiosk, idx) => {
+          const coords = kioskCoords[kiosk.id] || [
+            defaultCenter[0] + (idx === 0 ? 0.015 : idx === 1 ? -0.02 : 0.03),
+            defaultCenter[1] + (idx === 0 ? -0.015 : idx === 1 ? 0.025 : -0.035),
+          ];
 
-                <button className="w-full bg-primary text-primary-foreground text-xs font-semibold py-1.5 rounded flex items-center justify-center hover:bg-primary/90">
-                  <ExternalLink className="w-3 h-3 mr-1" /> Get Directions
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+          return (
+            <Marker key={kiosk.id} position={coords} icon={cscPin}>
+              <Popup>
+                <div className="p-2 min-w-[220px] text-xs font-sans space-y-2">
+                  <div className="border-b border-slate-100 pb-1.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                      CSC JAN SEVA KENDRA
+                    </span>
+                    <h3 className="font-bold text-sm text-slate-900 mt-1">
+                      {kiosk.center_name || (kiosk as any).name}
+                    </h3>
+                    <p className="text-slate-500 text-[11px] mt-0.5">{kiosk.address}</p>
+                  </div>
+
+                  <div className="space-y-1 text-slate-700 text-[11px]">
+                    <div className="flex items-center space-x-1.5">
+                      <Phone className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{kiosk.phone || (kiosk as any).contact_number || "+91 94150 12345"}</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5">
+                      <Building2 className="w-3.5 h-3.5 text-slate-400" />
+                      <span>संचालक: {kiosk.vle_operator_name || (kiosk as any).operator_name || "सुरेंद्र यादव"}</span>
+                    </div>
+                  </div>
+
+                  {onSelectKiosk && (
+                    <button
+                      onClick={() => onSelectKiosk(kiosk)}
+                      className="w-full mt-2 py-1.5 px-3 rounded-md bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-2xs transition-colors cursor-pointer"
+                    >
+                      अपॉइंटमेंट टोकन बुक करें
+                    </button>
+                  )}
+                </div>
+              </Popup>
+            </Marker>
+          );
+        })}
       </MapContainer>
     </div>
   );

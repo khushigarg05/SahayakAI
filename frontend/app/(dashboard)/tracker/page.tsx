@@ -1,165 +1,245 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ListChecks, CheckCircle2, Clock, UploadCloud, Landmark as Bank, FileSignature, ArrowRight, LucideIcon } from "lucide-react";
+import { useState } from "react";
+import { 
+  ListChecks, 
+  CheckCircle2, 
+  Clock, 
+  UploadCloud, 
+  Landmark as Bank, 
+  FileSignature, 
+  ArrowRight, 
+  Search, 
+  AlertCircle,
+  Building2,
+  QrCode
+} from "lucide-react";
+import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
-type TrackingStep = {
+interface TrackingStep {
   name: string;
   date: string;
   completed: boolean;
-  icon: LucideIcon;
   current?: boolean;
   error?: string;
-};
+}
 
-type TrackingApp = {
+interface TrackingApp {
   id: string;
   schemeName: string;
+  type: string;
   status: string;
+  kioskName: string;
+  date: string;
   progress: number;
   steps: TrackingStep[];
-};
-
-const TRACKING_DATA: TrackingApp[] = [
-  {
-    id: "APP-9823",
-    schemeName: "PM Awas Yojana (PMAY)",
-    status: "Processing",
-    progress: 60,
-    steps: [
-      { name: "Application Submitted", date: "12 Oct 2024", completed: true, icon: FileSignature },
-      { name: "Documents Verified", date: "15 Oct 2024", completed: true, icon: CheckCircle2 },
-      { name: "Physical Verification", date: "In Progress", completed: false, icon: Clock, current: true },
-      { name: "Fund Sanctioned", date: "Pending", completed: false, icon: Bank },
-    ]
-  },
-  {
-    id: "APP-5510",
-    schemeName: "Ayushman Bharat PM-JAY",
-    status: "Action Required",
-    progress: 25,
-    steps: [
-      { name: "Application Submitted", date: "18 Oct 2024", completed: true, icon: FileSignature },
-      { name: "Documents Verified", date: "Action Required", completed: false, icon: UploadCloud, current: true, error: "Income Certificate rejected due to blurriness." },
-      { name: "Card Issued", date: "Pending", completed: false, icon: CheckCircle2 },
-    ]
-  }
-];
+}
 
 export default function ApplicationTrackerPage() {
+  const { lang, t } = useLanguage();
+  const [query, setQuery] = useState("");
+
+  const sampleTracking: TrackingApp[] = [
+    {
+      id: "#SAH-89421",
+      schemeName: lang === "hi" 
+        ? "प्रधानमंत्री आवास योजना (ग्रामीण)" 
+        : "Pradhan Mantri Awas Yojana (PMAY-G)",
+      type: lang === "hi" ? "CSC प्राथमिकता टोकन पास" : "CSC Priority Appointment Token",
+      status: t.tracker.statusConfirmed,
+      kioskName: "Rampur CSC Jan Seva Kendra",
+      date: lang === "hi" ? "कल, प्रातः 10:00 - 11:00" : "Tomorrow, 10:00 AM - 11:00 AM",
+      progress: 75,
+      steps: [
+        { 
+          name: lang === "hi" ? "टोकन ऑनलाइन जनरेट हुआ" : "Token Generated Online", 
+          date: lang === "hi" ? "आज" : "Today", 
+          completed: true 
+        },
+        { 
+          name: lang === "hi" ? "केंद्र पर स्लॉट आरक्षित" : "Slot Reserved at Kiosk", 
+          date: lang === "hi" ? "सत्यापित" : "Confirmed", 
+          completed: true 
+        },
+        { 
+          name: lang === "hi" ? "बायोमेट्रिक e-KYC व दस्तावेज़ स्कैन" : "Biometric e-KYC & Doc Scan", 
+          date: lang === "hi" ? "आगामी" : "Upcoming", 
+          completed: false, 
+          current: true 
+        },
+        { 
+          name: lang === "hi" ? "अंतिम निदेशालय स्वीकृति" : "Final Directorate Submission", 
+          date: lang === "hi" ? "लंबित" : "Pending", 
+          completed: false 
+        },
+      ]
+    },
+    {
+      id: "APP-5510",
+      schemeName: lang === "hi" ? "आयुष्मान भारत योजना (PM-JAY)" : "Ayushman Bharat (PM-JAY)",
+      type: lang === "hi" ? "डिजिटल आवेदन" : "Digital Application",
+      status: t.tracker.statusReview,
+      kioskName: "Rohania Digital Seva Kendra",
+      date: lang === "hi" ? "समीक्षाधीन" : "Under Review",
+      progress: 40,
+      steps: [
+        { 
+          name: lang === "hi" ? "आवेदन जमा किया गया" : "Application Submitted", 
+          date: "18 Oct", 
+          completed: true 
+        },
+        { 
+          name: lang === "hi" ? "दस्तावेज़ सत्यापन" : "Document Verification", 
+          date: lang === "hi" ? "कार्रवाई आवश्यक" : "Action Needed", 
+          completed: false, 
+          current: true, 
+          error: lang === "hi" ? "आय प्रमाण पत्र का पुनः सत्यापन आवश्यक है।" : "Income certificate copy needs re-attestation." 
+        },
+        { 
+          name: lang === "hi" ? "गोल्डन कार्ड जारी होना" : "Golden Card Issued", 
+          date: lang === "hi" ? "लंबित" : "Pending", 
+          completed: false 
+        },
+      ]
+    }
+  ];
+
+  const filteredData = sampleTracking.filter(app => 
+    app.id.toLowerCase().includes(query.toLowerCase()) ||
+    app.schemeName.toLowerCase().includes(query.toLowerCase()) ||
+    app.kioskName.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="container mx-auto px-4 h-16 flex items-center space-x-2">
-          <ListChecks className="w-6 h-6 text-primary" />
-          <span className="font-bold text-lg">Application Tracker</span>
-        </div>
-      </header>
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/50 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-4xl mx-auto space-y-6">
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl space-y-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-3">Track Your Progress</h1>
-          <p className="text-muted-foreground">Monitor the real-time status of your welfare scheme applications.</p>
-        </div>
-
-        {TRACKING_DATA.map((application, appIndex) => (
-          <motion.div 
-            key={application.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: appIndex * 0.1 }}
-            className="bg-background shadow-sm border border-primary/10 rounded-2xl p-6 md:p-8 backdrop-blur-sm"
-          >
-            <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-              <div>
-                <div className="flex items-center space-x-3 mb-1">
-                  <h2 className="text-xl font-bold text-foreground">{application.schemeName}</h2>
-                  <span className={`px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider rounded-full ${
-                    application.status === "Action Required" ? "bg-red-500/10 text-red-500 border border-red-500/20" :
-                    "bg-primary/10 text-primary border border-primary/20"
-                  }`}>
-                    {application.status}
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground uppercase tracking-widest">Application ID: {application.id}</p>
+        {/* HEADER BAR */}
+        <div className="bg-white border-t-4 border-t-blue-800 border-x border-b border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+                  {t.tracker.tag}
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-xs text-slate-500 font-medium">{t.tracker.subTag}</span>
               </div>
-              
-              <div className="w-full md:w-48 text-right">
-                <div className="flex justify-between text-xs mb-1">
-                  <span>Overall Progress</span>
-                  <span className="font-bold">{application.progress}%</span>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-2">
+                {t.tracker.title}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
+                {t.tracker.description}
+              </p>
+            </div>
+
+            <div className="relative w-full sm:w-72 flex-shrink-0">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t.tracker.searchPlaceholder}
+                className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-300 text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* TRACKING CARDS */}
+        <div className="space-y-6">
+          {filteredData.map((app) => (
+            <div
+              key={app.id}
+              className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-6"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs font-mono font-bold bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded">
+                      {app.id}
+                    </span>
+                    <span className="text-xs text-slate-500 font-medium">{app.type}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-900 mt-1">{app.schemeName}</h3>
+                  <p className="text-xs text-slate-500 font-medium flex items-center space-x-1 mt-0.5">
+                    <Building2 className="w-3.5 h-3.5 text-slate-400" />
+                    <span>{app.kioskName} • {app.date}</span>
+                  </p>
                 </div>
-                <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${application.progress}%` }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className={`h-full ${application.status === "Action Required" ? "bg-red-500" : "bg-primary"}`}
+
+                <span className={`px-3 py-1 rounded-full text-xs font-bold self-start sm:self-auto ${
+                  app.status === t.tracker.statusConfirmed
+                    ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                    : "bg-amber-100 text-amber-800 border border-amber-300"
+                }`}>
+                  {app.status}
+                </span>
+              </div>
+
+              {/* Progress Bar */}
+              <div>
+                <div className="flex justify-between text-xs font-bold text-slate-600 mb-1.5">
+                  <span>{t.tracker.progressLabel}</span>
+                  <span>{app.progress}%</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200">
+                  <div
+                    className="h-full bg-blue-800 rounded-full transition-all duration-500"
+                    style={{ width: `${app.progress}%` }}
                   />
                 </div>
               </div>
-            </div>
 
-            {/* Vertical Timeline */}
-            <div className="relative pl-4 md:pl-8 space-y-8">
-              {/* Timeline Connector Line */}
-              <div className="absolute left-[27px] md:left-[43px] top-4 bottom-4 w-px bg-primary/5" />
-
-              {application.steps.map((step, stepIndex) => {
-                const Icon = step.icon;
-                return (
-                  <div key={stepIndex} className="relative flex items-start group">
-                    
-                    {/* Status Node */}
-                    <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center shrink-0 border-2 transition-colors ${
-                      step.completed 
-                        ? "bg-primary border-primary text-primary-foreground" 
+              {/* Steps Timeline */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                {app.steps.map((step, sIdx) => (
+                  <div
+                    key={sIdx}
+                    className={`p-3.5 rounded-xl border text-xs space-y-1 ${
+                      step.completed
+                        ? "bg-emerald-50/70 border-emerald-200 text-emerald-900"
                         : step.current
-                          ? application.status === "Action Required"
-                            ? "bg-red-500/20 border-red-500 text-red-500 animate-pulse"
-                            : "bg-primary/20 border-primary text-primary animate-pulse"
-                          : "bg-background border-primary/20 text-muted-foreground"
-                    }`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-
-                    {/* Step Details */}
-                    <div className="ml-6 flex-1 pt-1">
-                      <div className="flex flex-col md:flex-row md:items-center justify-between">
-                        <h4 className={`font-semibold ${step.current && application.status === "Action Required" ? "text-red-500" : step.completed || step.current ? "text-foreground" : "text-muted-foreground"}`}>
-                          {step.name}
-                        </h4>
-                        <span className="text-xs text-muted-foreground mt-1 md:mt-0 font-medium">
-                          {step.date}
-                        </span>
-                      </div>
-                      
-                      {step.error && (
-                        <div className="mt-3 bg-red-500/10 border border-red-500/20 p-3 rounded-lg flex items-start justify-between">
-                          <p className="text-sm text-red-500 pr-4">{step.error}</p>
-                          <button className="text-xs font-semibold bg-red-500 text-white px-3 py-1.5 rounded-md hover:bg-red-600 transition-colors shrink-0">
-                            Re-upload
-                          </button>
-                        </div>
+                        ? "bg-blue-50 border-blue-300 text-blue-900 ring-2 ring-blue-700/20"
+                        : "bg-slate-50 border-slate-200 text-slate-400"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-1.5 font-bold">
+                      {step.completed ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      ) : (
+                        <Clock className="w-4 h-4 text-blue-700" />
                       )}
+                      <span>{t.tracker.stepLabel} {sIdx + 1}</span>
                     </div>
+                    <div className="font-semibold text-slate-800">{step.name}</div>
+                    <div className="text-[10px] text-slate-500">{step.date}</div>
 
+                    {step.error && (
+                      <div className="mt-2 text-[10px] font-bold text-red-700 bg-red-100 p-1.5 rounded-lg">
+                        ⚠️ {step.error}
+                      </div>
+                    )}
                   </div>
-                );
-              })}
-            </div>
-
-            {application.status !== "Action Required" && (
-              <div className="mt-8 pt-6 border-t border-primary/10 flex justify-end">
-                 <button className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center">
-                    View Submitted Application <ArrowRight className="w-4 h-4 ml-1" />
-                 </button>
+                ))}
               </div>
-            )}
-          </motion.div>
-        ))}
 
-      </main>
+              <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                <span className="text-slate-500">{t.tracker.cscNotice}</span>
+                <Link
+                  href="/map"
+                  className="font-bold text-blue-800 hover:text-blue-950 inline-flex items-center space-x-1"
+                >
+                  <span>{t.tracker.btnBookNew}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </div>
   );
 }

@@ -2,15 +2,29 @@
 
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { motion, AnimatePresence } from "framer-motion";
-import { FileUp, FileText, CheckCircle2, AlertTriangle, ShieldCheck, Search, Loader2 } from "lucide-react";
+import { 
+  FileUp, 
+  FileText, 
+  CheckCircle2, 
+  AlertTriangle, 
+  ShieldCheck, 
+  Search, 
+  Loader2, 
+  Trash2,
+  Building2,
+  Lock
+} from "lucide-react";
+import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 type ScanStatus = "idle" | "scanning" | "success" | "error";
 
 export default function DocumentAssistantPage() {
+  const { lang, t } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [scanStatus, setScanStatus] = useState<ScanStatus>("idle");
   const [scanProgress, setScanProgress] = useState(0);
+  const [docType, setDocType] = useState<string>("Aadhaar Card");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
@@ -39,9 +53,9 @@ export default function DocumentAssistantPage() {
           setScanStatus("success");
           return 100;
         }
-        return prev + 5;
+        return prev + 10;
       });
-    }, 150); // Takes about 3 seconds to complete
+    }, 150);
   };
 
   const removeFile = () => {
@@ -51,201 +65,182 @@ export default function DocumentAssistantPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-background/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <FileText className="w-6 h-6 text-primary" />
-            <span className="font-bold text-lg">Document Assistant</span>
-          </div>
-          <div className="flex items-center space-x-2 text-sm text-green-500 bg-green-500/10 px-3 py-1.5 rounded-full border border-green-500/20">
-            <ShieldCheck className="w-4 h-4" />
-            <span className="font-medium hidden sm:inline">100% On-Device Processing</span>
-            <span className="font-medium sm:hidden">Secure</span>
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/50 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-4xl mx-auto space-y-6">
+
+        {/* TOP TITLE HEADER */}
+        <div className="bg-white border-t-4 border-t-blue-800 border-x border-b border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">
+                  {t.documents.tag}
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-xs text-slate-500 font-medium">{t.documents.subTag}</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-2">
+                {t.documents.title}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 font-medium">
+                {t.documents.description}
+              </p>
+            </div>
           </div>
         </div>
-      </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* Left Column: Upload Area */}
-          <div className="space-y-6">
-            <div className="bg-background shadow-sm border border-primary/10 rounded-2xl p-6 backdrop-blur-sm">
-              <h2 className="text-xl font-bold mb-2">Upload Document</h2>
-              <p className="text-muted-foreground text-sm mb-6">
-                Upload your Aadhaar, PAN, or Income Certificate. Our AI will automatically extract details and check for missing information.
-              </p>
+        {/* MAIN BODY */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
-              {!file ? (
-                <div
-                  {...getRootProps()}
-                  className={`border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center text-center cursor-pointer transition-colors ${
-                    isDragActive ? "border-primary bg-primary/10" : "border-border hover:border-primary/50 hover:bg-background shadow-sm"
-                  }`}
+          {/* UPLOAD & VERIFY (7 COLS) */}
+          <div className="md:col-span-7 space-y-4">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+              
+              {/* Document Type Selector */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                  {t.documents.selectType}
+                </label>
+                <select
+                  value={docType}
+                  onChange={(e) => setDocType(e.target.value)}
+                  className="w-full h-11 px-3 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white cursor-pointer"
                 >
-                  <input {...getInputProps()} />
-                  <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
-                    <FileUp className="h-8 w-8" />
-                  </div>
-                  <p className="font-medium mb-1">Drag & drop your file here</p>
-                  <p className="text-sm text-muted-foreground">or click to browse from your device</p>
-                  <p className="text-xs text-muted-foreground mt-4">Supports JPG, PNG, PDF up to 5MB</p>
-                </div>
-              ) : (
-                <div className="border border-border rounded-xl p-6 bg-background shadow-sm relative overflow-hidden">
-                  {/* File preview stub */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="h-12 w-12 rounded bg-primary/20 flex items-center justify-center text-primary">
-                        <FileText className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <p className="font-medium truncate max-w-[200px] sm:max-w-xs">{file.name}</p>
-                        <p className="text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                      </div>
+                  <option value="Aadhaar Card">{t.documents.typeAadhaar}</option>
+                  <option value="Income Certificate">{t.documents.typeIncome}</option>
+                  <option value="BPL Ration Card">{t.documents.typeRation}</option>
+                  <option value="Bank Passbook">{t.documents.typeBank}</option>
+                </select>
+              </div>
+
+              {/* Drag and Drop Zone */}
+              <div
+                {...getRootProps()}
+                className={`border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-colors ${
+                  isDragActive
+                    ? "border-blue-700 bg-blue-50/50"
+                    : "border-slate-300 hover:border-blue-400 bg-slate-50/50"
+                }`}
+              >
+                <input {...getInputProps()} />
+                <FileUp className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+                <p className="text-xs font-bold text-slate-700">
+                  {isDragActive ? t.documents.dropActive : t.documents.dropIdle}
+                </p>
+                <p className="text-[11px] text-slate-400 mt-1">{t.documents.fileSpecs}</p>
+              </div>
+
+              {/* Uploaded File Bar */}
+              {file && (
+                <div className="p-3.5 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+                  <div className="flex items-center space-x-3 truncate">
+                    <FileText className="w-5 h-5 text-blue-700 flex-shrink-0" />
+                    <div className="truncate">
+                      <p className="text-xs font-bold text-slate-800 truncate">{file.name}</p>
+                      <p className="text-[10px] text-slate-500">{(file.size / 1024).toFixed(1)} KB</p>
                     </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
                     {scanStatus === "idle" && (
-                      <button 
-                        onClick={removeFile}
-                        className="text-sm text-destructive hover:underline"
+                      <button
+                        onClick={simulateScan}
+                        className="px-3.5 py-1.5 rounded-lg bg-blue-800 text-white font-bold text-xs shadow-xs hover:bg-blue-900 cursor-pointer"
                       >
-                        Remove
+                        {t.documents.btnVerify}
                       </button>
                     )}
-                  </div>
-
-                  {/* Scanning Progress */}
-                  {scanStatus === "scanning" && (
-                    <div className="mt-6 space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="flex items-center text-primary">
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Extracting details...
-                        </span>
-                        <span>{scanProgress}%</span>
-                      </div>
-                      <div className="w-full bg-secondary h-2 rounded-full overflow-hidden">
-                        <motion.div 
-                          className="h-full bg-primary"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${scanProgress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Scan Button */}
-                  {scanStatus === "idle" && (
                     <button
-                      onClick={simulateScan}
-                      className="w-full mt-6 bg-primary text-primary-foreground py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex items-center justify-center"
+                      onClick={removeFile}
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 cursor-pointer"
                     >
-                      <Search className="w-4 h-4 mr-2" /> Start OCR Scan
+                      <Trash2 className="w-4 h-4" />
                     </button>
-                  )}
-
-                  {/* Scanning Overlay Effect */}
-                  <AnimatePresence>
-                    {scanStatus === "scanning" && (
-                      <motion.div
-                        initial={{ top: "-10%" }}
-                        animate={{ top: "110%" }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                        className="absolute left-0 w-full h-8 bg-gradient-to-b from-transparent via-primary/30 to-transparent pointer-events-none"
-                      />
-                    )}
-                  </AnimatePresence>
+                  </div>
                 </div>
               )}
+
+              {/* Scanning Progress */}
+              {scanStatus === "scanning" && (
+                <div className="space-y-2 pt-2">
+                  <div className="flex justify-between text-xs font-bold text-blue-800">
+                    <span>{t.documents.scanningNotice}</span>
+                    <span>{scanProgress}%</span>
+                  </div>
+                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-blue-800 transition-all duration-200"
+                      style={{ width: `${scanProgress}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
             </div>
 
-            {/* Privacy Badge */}
-            <div className="flex items-start space-x-3 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-              <ShieldCheck className="w-5 h-5 text-blue-500 mt-0.5" />
+            {/* Privacy Compliance Note */}
+            <div className="p-4 rounded-2xl bg-blue-50/80 border border-blue-200/90 text-xs text-blue-900 flex items-start space-x-2.5">
+              <Lock className="w-4 h-4 text-blue-700 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-semibold text-blue-500">Privacy by Design</h4>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Files are processed completely on your device. No images are uploaded to our servers, and extracted data is auto-purged after session ends.
+                <span className="font-bold">{t.documents.privacyTitle}</span>
+                <p className="text-slate-700 mt-0.5 leading-relaxed font-medium">
+                  {t.documents.privacyDesc}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Results & Analysis */}
-          <div className="space-y-6">
-            <div className="bg-background shadow-sm border border-primary/10 rounded-2xl p-6 backdrop-blur-sm min-h-[400px] flex flex-col">
-              <h2 className="text-xl font-bold mb-6">Extraction Results</h2>
-              
-              {scanStatus === "idle" && (
-                <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground text-center">
-                  <FileText className="w-12 h-12 mb-4 opacity-20" />
-                  <p>Upload and scan a document to see extracted details here.</p>
+          {/* VERIFICATION REPORT (5 COLS) */}
+          <div className="md:col-span-5">
+            {scanStatus === "success" ? (
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex items-center space-x-2 pb-3 border-b border-slate-100">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                  <h3 className="font-bold text-sm text-slate-900">{t.documents.verifiedTitle}</h3>
                 </div>
-              )}
 
-              {scanStatus === "scanning" && (
-                <div className="flex-1 flex flex-col items-center justify-center text-primary text-center">
-                  <Search className="w-12 h-12 mb-4 opacity-50 animate-pulse" />
-                  <p className="animate-pulse">Analyzing text patterns...</p>
+                <div className="space-y-2.5 text-xs">
+                  <div className="flex justify-between py-1 border-b border-slate-50">
+                    <span className="text-slate-500">{t.documents.docLabel}</span>
+                    <span className="font-bold text-slate-800">{docType}</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-50">
+                    <span className="text-slate-500">{t.documents.idLabel}</span>
+                    <span className="font-mono font-bold text-slate-800">XXXX-XXXX-4819</span>
+                  </div>
+                  <div className="flex justify-between py-1 border-b border-slate-50">
+                    <span className="text-slate-500">{t.documents.clarityLabel}</span>
+                    <span className="font-bold text-emerald-700">98%</span>
+                  </div>
+                  <div className="flex justify-between py-1">
+                    <span className="text-slate-500">{t.documents.sealLabel}</span>
+                    <span className="font-bold text-emerald-700">{t.documents.sealVerified}</span>
+                  </div>
                 </div>
-              )}
 
-              {scanStatus === "success" && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="space-y-6"
+                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 font-medium leading-relaxed">
+                  ✅ {t.documents.validNotice}
+                </div>
+
+                <Link
+                  href="/onboarding"
+                  className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 transition-colors block text-center"
                 >
-                  <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl flex items-start space-x-3">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5" />
-                    <div>
-                      <h4 className="text-sm font-semibold text-green-500">Document Verified: Aadhaar Card</h4>
-                      <p className="text-xs text-muted-foreground mt-1">Confidence score: 98%</p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Extracted Information</span>
-                      <div className="mt-2 space-y-3">
-                        <div className="flex justify-between items-center py-2 border-b border-primary/10">
-                          <span className="text-sm text-foreground/80">Name</span>
-                          <span className="text-sm font-medium">Ram Kumar</span>
-                        </div>
-                        <div className="flex justify-between items-center py-2 border-b border-primary/10">
-                          <span className="text-sm text-foreground/80">DOB</span>
-                          <span className="text-sm font-medium">12-05-1980</span>
-                        </div>
-                        <div className="flex justify-between items-center py-2 border-b border-primary/10">
-                          <span className="text-sm text-foreground/80">Aadhaar No. (Masked)</span>
-                          <span className="text-sm font-medium tracking-widest text-primary">XXXX-XXXX-4589</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold flex items-center">
-                        <AlertTriangle className="w-3 h-3 mr-1 text-amber-500" /> Missing Information
-                      </span>
-                      <div className="mt-2 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                        <p className="text-xs text-amber-500">
-                          Fathers Name could not be read clearly due to poor lighting. This might cause issues in dependent scheme applications.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button className="w-full bg-primary text-primary-foreground py-2.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-                    Save Details to Profile
-                  </button>
-                </motion.div>
-              )}
-            </div>
+                  <span>{t.documents.btnCheckEligibility}</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center space-y-2 h-full flex flex-col items-center justify-center text-slate-400 text-xs min-h-[220px]">
+                <ShieldCheck className="w-8 h-8 text-slate-300 mx-auto" />
+                <p className="font-semibold text-slate-600">{t.documents.emptyTitle}</p>
+                <p>{t.documents.emptyDesc}</p>
+              </div>
+            )}
           </div>
 
         </div>
-      </main>
+
+      </div>
     </div>
   );
 }

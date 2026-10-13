@@ -1,136 +1,202 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, FileText, UserPlus, Shield } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { 
+  Shield, 
+  UserPlus, 
+  Phone, 
+  Lock, 
+  User, 
+  AlertCircle, 
+  Loader2, 
+  CheckCircle2, 
+  ShieldCheck 
+} from "lucide-react";
+import { registerUser } from "@/lib/api";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function RegisterPage() {
+  const router = useRouter();
+  const { lang, t } = useLanguage();
+  const [mobile, setMobile] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
+    if (password.length < 8) {
+      setErrorMsg("Password kamzor hai: Kam se kam 8 characters hone chahiye.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrorMsg(t.auth.passwordMismatch);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const payload = {
+        mobile: mobile.replace(/\D/g, ""),
+        password,
+        confirm_password: confirmPassword,
+        full_name: fullName,
+        role: "citizen",
+      };
+
+      const res = await registerUser(payload);
+      setSuccessMsg(res.message || t.auth.accountCreated);
+      setTimeout(() => router.push("/login"), 1500);
+    } catch (err: any) {
+      setErrorMsg(err.message || "Registration failed. Kripya details check karein.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-background">
-      {/* Left Side - Info/Branding */}
-      <div className="hidden md:flex md:w-1/2 bg-primary/5 border-r border-primary/10 flex-col justify-center px-12 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent opacity-50" />
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/50 flex items-center justify-center p-4 sm:p-6 font-sans">
+      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
         
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="z-10 max-w-md"
-        >
-          <div className="inline-flex items-center space-x-2 mb-8">
-            <Shield className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">SahayakAI</span>
+        {/* Brand Header */}
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 rounded-2xl bg-blue-800 text-white flex items-center justify-center mx-auto shadow-sm shadow-blue-800/20">
+            <UserPlus className="w-6 h-6 text-amber-400" />
           </div>
-          
-          <h1 className="text-4xl font-bold mb-6">Start Your Journey Towards Accessibility</h1>
-          <p className="text-muted-foreground text-lg mb-8">
-            Create an account to securely store your digital documents, evaluate scheme eligibility, and get personalized recommendations.
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">{t.auth.registerTitle}</h1>
+          <p className="text-xs text-slate-500 font-medium">
+            {t.auth.registerSub}
           </p>
-          
-          <div className="space-y-4">
-            {[
-              "End-to-end encrypted profile data",
-              "AI-driven eligibility matching",
-              "Access to verified application templates"
-            ].map((feature, idx) => (
-              <div key={idx} className="flex items-center space-x-3 text-sm text-foreground/80">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>{feature}</span>
-              </div>
-            ))}
+        </div>
+
+        {errorMsg && (
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center space-x-2">
+            <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+            <span>{errorMsg}</span>
           </div>
-        </motion.div>
-      </div>
+        )}
 
-      {/* Right Side - Form */}
-      <div className="flex-1 flex flex-col justify-center px-6 md:px-16 lg:px-24 py-12 relative">
-        <Link href="/" className="absolute top-8 right-8 text-sm text-muted-foreground hover:text-foreground transition-colors">
-          &larr; Back to Home
-        </Link>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="w-full max-w-md mx-auto"
-        >
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold mb-2">Create Account</h2>
-            <p className="text-muted-foreground">Fill in your details to get started</p>
+        {successMsg && (
+          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center space-x-2 font-bold">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <span>{successMsg}</span>
           </div>
+        )}
 
-          <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="firstName">First Name</label>
-                <input
-                  id="firstName"
-                  type="text"
-                  placeholder="Ram"
-                  className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium" htmlFor="lastName">Last Name</label>
-                <input
-                  id="lastName"
-                  type="text"
-                  placeholder="Kumar"
-                  className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium" htmlFor="phone">Mobile Number</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-muted-foreground">
-                  +91
-                </div>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder="9876543210"
-                  className="flex h-12 w-full rounded-md border border-input bg-background pl-12 pr-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium" htmlFor="password">Password</label>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              {t.auth.nameLabel}
+            </label>
+            <div className="relative">
               <input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder={t.auth.namePlaceholder}
+                className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-300 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
               />
+              <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             </div>
-
-            <div className="flex items-start space-x-2 pt-2">
-              <input type="checkbox" id="terms" className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" />
-              <label htmlFor="terms" className="text-sm text-muted-foreground">
-                I agree to the <a href="#" className="text-primary hover:underline">Terms of Service</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a> (Local Data Processing).
-              </label>
-            </div>
-
-            <Link href="/onboarding" passHref>
-              <button
-                type="button"
-                className="w-full inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-12 px-8 mt-6 group"
-              >
-                Create Account
-                <UserPlus className="ml-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-              </button>
-            </Link>
-          </form>
-
-          <div className="mt-8 text-center text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline font-medium">
-              Sign In
-            </Link>
           </div>
-        </motion.div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              {t.auth.mobileLabel}
+            </label>
+            <div className="relative">
+              <input
+                type="tel"
+                required
+                maxLength={10}
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+                placeholder={t.auth.mobilePlaceholder}
+                className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-300 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
+              />
+              <Phone className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              {t.auth.passwordLabel}
+            </label>
+            <div className="relative">
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t.auth.passwordPlaceholder}
+                className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-300 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
+              />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+              {t.auth.confirmPasswordLabel}
+            </label>
+            <div className="relative">
+              <input
+                type="password"
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder={t.auth.confirmPasswordPlaceholder}
+                className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-300 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white"
+              />
+              <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white font-bold text-xs shadow-md shadow-blue-800/20 transition-all flex items-center justify-center space-x-2 cursor-pointer disabled:opacity-50"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>{t.auth.registering}</span>
+              </>
+            ) : (
+              <>
+                <UserPlus className="w-4 h-4" />
+                <span>{t.auth.btnRegister}</span>
+              </>
+            )}
+          </button>
+        </form>
+
+        <div className="pt-4 border-t border-slate-100 text-center space-y-2">
+          <p className="text-xs text-slate-500">
+            {t.auth.hasAccount}{" "}
+            <Link href="/login" className="font-bold text-blue-800 hover:underline">
+              {t.auth.linkLogin}
+            </Link>
+          </p>
+
+          <div className="pt-2 flex items-center justify-center space-x-1 text-[11px] text-slate-400">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>{t.auth.securityStandard}</span>
+          </div>
+        </div>
+
       </div>
     </div>
   );

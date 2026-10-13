@@ -142,3 +142,12 @@
     display: none;
   }
 }
+
+/* Hide Next.js Development Overlay & Dev Indicator Badge */
+nextjs-portal,
+#nextjs-dev-overlay,
+[data-nextjs-dev-overlay-container],
+[data-nextjs-toast],
+[data-nextjs-dialog] {
+  display: none !important;
+}

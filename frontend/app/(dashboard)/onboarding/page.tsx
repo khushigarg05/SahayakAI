@@ -1,487 +1,610 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2, User, MapPin, Briefcase, FileText, HelpCircle, Video, ShieldCheck } from "lucide-react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { 
+  User, 
+  MapPin, 
+  Wallet, 
+  FileCheck2, 
+  ArrowRight, 
+  ArrowLeft, 
+  CheckCircle2, 
+  AlertCircle, 
+  Loader2, 
+  ShieldCheck, 
+  CreditCard,
+  FileText,
+  BadgeCheck,
+  Smartphone,
+  Check,
+  Sparkles
+} from "lucide-react";
+import { matchSchemes, assessRisk } from "@/lib/api";
+import { useLanguage } from "@/context/LanguageContext";
 
-const HelpTooltip = ({ message }: { message: string }) => (
-  <div className="group relative inline-flex items-center ml-2">
-    <button type="button" className="text-blue-600 hover:text-blue-700 transition-colors bg-blue-100 p-1 rounded-full border border-blue-200">
-      <HelpCircle className="w-3.5 h-3.5" />
-    </button>
-    <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute z-50 w-56 p-3 mt-2 -ml-28 text-xs text-slate-800 bg-white rounded-xl shadow-xl border border-slate-200 transition-all duration-200">
-      <div className="absolute -top-1.5 left-1/2 -mt-1 w-3 h-3 bg-white border-l border-t border-slate-200 rotate-45 -ml-1.5"></div>
-      {message}
-    </div>
-  </div>
-);
-
-// Zod Schema for Validation
 const formSchema = z.object({
-  age: z.string().min(1, "Required"),
-  gender: z.string().min(1, "Required"),
-  location: z.string().min(2, "Required"),
-  distanceToCSC: z.string().min(1, "Required"),
-  income: z.string().min(1, "Required"),
-  bplStatus: z.string().min(1, "Required"),
-  education: z.string().min(1, "Required"),
-  digitalLiteracy: z.number().min(1).max(10),
-  hasAadhaar: z.boolean(),
-  hasPanCard: z.boolean(),
+  age: z.number().min(18, "Age must be at least 18").max(100, "Please enter a valid age"),
+  gender: z.string().min(1, "Please select gender"),
+  caste_category: z.string().min(1, "Please select category"),
+  annual_income: z.number().min(0, "Income cannot be negative"),
+  bpl_status: z.string().min(1, "Please select BPL status"),
+  state: z.string().min(2, "Please enter state"),
+  district: z.string().min(2, "Please enter district"),
+  distance_to_csc_km: z.number().min(0.1, "Please enter valid distance"),
+  digital_literacy: z.enum(["Low", "Medium", "High"]),
+  has_income_certificate: z.boolean(),
+  bank_account_aadhaar_linked: z.boolean(),
+  has_caste_certificate: z.boolean(),
+  has_bpl_ration_card: z.boolean(),
+  prior_rejections_count: z.number().min(0).max(10),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-const CONTENT = {
-  en: {
-    header: "Smart Profile Creation",
-    desc: "We need a few details to accurately predict your scheme eligibility.",
-    back: "Back",
-    next: "Next",
-    submit: "Check Eligibility",
-    steps: [
-      { id: "personal", title: "Personal Details", icon: User },
-      { id: "location", title: "Location & Access", icon: MapPin },
-      { id: "economic", title: "Economic Profile", icon: Briefcase },
-      { id: "documents", title: "Documents & Skills", icon: FileText },
-    ],
-    fields: {
-      age: "Age",
-      agePlaceholder: "e.g. 35",
-      gender: "Gender",
-      genderSelect: "Select Gender",
-      male: "Male", female: "Female", other: "Other",
-      location: "State / District",
-      locationTip: "Type your current residing state and district.",
-      locPlaceholder: "e.g. Maharashtra, Pune",
-      dist: "Distance to nearest CSC/Tehsil",
-      distSelect: "Select Distance",
-      d1: "Less than 5 km", d2: "5 - 15 km", d3: "More than 15 km",
-      income: "Annual Household Income (₹)",
-      incPlaceholder: "e.g. 150000",
-      bpl: "BPL Status",
-      bplTip: "Find your BPL Ration Card number on your ration card.",
-      bplSelect: "Are you Below Poverty Line?",
-      yes: "Yes", no: "No",
-      edu: "Highest Education",
-      eduSelect: "Select Education",
-      e1: "No Formal Education", e2: "Primary", e3: "Secondary (10th/12th)", e4: "Graduate and above",
-      digi: "Digital Literacy Score",
-      digiTip: "Rate from 1 (Need Help) to 10 (Independent User)",
-      dHelp: "Need Help", dIndep: "Independent User",
-      docs: "Documents Available",
-      aadhaar: "Aadhaar Card",
-      pan: "PAN Card"
-    }
-  },
-  hi: {
-    header: "स्मार्ट प्रोफाइल बनाएं",
-    desc: "हमें आपकी कुछ जानकारी चाहिए ताकि हम आपको सही योजनाएं बता सकें।",
-    back: "पीछे जाएं",
-    next: "आगे बढ़ें",
-    submit: "योग्यता जांचें",
-    steps: [
-      { id: "personal", title: "व्यक्तिगत जानकारी", icon: User },
-      { id: "location", title: "पता और पहुंच", icon: MapPin },
-      { id: "economic", title: "आर्थिक स्थिति", icon: Briefcase },
-      { id: "documents", title: "दस्तावेज़", icon: FileText },
-    ],
-    fields: {
-      age: "आयु (Age)",
-      agePlaceholder: "उदा. 35",
-      gender: "लिंग (Gender)",
-      genderSelect: "लिंग चुनें",
-      male: "पुरुष", female: "महिला", other: "अन्य",
-      location: "राज्य / जिला",
-      locationTip: "अपना वर्तमान राज्य और जिला लिखें।",
-      locPlaceholder: "उदा. Maharashtra, Pune",
-      dist: "निकटतम CSC/तहसील की दूरी",
-      distSelect: "दूरी चुनें",
-      d1: "5 किमी से कम", d2: "5 - 15 किमी", d3: "15 किमी से अधिक",
-      income: "वार्षिक घरेलू आय (₹)",
-      incPlaceholder: "उदा. 150000",
-      bpl: "BPL स्थिति (राशन कार्ड)",
-      bplTip: "अपना BPL राशन कार्ड नंबर अपने राशन कार्ड पर खोजें।",
-      bplSelect: "क्या आप गरीबी रेखा से नीचे हैं?",
-      yes: "हाँ", no: "नहीं",
-      edu: "उच्चतम शिक्षा",
-      eduSelect: "शिक्षा चुनें",
-      e1: "कोई औपचारिक शिक्षा नहीं", e2: "प्राथमिक", e3: "माध्यमिक (10वीं/12वीं)", e4: "स्नातक (Graduate)",
-      digi: "डिजिटल साक्षरता स्कोर",
-      digiTip: "1 (मदद चाहिए) से 10 (स्वतंत्र उपयोगकर्ता) तक रेट करें",
-      dHelp: "मदद चाहिए", dIndep: "स्वतंत्र",
-      docs: "उपलब्ध दस्तावेज़",
-      aadhaar: "आधार कार्ड",
-      pan: "पैन कार्ड"
-    }
-  },
-  mr: {
-    header: "स्मार्ट प्रोफाईल तयार करा",
-    desc: "आम्हाला तुमची काही माहिती हवी आहे जेणेकरून आम्ही तुम्हाला योग्य योजना सांगू शकू.",
-    back: "मागे",
-    next: "पुढे जा",
-    submit: "पात्रता तपासा",
-    steps: [
-      { id: "personal", title: "वैयक्तिक माहिती", icon: User },
-      { id: "location", title: "पत्ता आणि प्रवेश", icon: MapPin },
-      { id: "economic", title: "आर्थिक स्थिती", icon: Briefcase },
-      { id: "documents", title: "कागदपत्रे", icon: FileText },
-    ],
-    fields: {
-      age: "वय (Age)",
-      agePlaceholder: "उदा. 35",
-      gender: "लिंग (Gender)",
-      genderSelect: "लिंग निवडा",
-      male: "पुरुष", female: "स्त्री", other: "इतर",
-      location: "राज्य / जिल्हा",
-      locationTip: "तुमचे सध्याचे राज्य आणि जिल्हा लिहा.",
-      locPlaceholder: "उदा. Maharashtra, Pune",
-      dist: "जवळच्या CSC ची अंतर",
-      distSelect: "अंतर निवडा",
-      d1: "5 किमी पेक्षा कमी", d2: "5 - 15 किमी", d3: "15 किमी पेक्षा जास्त",
-      income: "वार्षिक उत्पन्न (₹)",
-      incPlaceholder: "उदा. 150000",
-      bpl: "BPL स्थिती",
-      bplTip: "तुमचा BPL रेशन कार्ड नंबर तुमच्या रेशन कार्डवर शोधा.",
-      bplSelect: "तुम्ही दारिद्र्यरेषेखालील आहात का?",
-      yes: "होय", no: "नाही",
-      edu: "शिक्षण",
-      eduSelect: "शिक्षण निवडा",
-      e1: "औपचारिक शिक्षण नाही", e2: "प्राथमिक", e3: "माध्यमिक", e4: "पदवीधर",
-      digi: "डिजिटल साक्षरता",
-      digiTip: "1 (मदत हवी) ते 10 (स्वतंत्र) रेट करा",
-      dHelp: "मदत हवी", dIndep: "स्वतंत्र",
-      docs: "कागदपत्रे",
-      aadhaar: "आधार कार्ड",
-      pan: "पैन कार्ड"
-    }
-  },
-  bn: {
-    header: "স্মার্ট প্রোফাইল তৈরি",
-    desc: "আপনার সঠিক স্কিমগুলি জানাতে আমাদের কিছু তথ্য প্রয়োজন।",
-    back: "পেছনে",
-    next: "এগিয়ে যান",
-    submit: "যোগ্যতা চেক করুন",
-    steps: [
-      { id: "personal", title: "ব্যক্তিগত তথ্য", icon: User },
-      { id: "location", title: "ঠিকানা", icon: MapPin },
-      { id: "economic", title: "অর্থনৈতিক প্রোফাইল", icon: Briefcase },
-      { id: "documents", title: "নথিপত্র", icon: FileText },
-    ],
-    fields: {
-      age: "বয়স",
-      agePlaceholder: "উদা. 35",
-      gender: "লিঙ্গ",
-      genderSelect: "লিঙ্গ নির্বাচন করুন",
-      male: "পুরুষ", female: "মহিলা", other: "অন্যান্য",
-      location: "রাজ্য / জেলা",
-      locationTip: "আপনার বর্তমান রাজ্য এবং জেলা লিখুন।",
-      locPlaceholder: "উদা. West Bengal, Kolkata",
-      dist: "নিকটতম CSC এর দূরত্ব",
-      distSelect: "দূরত্ব নির্বাচন করুন",
-      d1: "5 কিমি এর কম", d2: "5 - 15 কিমি", d3: "15 কিমি এর বেশি",
-      income: "বার্ষিক আয় (₹)",
-      incPlaceholder: "উদা. 150000",
-      bpl: "BPL অবস্থা",
-      bplTip: "আপনার রেশন কার্ডে BPL কার্ড নম্বর খুঁজুন।",
-      bplSelect: "আপনি কি দারিদ্র্য সীমার নিচে?",
-      yes: "হ্যাঁ", no: "না",
-      edu: "শিক্ষা",
-      eduSelect: "শিক্ষা নির্বাচন করুন",
-      e1: "কোন আনুষ্ঠানিক শিক্ষা নেই", e2: "প্রাথমিক", e3: "মাধ্যমিক", e4: "স্নাতক",
-      digi: "ডিজিটাল সাক্ষরতা",
-      digiTip: "1 (সাহায্য প্রয়োজন) থেকে 10 (স্বাধীন)",
-      dHelp: "সাহায্য প্রয়োজন", dIndep: "স্বাধীন",
-      docs: "উপলব্ধ নথিপত্র",
-      aadhaar: "আধার কার্ড",
-      pan: "প্যান কার্ড"
-    }
-  }
-};
-
 export default function OnboardingPage() {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [direction, setDirection] = useState(0); 
-  const [langCode, setLangCode] = useState<string>("en");
+  const { lang, t } = useLanguage();
+  const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("sahayak_lang");
-    if (savedLang && (CONTENT as any)[savedLang]) {
-      setLangCode(savedLang);
-    }
-  }, []);
-
-  const t = (CONTENT as any)[langCode] || CONTENT.en;
-  const STEPS = t.steps;
-
-  const { register, handleSubmit, trigger, watch, formState: { errors } } = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      digitalLiteracy: 5,
-      hasAadhaar: false,
-      hasPanCard: false,
-    }
+      age: 45,
+      gender: "Male",
+      caste_category: "OBC",
+      annual_income: 60000,
+      bpl_status: "yes",
+      state: "Uttar Pradesh",
+      district: "Varanasi",
+      distance_to_csc_km: 12.5,
+      digital_literacy: "Low",
+      has_income_certificate: true,
+      bank_account_aadhaar_linked: true,
+      has_caste_certificate: true,
+      has_bpl_ration_card: true,
+      prior_rejections_count: 0,
+    },
   });
 
-  const processData = (data: FormValues) => {
-    const profileData = {
-        age: parseInt(data.age) || 30,
-        income: parseInt(data.income) || 0,
-        distance_to_csc: data.distanceToCSC === "<5km" ? 2 : data.distanceToCSC === "5-15km" ? 10 : 20,
-        documents_missing: (!data.hasAadhaar ? 1 : 0) + (!data.hasPanCard ? 1 : 0),
-        literacy_level: data.education === "none" ? 0 : data.education === "primary" ? 1 : data.education === "secondary" ? 2 : 3,
-        has_internet: data.digitalLiteracy > 3 ? 1 : 0,
-        caste_category: "General", 
-        location_type: data.location.toLowerCase().includes("rural") ? "Rural" : "Urban"
-    };
-    
-    if (typeof window !== "undefined") {
-        localStorage.setItem("sahayak_profile", JSON.stringify(profileData));
-    }
-    
-    router.push("/dashboard");
-  };
+  const watchedIncome = watch("annual_income");
+  const watchedDistance = watch("distance_to_csc_km");
+  const watchedDigital = watch("digital_literacy");
+  const watchedBank = watch("bank_account_aadhaar_linked");
+  const watchedIncomeCert = watch("has_income_certificate");
+  const watchedBplCard = watch("has_bpl_ration_card");
+  const watchedCasteCert = watch("has_caste_certificate");
 
   const nextStep = async () => {
-    const fieldsToValidate = getFieldsForStep(currentStep);
-    const isStepValid = await trigger(fieldsToValidate as any);
-    
-    if (isStepValid && currentStep < STEPS.length - 1) {
-      setDirection(1);
-      setCurrentStep(prev => prev + 1);
+    let fieldsToValidate: (keyof FormValues)[] = [];
+    if (step === 1) fieldsToValidate = ["age", "gender", "caste_category"];
+    if (step === 2) fieldsToValidate = ["annual_income", "bpl_status", "state", "district", "distance_to_csc_km"];
+
+    const valid = await trigger(fieldsToValidate);
+    if (valid) {
+      setStep((prev) => Math.min(prev + 1, 3));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const prevStep = () => {
-    if (currentStep > 0) {
-      setDirection(-1);
-      setCurrentStep(prev => prev - 1);
-    }
+    setStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const getFieldsForStep = (step: number) => {
-    switch (step) {
-      case 0: return ["age", "gender"];
-      case 1: return ["location", "distanceToCSC"];
-      case 2: return ["income", "bplStatus", "education"];
-      case 3: return ["digitalLiteracy", "hasAadhaar", "hasPanCard"];
-      default: return [];
-    }
-  };
+  const onSubmit = async (data: FormValues) => {
+    setLoading(true);
+    setErrorMsg(null);
 
-  const slideVariants: any = {
-    hidden: (direction: number) => ({ x: direction > 0 ? '10%' : '-10%', opacity: 0 }),
-    visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 30 } },
-    exit: (direction: number) => ({ x: direction < 0 ? '10%' : '-10%', opacity: 0, transition: { duration: 0.2 } })
+    try {
+      const isBpl = data.bpl_status === "yes";
+
+      // 1. Match Schemes against central gazettes
+      const matchPayload = {
+        age: data.age,
+        annual_income: data.annual_income,
+        bpl_status: isBpl,
+        gender: data.gender,
+        caste_category: data.caste_category,
+        state: data.state,
+        district: data.district,
+      };
+
+      const matchResponse = await matchSchemes(matchPayload);
+      const targetSchemeId = matchResponse.schemes.length > 0 ? matchResponse.schemes[0].scheme_id : 1;
+
+      // 2. Assess Access Risk using XGBoost & SHAP
+      const riskPayload = {
+        scheme_id: targetSchemeId,
+        age: data.age,
+        annual_income: data.annual_income,
+        bpl_status: isBpl,
+        gender: data.gender,
+        caste_category: data.caste_category,
+        distance_to_csc_km: data.distance_to_csc_km,
+        digital_literacy: data.digital_literacy,
+        has_income_certificate: data.has_income_certificate,
+        bank_account_aadhaar_linked: data.bank_account_aadhaar_linked,
+        has_caste_certificate: data.has_caste_certificate,
+        prior_rejections_count: data.prior_rejections_count,
+      };
+
+      const riskResponse = await assessRisk(riskPayload);
+
+      if (typeof window !== "undefined") {
+        localStorage.setItem("sahayak_citizen_profile", JSON.stringify(data));
+        localStorage.setItem("sahayak_scheme_matches", JSON.stringify(matchResponse));
+        localStorage.setItem("sahayak_risk_assessment", JSON.stringify(riskResponse));
+      }
+
+      router.push("/dashboard");
+    } catch (err: any) {
+      console.error("Backend assessment failed:", err);
+      setErrorMsg(
+        lang === "hi"
+          ? "बैकएंड सर्वर से कनेक्ट करने में समस्या हुई। कृपया सुनिश्चित करें कि FastAPI बैकएंड (localhost:8000) चालू है।"
+          : "Could not reach FastAPI backend. Please ensure the server is running on http://127.0.0.1:8000"
+      );
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 text-slate-800 flex flex-col font-sans relative overflow-hidden">
-      
-      {/* Light Colorful Animated Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-br from-pink-400/30 via-purple-400/30 to-indigo-400/30 blur-[120px] animate-pulse duration-[8000ms]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-gradient-to-tl from-cyan-400/30 via-emerald-400/30 to-blue-400/30 blur-[120px] animate-pulse duration-[10000ms] delay-1000" />
-      </div>
-
-      <header className="relative z-10 border-b border-indigo-100 bg-white/70 backdrop-blur-md shadow-sm">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-105 transition-transform">
-              <ShieldCheck className="text-white w-5 h-5" />
-            </div>
-            <span className="text-xl font-black tracking-tight text-slate-800">
-              Sahayak<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">AI</span>
-            </span>
-          </Link>
-          {currentStep > 0 && (
-            <button type="button" onClick={prevStep} className="inline-flex items-center text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors bg-white border border-slate-200 shadow-sm rounded-full px-4 py-2 hover:bg-slate-50">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {t.back}
-            </button>
-          )}
-        </div>
-      </header>
-
-      <div className="container max-w-3xl px-4 md:px-6 mx-auto flex-1 flex flex-col py-10 relative z-10">
+    <div className="min-h-[calc(100vh-4rem)] bg-slate-50/50 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
         
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-black mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600">{t.header}</h1>
-          <p className="text-slate-600 max-w-lg mx-auto font-medium">{t.desc}</p>
-        </div>
+        {/* HEADER TITLE CARD */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-8 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-blue-50 text-blue-800 border border-blue-200">
+                {t.form.headerTag}
+              </span>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 tracking-tight">
+                {t.form.headerTitle}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl">
+                {t.form.headerDesc}
+              </p>
+            </div>
 
-        {/* Stepper */}
-        <div className="mb-12 relative">
-          <div className="absolute top-1/2 left-0 w-full h-1.5 bg-purple-100 -translate-y-1/2 rounded-full z-0" />
-          <div className="absolute top-1/2 left-0 h-1.5 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500 -translate-y-1/2 rounded-full z-0 transition-all duration-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]" style={{ width: `${(currentStep / (STEPS.length - 1)) * 100}%` }} />
-          <div className="relative z-10 flex justify-between">
-            {STEPS.map((step: any, idx: number) => {
-              const Icon = step.icon;
+            {/* Step Progress Percentage */}
+            <div className="flex items-center space-x-3 bg-slate-50 p-2.5 sm:p-3 rounded-xl border border-slate-200/80 flex-shrink-0 self-start sm:self-auto">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-800 text-white font-mono font-black text-xs sm:text-sm flex items-center justify-center shadow-xs">
+                {step === 1 ? "33%" : step === 2 ? "66%" : "100%"}
+              </div>
+              <div className="text-left">
+                <div className="text-[10px] uppercase font-bold text-slate-400">Step {step}/3</div>
+                <div className="text-xs font-bold text-slate-800">
+                  {step === 1 ? t.form.step1 : step === 2 ? t.form.step2 : t.form.step3}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* STEPPER PROGRESS TABS */}
+          <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-3">
+            {[
+              { num: 1, title: t.form.step1, icon: User },
+              { num: 2, title: t.form.step2, icon: Wallet },
+              { num: 3, title: t.form.step3, icon: FileCheck2 },
+            ].map((s) => {
+              const Icon = s.icon;
+              const isDone = step > s.num;
+              const isCurrent = step === s.num;
+
               return (
-                <div key={step.id} className="flex flex-col items-center">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-500 shadow-lg ${idx <= currentStep ? "bg-white border-purple-500 text-purple-600 shadow-purple-500/30" : "bg-white border-slate-200 text-slate-400 shadow-sm"}`}>
-                    {idx < currentStep ? <CheckCircle2 className="w-6 h-6" /> : <Icon className="w-5 h-5" />}
+                <div
+                  key={s.num}
+                  className={`p-2.5 sm:p-3 rounded-xl border flex items-center space-x-2 sm:space-x-2.5 transition-all duration-200 ${
+                    isCurrent
+                      ? "bg-blue-800 text-white border-blue-800 shadow-xs"
+                      : isDone
+                      ? "bg-emerald-50 text-emerald-800 border-emerald-200 font-semibold"
+                      : "bg-slate-50 text-slate-400 border-slate-200"
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold flex-shrink-0 ${
+                      isCurrent ? "bg-white text-blue-800" : isDone ? "bg-emerald-600 text-white" : "bg-slate-200 text-slate-600"
+                    }`}
+                  >
+                    {isDone ? <Check className="w-3.5 h-3.5" /> : s.num}
                   </div>
-                  <span className={`text-xs mt-3 font-bold text-center max-w-[80px] leading-tight transition-colors ${idx <= currentStep ? "text-slate-800" : "text-slate-500"}`}>
-                    {step.title}
-                  </span>
+                  <span className="text-[11px] sm:text-xs font-bold truncate">{s.title}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        {/* Form Container */}
-        <div className="flex-1 bg-white/80 border border-white/50 rounded-[32px] p-6 md:p-10 backdrop-blur-xl shadow-2xl relative ring-1 ring-slate-900/5">
-          <form onSubmit={handleSubmit(processData)} className="flex flex-col min-h-[350px]">
-            
-            <div className="flex-1">
-              <AnimatePresence custom={direction} mode="wait">
-                <motion.div key={currentStep} custom={direction} variants={slideVariants} initial="hidden" animate="visible" exit="exit" className="w-full">
-                  
-                  {/* STEP 1: Personal */}
-                  {currentStep === 0 && (
-                    <div className="space-y-6">
-                      <h2 className="text-2xl font-bold mb-8 text-slate-800">{STEPS[0].title}</h2>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700">{t.fields.age}</label>
-                          <input type="number" {...register("age")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-400" placeholder={t.fields.agePlaceholder} />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700">{t.fields.gender}</label>
-                          <select {...register("gender")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-pointer">
-                            <option value="">{t.fields.genderSelect}</option>
-                            <option value="male">{t.fields.male}</option>
-                            <option value="female">{t.fields.female}</option>
-                            <option value="other">{t.fields.other}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* STEP 2: Location */}
-                  {currentStep === 1 && (
-                    <div className="space-y-6">
-                      <h2 className="text-2xl font-bold mb-8 text-slate-800">{STEPS[1].title}</h2>
-                      <div className="space-y-6">
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700 flex items-center">
-                            {t.fields.location} <HelpTooltip message={t.fields.locationTip} />
-                          </label>
-                          <input type="text" {...register("location")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-400" placeholder={t.fields.locPlaceholder} />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700">{t.fields.dist}</label>
-                          <select {...register("distanceToCSC")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-pointer">
-                            <option value="">{t.fields.distSelect}</option>
-                            <option value="<5km">{t.fields.d1}</option>
-                            <option value="5-15km">{t.fields.d2}</option>
-                            <option value=">15km">{t.fields.d3}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* STEP 3: Economic */}
-                  {currentStep === 2 && (
-                    <div className="space-y-6">
-                      <h2 className="text-2xl font-bold mb-8 text-slate-800">{STEPS[2].title}</h2>
-                      <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-700">{t.fields.income}</label>
-                            <input type="number" {...register("income")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all placeholder:text-slate-400" placeholder={t.fields.incPlaceholder} />
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-700 flex items-center">
-                              {t.fields.bpl} <HelpTooltip message={t.fields.bplTip} />
-                            </label>
-                            <select {...register("bplStatus")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-pointer">
-                              <option value="">{t.fields.bplSelect}</option>
-                              <option value="yes">{t.fields.yes}</option>
-                              <option value="no">{t.fields.no}</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-semibold text-slate-700">{t.fields.edu}</label>
-                          <select {...register("education")} className="h-14 w-full rounded-xl border border-slate-200 bg-white px-4 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all cursor-pointer">
-                            <option value="">{t.fields.eduSelect}</option>
-                            <option value="none">{t.fields.e1}</option>
-                            <option value="primary">{t.fields.e2}</option>
-                            <option value="secondary">{t.fields.e3}</option>
-                            <option value="graduate">{t.fields.e4}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* STEP 4: Documents */}
-                  {currentStep === 3 && (
-                    <div className="space-y-6">
-                      <h2 className="text-2xl font-bold mb-8 text-slate-800">{STEPS[3].title}</h2>
-                      <div className="space-y-8">
-                        <div className="space-y-4">
-                          <label className="text-sm font-semibold text-slate-700 flex justify-between">
-                            <span className="flex items-center">
-                              {t.fields.digi} <HelpTooltip message={t.fields.digiTip} />
-                            </span>
-                            <span className="text-blue-700 font-bold bg-blue-100 px-3 py-1 rounded-full">{watch("digitalLiteracy")}/10</span>
-                          </label>
-                          <input type="range" min="1" max="10" {...register("digitalLiteracy", { valueAsNumber: true })} className="w-full accent-blue-600 h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
-                          <div className="flex justify-between text-xs text-slate-500 font-bold uppercase tracking-wider">
-                            <span>{t.fields.dHelp}</span>
-                            <span>{t.fields.dIndep}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-4 pt-6 border-t border-slate-100">
-                          <h3 className="text-sm font-semibold text-slate-700">{t.fields.docs}</h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            <label className="flex items-center space-x-3 bg-slate-50 border border-slate-200 p-4 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors shadow-sm">
-                              <input type="checkbox" {...register("hasAadhaar")} className="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-                              <span className="text-sm font-bold text-slate-700">{t.fields.aadhaar}</span>
-                            </label>
-                            <label className="flex items-center space-x-3 bg-slate-50 border border-slate-200 p-4 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors shadow-sm">
-                              <input type="checkbox" {...register("hasPanCard")} className="h-5 w-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-                              <span className="text-sm font-bold text-slate-700">{t.fields.pan}</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </AnimatePresence>
+        {/* ERROR NOTIFICATION */}
+        {errorMsg && (
+          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 flex items-start space-x-3 text-xs">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold text-sm">Notice</p>
+              <p className="mt-0.5 font-medium">{errorMsg}</p>
             </div>
+          </div>
+        )}
 
-            <div className="pt-8 mt-8 flex justify-end border-t border-slate-100 w-full relative z-10">
-              {currentStep < STEPS.length - 1 ? (
-                <button type="button" onClick={nextStep} className="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 h-12 px-8 w-full md:w-auto hover:-translate-y-0.5 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full -translate-x-full transition-transform duration-500 skew-x-12" />
-                  {t.next}
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+        {/* FORM CONTAINER */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-8 md:p-10">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
+            
+            {/* ================= STEP 1: PERSONAL DETAILS ================= */}
+            {step === 1 && (
+              <div className="space-y-5 sm:space-y-6">
+                <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center space-x-2">
+                    <User className="w-5 h-5 text-blue-700" />
+                    <span>{t.form.step1}</span>
+                  </h2>
+                  <span className="text-xs text-slate-500 font-medium">1 / 3</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                  {/* Age */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.ageLabel}
+                    </label>
+                    <input
+                      type="number"
+                      {...register("age", { valueAsNumber: true })}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      placeholder={t.form.agePlaceholder}
+                    />
+                    <p className="text-[11px] text-slate-500">{t.form.ageTip}</p>
+                    {errors.age && <p className="text-xs text-red-600 font-semibold">{errors.age.message}</p>}
+                  </div>
+
+                  {/* Gender */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.genderLabel}
+                    </label>
+                    <select
+                      {...register("gender")}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer"
+                    >
+                      <option value="Male">{t.form.genderMale}</option>
+                      <option value="Female">{t.form.genderFemale}</option>
+                      <option value="Other">{t.form.genderOther}</option>
+                    </select>
+                  </div>
+
+                  {/* Caste Category */}
+                  <div className="sm:col-span-2 space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.casteLabel}
+                    </label>
+                    <select
+                      {...register("caste_category")}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer"
+                    >
+                      <option value="General">{t.form.casteGeneral}</option>
+                      <option value="OBC">{t.form.casteObc}</option>
+                      <option value="SC">{t.form.casteSc}</option>
+                      <option value="ST">{t.form.casteSt}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ================= STEP 2: SOCIO-ECONOMIC ================= */}
+            {step === 2 && (
+              <div className="space-y-5 sm:space-y-6">
+                <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center space-x-2">
+                    <Wallet className="w-5 h-5 text-blue-700" />
+                    <span>{t.form.step2}</span>
+                  </h2>
+                  <span className="text-xs text-slate-500 font-medium">2 / 3</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                  {/* Annual Income */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                        {t.form.incomeLabel}
+                      </label>
+                      {watchedIncome <= 120000 && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                          {t.form.bplEligibleBadge}
+                        </span>
+                      )}
+                    </div>
+                    <input
+                      type="number"
+                      {...register("annual_income", { valueAsNumber: true })}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      placeholder={t.form.incomePlaceholder}
+                    />
+                  </div>
+
+                  {/* BPL Status */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.bplLabel}
+                    </label>
+                    <select
+                      {...register("bpl_status")}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer"
+                    >
+                      <option value="yes">{t.form.bplYes}</option>
+                      <option value="no">{t.form.bplNo}</option>
+                    </select>
+                  </div>
+
+                  {/* State */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.stateLabel}
+                    </label>
+                    <input
+                      type="text"
+                      {...register("state")}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      placeholder={t.form.statePlaceholder}
+                    />
+                  </div>
+
+                  {/* District */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      {t.form.districtLabel}
+                    </label>
+                    <input
+                      type="text"
+                      {...register("district")}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      placeholder={t.form.districtPlaceholder}
+                    />
+                  </div>
+
+                  {/* Distance to CSC Kiosk */}
+                  <div className="sm:col-span-2 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                        {t.form.distanceLabel}
+                      </label>
+                      <span className="text-[11px] font-mono text-slate-500 font-semibold">
+                        ~{Math.round(watchedDistance * 2.5)} mins {t.form.travelEstimate}
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      step="0.5"
+                      {...register("distance_to_csc_km", { valueAsNumber: true })}
+                      className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      placeholder={t.form.distancePlaceholder}
+                    />
+                    <p className="text-[11px] text-slate-500">{t.form.distanceTip}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ================= STEP 3: DOCUMENTS & DIGITAL ================= */}
+            {step === 3 && (
+              <div className="space-y-5 sm:space-y-6">
+                <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center space-x-2">
+                    <FileCheck2 className="w-5 h-5 text-blue-700" />
+                    <span>{t.form.step3}</span>
+                  </h2>
+                  <span className="text-xs text-slate-500 font-medium">3 / 3</span>
+                </div>
+
+                {/* Digital Literacy Cards */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                    {t.form.digitalLabel}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {[
+                      { val: "Low", label: t.form.digitalLow, desc: t.form.digitalLowDesc, icon: User },
+                      { val: "Medium", label: t.form.digitalMedium, desc: t.form.digitalMediumDesc, icon: Smartphone },
+                      { val: "High", label: t.form.digitalHigh, desc: t.form.digitalHighDesc, icon: Sparkles },
+                    ].map((d) => (
+                      <button
+                        key={d.val}
+                        type="button"
+                        onClick={() => setValue("digital_literacy", d.val as any)}
+                        className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                          watchedDigital === d.val
+                            ? "border-blue-700 bg-blue-50/60 ring-2 ring-blue-700/20 shadow-2xs"
+                            : "border-slate-200 bg-white hover:bg-slate-50"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`text-xs font-bold ${watchedDigital === d.val ? "text-blue-800" : "text-slate-800"}`}>
+                            {d.label}
+                          </span>
+                          {watchedDigital === d.val && <CheckCircle2 className="w-4 h-4 text-blue-700" />}
+                        </div>
+                        <p className="text-[11px] text-slate-500 font-medium leading-relaxed">{d.desc}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Interactive Document Checklist Cards */}
+                <div className="space-y-3 pt-2">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                    {t.form.docsTitle}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    
+                    {/* Bank Account */}
+                    <div
+                      onClick={() => setValue("bank_account_aadhaar_linked", !watchedBank)}
+                      className={`p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                        watchedBank ? "border-emerald-300 bg-emerald-50/60" : "border-slate-200 bg-slate-50/60 opacity-80"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <CreditCard className={`w-5 h-5 ${watchedBank ? "text-emerald-700" : "text-slate-400"}`} />
+                        <div>
+                          <div className="text-xs font-bold text-slate-900">{t.form.docBank}</div>
+                          <div className="text-[10px] text-slate-500 font-medium">{t.form.docBankSub}</div>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded ${watchedBank ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"}`}>
+                        {watchedBank ? t.form.docAvailable : t.form.docMissing}
+                      </span>
+                    </div>
+
+                    {/* Income Certificate */}
+                    <div
+                      onClick={() => setValue("has_income_certificate", !watchedIncomeCert)}
+                      className={`p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                        watchedIncomeCert ? "border-emerald-300 bg-emerald-50/60" : "border-slate-200 bg-slate-50/60 opacity-80"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <FileText className={`w-5 h-5 ${watchedIncomeCert ? "text-emerald-700" : "text-slate-400"}`} />
+                        <div>
+                          <div className="text-xs font-bold text-slate-900">{t.form.docIncome}</div>
+                          <div className="text-[10px] text-slate-500 font-medium">{t.form.docIncomeSub}</div>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded ${watchedIncomeCert ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"}`}>
+                        {watchedIncomeCert ? t.form.docAvailable : t.form.docMissing}
+                      </span>
+                    </div>
+
+                    {/* BPL Ration Card */}
+                    <div
+                      onClick={() => setValue("has_bpl_ration_card", !watchedBplCard)}
+                      className={`p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                        watchedBplCard ? "border-emerald-300 bg-emerald-50/60" : "border-slate-200 bg-slate-50/60 opacity-80"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <BadgeCheck className={`w-5 h-5 ${watchedBplCard ? "text-emerald-700" : "text-slate-400"}`} />
+                        <div>
+                          <div className="text-xs font-bold text-slate-900">{t.form.docBpl}</div>
+                          <div className="text-[10px] text-slate-500 font-medium">{t.form.docBplSub}</div>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded ${watchedBplCard ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"}`}>
+                        {watchedBplCard ? t.form.docAvailable : t.form.docMissing}
+                      </span>
+                    </div>
+
+                    {/* Caste Certificate */}
+                    <div
+                      onClick={() => setValue("has_caste_certificate", !watchedCasteCert)}
+                      className={`p-3.5 sm:p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
+                        watchedCasteCert ? "border-emerald-300 bg-emerald-50/60" : "border-slate-200 bg-slate-50/60 opacity-80"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <FileCheck2 className={`w-5 h-5 ${watchedCasteCert ? "text-emerald-700" : "text-slate-400"}`} />
+                        <div>
+                          <div className="text-xs font-bold text-slate-900">{t.form.docCaste}</div>
+                          <div className="text-[10px] text-slate-500 font-medium">{t.form.docCasteSub}</div>
+                        </div>
+                      </div>
+                      <span className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded ${watchedCasteCert ? "bg-emerald-200 text-emerald-900" : "bg-slate-200 text-slate-600"}`}>
+                        {watchedCasteCert ? t.form.docAvailable : t.form.docMissing}
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+
+                {/* Prior Rejections */}
+                <div className="space-y-1.5 pt-1">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                    {t.form.priorLabel}
+                  </label>
+                  <select
+                    {...register("prior_rejections_count", { valueAsNumber: true })}
+                    className="w-full h-11 sm:h-12 px-3.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-blue-600 focus:outline-none cursor-pointer"
+                  >
+                    <option value="0">{t.form.prior0}</option>
+                    <option value="1">{t.form.prior1}</option>
+                    <option value="2">{t.form.prior2}</option>
+                    <option value="3">{t.form.prior3}</option>
+                  </select>
+                </div>
+
+              </div>
+            )}
+
+            {/* ================= BUTTONS NAVIGATION ================= */}
+            <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
+              {step > 1 ? (
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  disabled={loading}
+                  className="flex items-center space-x-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold hover:bg-slate-50 transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>{t.form.btnBack}</span>
                 </button>
               ) : (
-                <button type="submit" className="inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold transition-all bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600 text-white shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 h-12 px-8 w-full md:w-auto hover:-translate-y-0.5 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full -translate-x-full transition-transform duration-500 skew-x-12" />
-                  {t.submit}
-                  <CheckCircle2 className="ml-2 h-5 w-5" />
+                <div />
+              )}
+
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="flex items-center space-x-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
+                >
+                  <span>{t.form.btnNext}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex items-center space-x-2 px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white text-xs font-bold shadow-md shadow-emerald-700/25 transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>{t.form.btnLoading}</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="w-4 h-4 text-emerald-300" />
+                      <span>{t.form.btnSubmit}</span>
+                    </>
+                  )}
                 </button>
               )}
             </div>
+
           </form>
         </div>
+
+        {/* COMPLIANCE FOOTER */}
+        <div className="text-center text-xs text-slate-500 font-medium flex items-center justify-center space-x-1.5">
+          <ShieldCheck className="w-4 h-4 text-blue-700" />
+          <span>{t.form.compliance}</span>
+        </div>
+
       </div>
     </div>
   );
