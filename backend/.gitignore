@@ -15,6 +15,7 @@ venv/
 # ML Models & Artifacts
 *.pkl
 *.joblib
+!app/ml_artifacts/*.joblib
 *.h5
 
 # Vector Store local files
