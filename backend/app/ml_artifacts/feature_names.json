@@ -1,0 +1,16 @@
+[
+  "age",
+  "annual_income",
+  "distance_to_csc_km",
+  "digital_literacy_score",
+  "smartphone_access",
+  "bank_account_aadhaar_linked",
+  "has_income_certificate",
+  "has_caste_certificate",
+  "has_bpl_ration_card",
+  "documents_readiness_score",
+  "prior_rejections_count",
+  "education_level_years",
+  "electricity_access",
+  "family_dependents_count"
+]

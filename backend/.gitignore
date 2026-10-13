@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Environment Variables
+.env
+.env.local
+
+# ML Models & Artifacts
+*.pkl
+*.joblib
+*.h5
+
+# Vector Store local files
+app/ml_artifacts/vector_store/*
+!app/ml_artifacts/vector_store/.gitkeep
+
+# IDEs & System
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Database files
+*.db
+*.sqlite3
+sahayak.db
+*.db-wal
+*.db-shm
