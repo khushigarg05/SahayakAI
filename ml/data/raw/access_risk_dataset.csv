@@ -1,0 +1,1001 @@
+age,annual_income,occupation,state,rural_or_urban,digital_literacy,internet_access,documents_complete,scheme_awareness,distance_to_service_center,application_complexity,previous_application_failure,access_risk,primary_barrier
+56,135186,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,4,3,3,No,Low,Documentation
+69,326818,Daily Wage Worker,Rajasthan,Urban,1,No,No,5,35,5,Yes,High,Digital Access
+46,196926,Farmer,West Bengal,Rural,1,No,Yes,4,33,5,No,High,Digital Access
+32,76271,Homemaker,West Bengal,Urban,2,No,No,3,21,2,No,Medium,Digital Access
+60,365832,Daily Wage Worker,Rajasthan,Urban,5,Yes,Yes,5,31,2,Yes,Medium,Distance
+25,461734,Daily Wage Worker,Uttar Pradesh,Urban,3,Yes,Yes,4,34,4,Yes,Medium,Application Complexity
+38,403220,Student,West Bengal,Rural,3,Yes,Yes,3,32,1,No,Low,Distance
+56,171339,Student,Madhya Pradesh,Urban,2,Yes,No,4,35,4,No,High,Documentation
+36,251897,Student,Jharkhand,Rural,2,Yes,No,4,15,4,No,High,Documentation
+40,31062,Homemaker,Jharkhand,Rural,4,Yes,Yes,5,32,3,No,Low,Distance
+28,277736,Student,Bihar,Rural,2,Yes,Yes,3,6,5,No,Medium,Digital Access
+28,80448,Self Employed,Bihar,Urban,2,No,Yes,1,45,5,No,High,Digital Access
+41,125462,Small Business,Jharkhand,Rural,3,Yes,No,2,21,5,Yes,High,Documentation
+53,429445,Farmer,Jharkhand,Urban,4,Yes,Yes,5,33,1,Yes,Medium,Distance
+57,480009,Daily Wage Worker,Madhya Pradesh,Rural,2,Yes,No,3,32,3,No,High,Documentation
+41,275885,Self Employed,Rajasthan,Urban,2,Yes,No,4,19,3,Yes,Medium,Documentation
+20,77915,Farmer,Bihar,Urban,4,No,Yes,3,33,5,Yes,High,Application Complexity
+39,296776,Self Employed,Rajasthan,Rural,5,Yes,No,2,28,4,No,High,Documentation
+19,134592,Self Employed,Madhya Pradesh,Urban,4,Yes,Yes,2,31,1,Yes,Medium,Awareness
+41,164668,Daily Wage Worker,Jharkhand,Rural,3,Yes,Yes,1,21,4,No,Medium,Awareness
+61,401923,Small Business,West Bengal,Rural,5,Yes,Yes,1,34,2,No,Medium,Awareness
+47,429384,Student,Rajasthan,Rural,1,Yes,Yes,2,15,3,No,Medium,Digital Access
+55,138099,Homemaker,Jharkhand,Rural,4,No,No,5,14,3,No,Medium,Documentation
+19,37561,Small Business,Jharkhand,Rural,3,No,Yes,5,19,4,Yes,Medium,Application Complexity
+38,497010,Homemaker,Uttar Pradesh,Rural,5,No,Yes,4,43,1,No,Medium,Digital Access
+50,112152,Daily Wage Worker,Rajasthan,Rural,4,Yes,Yes,1,15,3,No,Low,Awareness
+29,155036,Daily Wage Worker,West Bengal,Urban,2,No,Yes,4,6,4,No,Medium,Digital Access
+39,416193,Daily Wage Worker,Rajasthan,Urban,4,Yes,Yes,1,9,1,Yes,Medium,Awareness
+61,56734,Farmer,Jharkhand,Urban,1,Yes,Yes,2,37,4,No,High,Digital Access
+42,429587,Homemaker,West Bengal,Urban,4,Yes,Yes,5,20,1,Yes,Low,Application Complexity
+66,56069,Small Business,Madhya Pradesh,Urban,5,Yes,No,5,34,5,No,Medium,Documentation
+44,240977,Small Business,Uttar Pradesh,Rural,5,Yes,No,2,38,1,No,High,Documentation
+59,42910,Self Employed,Jharkhand,Rural,4,Yes,Yes,4,26,2,Yes,Low,Application Complexity
+45,365623,Self Employed,Bihar,Urban,5,Yes,No,4,18,5,No,Medium,Documentation
+33,111264,Self Employed,Bihar,Rural,2,Yes,Yes,3,28,4,No,Medium,Digital Access
+32,53275,Daily Wage Worker,Uttar Pradesh,Urban,4,Yes,Yes,1,9,5,No,Medium,Awareness
+64,102274,Small Business,Madhya Pradesh,Rural,2,No,Yes,4,32,5,No,High,Digital Access
+68,392920,Homemaker,Jharkhand,Rural,2,No,Yes,2,6,4,No,High,Digital Access
+61,221076,Daily Wage Worker,Rajasthan,Rural,3,No,Yes,4,14,4,No,Medium,Digital Access
+69,224053,Farmer,Uttar Pradesh,Rural,4,Yes,No,5,28,2,Yes,Medium,Documentation
+20,215625,Self Employed,Madhya Pradesh,Rural,5,Yes,Yes,1,24,4,No,Medium,Awareness
+54,78447,Daily Wage Worker,Rajasthan,Urban,2,Yes,No,3,13,3,Yes,Medium,Documentation
+68,457745,Daily Wage Worker,Bihar,Rural,3,Yes,Yes,1,43,3,No,Medium,Awareness
+24,418538,Farmer,Bihar,Rural,4,Yes,No,5,12,2,No,Medium,Documentation
+38,105703,Student,Rajasthan,Urban,4,Yes,Yes,5,19,1,No,Low,Documentation
+26,368234,Small Business,Uttar Pradesh,Urban,1,Yes,Yes,5,21,1,No,Low,Digital Access
+56,309404,Homemaker,Bihar,Rural,1,No,Yes,5,27,3,No,Medium,Digital Access
+35,142581,Student,Jharkhand,Urban,2,Yes,Yes,2,19,4,No,Medium,Digital Access
+21,295956,Self Employed,West Bengal,Rural,1,Yes,Yes,3,24,2,No,Low,Digital Access
+42,451240,Daily Wage Worker,Rajasthan,Rural,2,Yes,No,5,26,1,No,Medium,Documentation
+31,219728,Farmer,Rajasthan,Rural,5,No,Yes,5,45,1,No,Medium,Digital Access
+67,408292,Farmer,Bihar,Urban,2,No,No,4,28,5,No,High,Digital Access
+26,450501,Small Business,Uttar Pradesh,Urban,1,No,Yes,3,46,3,Yes,High,Digital Access
+43,146421,Student,Jharkhand,Rural,5,No,No,1,18,4,No,High,Documentation
+19,31605,Small Business,Uttar Pradesh,Urban,1,Yes,Yes,3,44,2,No,Medium,Digital Access
+37,494374,Daily Wage Worker,Madhya Pradesh,Rural,2,Yes,Yes,3,36,1,No,Medium,Digital Access
+45,102303,Small Business,Madhya Pradesh,Rural,3,Yes,No,3,42,5,No,High,Documentation
+64,188211,Homemaker,West Bengal,Rural,4,Yes,Yes,5,29,3,No,Low,Documentation
+24,217210,Farmer,Bihar,Rural,1,Yes,Yes,5,17,3,No,Low,Digital Access
+61,291949,Farmer,Bihar,Rural,2,Yes,Yes,2,4,2,No,Medium,Digital Access
+25,368269,Self Employed,Bihar,Rural,5,No,Yes,1,44,1,No,Medium,Digital Access
+64,174990,Self Employed,West Bengal,Urban,1,No,Yes,4,45,2,No,Medium,Digital Access
+52,188518,Daily Wage Worker,Madhya Pradesh,Rural,1,No,No,3,29,2,No,High,Digital Access
+31,154040,Homemaker,Uttar Pradesh,Rural,4,No,Yes,1,4,5,Yes,High,Application Complexity
+34,174118,Student,West Bengal,Rural,2,Yes,Yes,1,10,3,No,Medium,Digital Access
+53,448034,Small Business,West Bengal,Rural,3,Yes,Yes,2,25,4,No,Medium,Awareness
+67,261966,Daily Wage Worker,Uttar Pradesh,Rural,5,Yes,Yes,4,31,3,No,Low,Distance
+57,296468,Self Employed,Bihar,Urban,2,Yes,Yes,3,3,3,No,Low,Digital Access
+21,368467,Small Business,Jharkhand,Rural,5,Yes,No,4,47,5,No,High,Documentation
+19,301255,Self Employed,Uttar Pradesh,Urban,1,Yes,Yes,2,2,4,No,Medium,Digital Access
+23,461326,Small Business,Madhya Pradesh,Urban,4,No,No,5,25,1,No,Medium,Documentation
+59,46389,Student,Rajasthan,Rural,4,Yes,Yes,1,49,4,No,Medium,Awareness
+21,152177,Daily Wage Worker,Rajasthan,Urban,3,Yes,Yes,3,6,1,No,Low,Documentation
+46,333571,Small Business,West Bengal,Rural,4,Yes,Yes,5,26,4,No,Low,Application Complexity
+35,189818,Homemaker,Rajasthan,Rural,1,Yes,Yes,2,8,2,No,Medium,Digital Access
+43,152883,Farmer,Jharkhand,Rural,3,Yes,Yes,4,35,4,No,Medium,Distance
+61,248958,Homemaker,Bihar,Rural,2,Yes,Yes,1,27,5,No,Medium,Digital Access
+51,268213,Homemaker,Madhya Pradesh,Rural,4,No,No,3,25,1,No,Medium,Documentation
+27,423333,Farmer,Jharkhand,Rural,3,Yes,Yes,5,18,3,No,Low,Documentation
+53,417952,Homemaker,Madhya Pradesh,Rural,1,Yes,No,5,1,5,No,High,Documentation
+31,142221,Small Business,Madhya Pradesh,Rural,5,Yes,Yes,1,48,1,No,Medium,Awareness
+48,305378,Small Business,Bihar,Rural,5,Yes,No,4,39,1,No,Medium,Documentation
+65,290669,Small Business,West Bengal,Urban,1,No,No,2,3,3,No,High,Digital Access
+32,264936,Farmer,Rajasthan,Urban,1,Yes,Yes,4,4,2,No,Low,Digital Access
+25,345585,Homemaker,Bihar,Rural,5,No,No,4,41,5,No,High,Documentation
+31,30846,Farmer,Jharkhand,Rural,3,Yes,Yes,4,37,3,No,Low,Distance
+40,40954,Small Business,West Bengal,Urban,5,No,No,1,15,3,Yes,High,Documentation
+57,371383,Homemaker,Jharkhand,Urban,1,Yes,Yes,1,8,2,No,Medium,Digital Access
+38,274761,Homemaker,West Bengal,Urban,4,Yes,Yes,2,38,5,No,Medium,Awareness
+33,338658,Self Employed,Jharkhand,Rural,2,Yes,No,4,50,3,No,High,Documentation
+62,380380,Self Employed,Bihar,Rural,4,Yes,Yes,1,19,2,No,Low,Awareness
+35,389723,Student,West Bengal,Rural,4,Yes,Yes,2,47,5,No,Medium,Awareness
+64,167541,Daily Wage Worker,West Bengal,Rural,1,Yes,No,2,26,4,No,High,Documentation
+41,453321,Self Employed,Madhya Pradesh,Urban,5,Yes,Yes,4,39,1,No,Low,Distance
+43,334245,Farmer,Madhya Pradesh,Urban,3,Yes,Yes,3,10,2,Yes,Low,Application Complexity
+42,94323,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,4,38,1,No,Low,Distance
+62,121922,Student,Jharkhand,Urban,5,No,Yes,3,14,4,No,Medium,Digital Access
+58,219139,Homemaker,Madhya Pradesh,Rural,3,Yes,No,2,49,3,No,High,Documentation
+46,210448,Student,Uttar Pradesh,Rural,4,Yes,Yes,1,41,3,Yes,Medium,Awareness
+32,206659,Homemaker,Madhya Pradesh,Rural,3,Yes,Yes,5,19,5,Yes,Medium,Application Complexity
+62,460192,Homemaker,Jharkhand,Urban,5,No,Yes,2,30,2,No,Medium,Digital Access
+18,265659,Daily Wage Worker,West Bengal,Rural,2,Yes,No,1,5,2,Yes,High,Documentation
+42,419678,Self Employed,Rajasthan,Urban,5,Yes,Yes,2,31,5,Yes,High,Application Complexity
+24,359728,Farmer,Jharkhand,Urban,1,No,Yes,4,7,1,Yes,Medium,Digital Access
+26,134537,Farmer,Bihar,Rural,3,Yes,No,3,19,3,No,Medium,Documentation
+41,370621,Small Business,Madhya Pradesh,Rural,2,Yes,Yes,2,31,3,No,Medium,Digital Access
+18,271983,Homemaker,Madhya Pradesh,Urban,3,Yes,Yes,1,39,2,Yes,Medium,Awareness
+61,72533,Farmer,West Bengal,Rural,3,Yes,Yes,4,24,2,Yes,Low,Application Complexity
+25,293972,Daily Wage Worker,Bihar,Urban,4,Yes,Yes,5,34,5,No,Medium,Distance
+41,31917,Homemaker,West Bengal,Urban,1,Yes,Yes,4,23,4,No,Medium,Digital Access
+28,312762,Daily Wage Worker,Bihar,Rural,3,Yes,Yes,3,48,1,Yes,Medium,Distance
+68,62254,Farmer,Rajasthan,Rural,5,No,No,4,45,4,No,High,Documentation
+34,291987,Farmer,Madhya Pradesh,Urban,5,Yes,Yes,5,40,4,No,Medium,Distance
+25,397436,Small Business,Madhya Pradesh,Urban,4,Yes,No,1,6,2,No,Medium,Documentation
+52,77362,Farmer,Rajasthan,Rural,1,Yes,Yes,2,38,2,No,Medium,Digital Access
+52,312272,Homemaker,Uttar Pradesh,Rural,1,Yes,No,3,41,2,No,High,Documentation
+50,415925,Homemaker,West Bengal,Rural,5,Yes,No,5,36,4,No,High,Documentation
+22,272353,Homemaker,Rajasthan,Urban,2,Yes,Yes,3,27,1,No,Low,Digital Access
+59,220455,Small Business,West Bengal,Urban,4,No,Yes,4,11,2,No,Low,Digital Access
+56,95545,Small Business,Jharkhand,Urban,4,No,Yes,3,5,3,No,Low,Digital Access
+58,112180,Farmer,Madhya Pradesh,Rural,5,Yes,No,5,17,1,No,Medium,Documentation
+45,117958,Student,West Bengal,Rural,5,Yes,No,2,7,3,No,Medium,Documentation
+24,433081,Student,Bihar,Urban,2,Yes,Yes,2,27,1,No,Medium,Digital Access
+26,425435,Small Business,West Bengal,Rural,2,Yes,Yes,3,47,2,Yes,Medium,Digital Access
+25,331953,Farmer,Jharkhand,Rural,1,Yes,Yes,1,15,5,No,Medium,Digital Access
+29,408892,Student,Madhya Pradesh,Rural,4,Yes,No,3,46,2,Yes,High,Documentation
+51,35287,Farmer,Rajasthan,Urban,4,Yes,Yes,4,13,4,No,Low,Application Complexity
+50,287665,Farmer,Jharkhand,Urban,5,No,Yes,2,11,4,Yes,High,Application Complexity
+65,457603,Farmer,Madhya Pradesh,Rural,1,No,Yes,2,45,1,No,High,Digital Access
+40,38512,Self Employed,West Bengal,Rural,4,Yes,Yes,2,26,4,Yes,Medium,Application Complexity
+41,162414,Homemaker,Uttar Pradesh,Rural,1,Yes,No,1,22,2,No,High,Documentation
+54,486292,Farmer,Uttar Pradesh,Urban,1,Yes,Yes,1,28,3,No,Medium,Digital Access
+52,138872,Self Employed,Bihar,Rural,5,Yes,Yes,5,24,2,No,Low,Documentation
+61,442432,Small Business,Madhya Pradesh,Rural,1,Yes,Yes,3,29,1,No,Low,Digital Access
+57,277754,Student,Uttar Pradesh,Rural,2,Yes,Yes,3,9,4,No,Medium,Digital Access
+39,123070,Homemaker,Rajasthan,Urban,2,Yes,Yes,4,42,3,No,Medium,Digital Access
+44,109767,Student,Madhya Pradesh,Rural,3,Yes,No,2,4,5,No,High,Documentation
+52,127829,Homemaker,Rajasthan,Rural,5,Yes,No,1,49,3,No,High,Documentation
+18,449830,Student,Rajasthan,Rural,3,Yes,Yes,4,46,3,No,Low,Distance
+52,459474,Homemaker,Uttar Pradesh,Urban,2,Yes,Yes,4,18,2,No,Low,Digital Access
+54,72078,Student,Madhya Pradesh,Rural,3,No,No,1,43,5,No,High,Documentation
+64,398432,Student,West Bengal,Urban,5,Yes,Yes,3,16,1,Yes,Low,Application Complexity
+31,113524,Student,Jharkhand,Rural,5,Yes,Yes,2,33,1,No,Medium,Awareness
+20,257645,Student,Uttar Pradesh,Rural,1,Yes,No,3,29,3,No,Medium,Documentation
+18,42219,Small Business,Uttar Pradesh,Rural,4,Yes,No,4,39,3,No,Medium,Documentation
+22,292379,Farmer,West Bengal,Urban,1,Yes,No,2,10,4,No,High,Documentation
+43,335073,Daily Wage Worker,Madhya Pradesh,Rural,5,Yes,No,5,9,5,No,Medium,Documentation
+31,157309,Self Employed,Madhya Pradesh,Urban,2,Yes,No,4,31,3,No,Medium,Documentation
+56,359588,Daily Wage Worker,Rajasthan,Urban,2,No,Yes,3,28,4,Yes,High,Digital Access
+44,169639,Daily Wage Worker,West Bengal,Rural,1,Yes,Yes,3,3,5,Yes,Medium,Application Complexity
+26,393978,Homemaker,West Bengal,Urban,5,Yes,Yes,3,14,1,No,Low,Documentation
+32,494008,Farmer,Madhya Pradesh,Urban,2,Yes,Yes,1,25,4,No,Medium,Digital Access
+32,226513,Homemaker,Rajasthan,Rural,5,Yes,Yes,4,15,5,No,Low,Application Complexity
+43,376699,Farmer,Uttar Pradesh,Rural,2,Yes,Yes,2,2,4,No,Medium,Digital Access
+59,365842,Farmer,Bihar,Urban,5,Yes,Yes,3,24,3,No,Low,Documentation
+30,416594,Student,Jharkhand,Rural,3,Yes,Yes,3,14,2,No,Low,Documentation
+68,278320,Small Business,Uttar Pradesh,Urban,5,Yes,Yes,1,48,1,No,Medium,Awareness
+49,166487,Student,Madhya Pradesh,Urban,5,Yes,Yes,2,7,3,No,Low,Awareness
+56,197231,Small Business,Jharkhand,Rural,1,Yes,Yes,4,36,3,No,Medium,Digital Access
+66,73925,Homemaker,Bihar,Urban,3,Yes,No,5,50,5,No,Medium,Documentation
+69,167023,Small Business,Bihar,Rural,4,Yes,Yes,1,24,4,Yes,Medium,Application Complexity
+49,117388,Homemaker,Rajasthan,Rural,1,No,Yes,4,27,1,No,Medium,Digital Access
+21,38007,Daily Wage Worker,Jharkhand,Rural,4,Yes,No,5,37,3,No,Medium,Documentation
+47,287802,Daily Wage Worker,Rajasthan,Rural,2,Yes,Yes,3,38,5,Yes,High,Application Complexity
+54,465048,Small Business,Uttar Pradesh,Urban,4,Yes,Yes,3,30,1,No,Low,Distance
+40,88596,Small Business,West Bengal,Urban,5,Yes,Yes,2,27,4,No,Medium,Awareness
+56,413245,Homemaker,West Bengal,Urban,4,Yes,Yes,5,39,3,No,Low,Distance
+62,453739,Student,West Bengal,Rural,1,No,No,3,15,3,No,High,Digital Access
+32,381005,Homemaker,Jharkhand,Rural,1,Yes,Yes,3,26,3,No,Low,Digital Access
+60,285266,Student,West Bengal,Urban,4,Yes,Yes,2,1,1,No,Low,Awareness
+46,378884,Daily Wage Worker,Uttar Pradesh,Rural,1,Yes,Yes,4,4,1,Yes,Medium,Digital Access
+53,45524,Farmer,Rajasthan,Urban,1,Yes,Yes,3,29,1,No,Low,Digital Access
+30,442498,Small Business,Jharkhand,Urban,4,Yes,Yes,1,1,1,No,Low,Awareness
+49,185002,Student,Rajasthan,Urban,3,Yes,Yes,1,43,5,Yes,High,Application Complexity
+24,423293,Homemaker,Jharkhand,Urban,3,Yes,Yes,4,50,2,No,Low,Distance
+68,155501,Daily Wage Worker,Rajasthan,Rural,2,Yes,Yes,5,46,5,Yes,High,Application Complexity
+39,312755,Student,Bihar,Urban,1,Yes,Yes,2,22,3,No,Medium,Digital Access
+45,178056,Homemaker,Rajasthan,Rural,4,Yes,Yes,1,11,5,Yes,Medium,Application Complexity
+19,44060,Small Business,West Bengal,Urban,1,Yes,Yes,1,10,4,No,Medium,Digital Access
+59,244057,Small Business,Bihar,Rural,5,Yes,No,4,17,1,No,Medium,Documentation
+62,335447,Self Employed,Rajasthan,Urban,1,Yes,Yes,5,36,4,No,Medium,Digital Access
+23,220279,Farmer,Jharkhand,Urban,1,Yes,Yes,5,47,4,No,Medium,Digital Access
+45,236118,Self Employed,Jharkhand,Rural,3,Yes,Yes,4,26,3,No,Low,Documentation
+45,190359,Daily Wage Worker,Jharkhand,Rural,4,Yes,Yes,1,48,1,No,Medium,Awareness
+61,69711,Student,Madhya Pradesh,Urban,1,Yes,No,2,21,4,Yes,High,Documentation
+61,173026,Daily Wage Worker,Uttar Pradesh,Rural,3,Yes,Yes,1,13,3,No,Low,Awareness
+37,365484,Homemaker,Jharkhand,Rural,2,Yes,No,5,9,1,No,Medium,Documentation
+47,495317,Small Business,Bihar,Rural,3,No,Yes,1,11,2,No,Medium,Digital Access
+28,494736,Self Employed,Jharkhand,Rural,3,Yes,No,2,11,3,Yes,High,Documentation
+45,248134,Self Employed,Madhya Pradesh,Urban,3,Yes,Yes,3,6,5,No,Low,Application Complexity
+42,132974,Self Employed,West Bengal,Rural,1,Yes,No,1,1,1,No,High,Documentation
+56,179646,Daily Wage Worker,Bihar,Rural,1,Yes,Yes,4,6,4,No,Medium,Digital Access
+50,432400,Small Business,Madhya Pradesh,Rural,2,Yes,Yes,3,13,4,No,Medium,Digital Access
+18,180168,Student,West Bengal,Rural,5,Yes,Yes,4,22,5,Yes,Medium,Application Complexity
+44,97728,Homemaker,Bihar,Rural,5,No,Yes,4,31,5,No,Medium,Digital Access
+69,195088,Student,Rajasthan,Rural,5,Yes,No,4,22,4,No,Medium,Documentation
+30,41246,Daily Wage Worker,Uttar Pradesh,Rural,2,Yes,Yes,1,37,1,Yes,High,Digital Access
+58,468774,Homemaker,Uttar Pradesh,Rural,5,Yes,Yes,5,47,3,No,Low,Distance
+20,441597,Self Employed,Madhya Pradesh,Urban,5,Yes,Yes,3,27,5,Yes,Medium,Application Complexity
+56,419940,Farmer,West Bengal,Rural,3,Yes,Yes,2,50,5,Yes,High,Application Complexity
+23,459671,Daily Wage Worker,Uttar Pradesh,Rural,1,No,Yes,5,14,5,No,Medium,Digital Access
+25,122263,Daily Wage Worker,West Bengal,Rural,1,Yes,Yes,1,47,2,No,Medium,Digital Access
+44,427234,Small Business,West Bengal,Rural,3,Yes,Yes,4,5,1,No,Low,Documentation
+26,41302,Student,Madhya Pradesh,Urban,3,No,No,2,36,1,No,High,Documentation
+54,359650,Daily Wage Worker,Madhya Pradesh,Rural,3,Yes,Yes,3,32,1,No,Low,Distance
+50,71157,Daily Wage Worker,Madhya Pradesh,Urban,1,Yes,Yes,5,34,1,Yes,Medium,Digital Access
+68,84917,Self Employed,Uttar Pradesh,Urban,5,Yes,No,5,7,1,No,Low,Documentation
+59,253810,Self Employed,Madhya Pradesh,Rural,3,Yes,Yes,2,42,4,No,Medium,Awareness
+61,126646,Homemaker,Uttar Pradesh,Urban,2,Yes,Yes,1,48,5,No,High,Digital Access
+41,375266,Farmer,Madhya Pradesh,Rural,3,Yes,Yes,3,10,4,Yes,Medium,Application Complexity
+32,316663,Small Business,Jharkhand,Rural,4,No,Yes,2,50,2,No,Medium,Digital Access
+49,480035,Farmer,West Bengal,Rural,3,Yes,Yes,4,17,3,No,Low,Documentation
+49,373054,Homemaker,Madhya Pradesh,Rural,1,Yes,No,3,30,5,No,High,Documentation
+41,412574,Self Employed,Bihar,Urban,3,Yes,Yes,5,21,2,No,Low,Documentation
+58,363468,Student,West Bengal,Urban,4,Yes,Yes,2,13,4,No,Medium,Awareness
+69,297552,Self Employed,West Bengal,Urban,2,Yes,No,5,1,3,Yes,Medium,Documentation
+66,89379,Small Business,Madhya Pradesh,Rural,5,Yes,No,5,1,2,No,Medium,Documentation
+66,55053,Self Employed,Rajasthan,Rural,3,Yes,Yes,5,47,3,No,Low,Distance
+69,432662,Small Business,Madhya Pradesh,Rural,4,No,Yes,1,33,2,Yes,High,Digital Access
+29,161994,Small Business,West Bengal,Urban,4,No,Yes,5,38,4,Yes,High,Application Complexity
+56,128723,Small Business,Bihar,Rural,2,No,No,4,25,3,Yes,High,Digital Access
+19,81356,Homemaker,West Bengal,Urban,1,Yes,No,4,26,2,Yes,Medium,Documentation
+20,302933,Small Business,Bihar,Rural,3,Yes,Yes,3,13,4,No,Low,Application Complexity
+66,389864,Small Business,Uttar Pradesh,Rural,4,Yes,Yes,5,28,5,No,Low,Application Complexity
+54,358800,Student,Jharkhand,Urban,2,Yes,Yes,5,33,4,No,Medium,Digital Access
+66,336172,Farmer,West Bengal,Rural,5,Yes,No,2,37,4,No,High,Documentation
+34,356628,Daily Wage Worker,Madhya Pradesh,Rural,4,Yes,Yes,1,41,5,No,Medium,Awareness
+66,62154,Farmer,Uttar Pradesh,Urban,2,Yes,Yes,3,30,4,No,Medium,Digital Access
+19,243942,Small Business,Jharkhand,Rural,1,Yes,No,5,49,5,Yes,High,Documentation
+19,294480,Student,Madhya Pradesh,Urban,1,Yes,Yes,2,48,5,No,High,Digital Access
+45,395821,Self Employed,Rajasthan,Rural,4,No,Yes,1,8,5,No,Medium,Digital Access
+40,359923,Student,Madhya Pradesh,Urban,4,Yes,Yes,3,49,2,Yes,Medium,Distance
+54,311173,Small Business,Bihar,Urban,3,Yes,Yes,3,47,3,No,Low,Distance
+49,351345,Student,Bihar,Rural,2,Yes,Yes,5,1,2,No,Low,Digital Access
+50,62265,Student,Rajasthan,Rural,4,Yes,Yes,3,12,5,No,Low,Application Complexity
+18,395060,Small Business,Uttar Pradesh,Urban,3,No,Yes,2,5,3,Yes,Medium,Digital Access
+36,273322,Homemaker,Jharkhand,Rural,3,Yes,No,3,24,3,No,Medium,Documentation
+19,204944,Student,Madhya Pradesh,Urban,4,Yes,Yes,4,6,5,No,Low,Application Complexity
+61,76197,Daily Wage Worker,Bihar,Rural,1,Yes,Yes,2,25,3,No,Medium,Digital Access
+43,417877,Daily Wage Worker,Uttar Pradesh,Rural,2,No,Yes,1,1,3,Yes,High,Digital Access
+49,478396,Student,Rajasthan,Urban,2,Yes,No,1,25,2,No,Medium,Documentation
+23,184782,Homemaker,West Bengal,Urban,1,No,No,5,1,3,Yes,High,Digital Access
+49,190558,Self Employed,Bihar,Rural,4,Yes,Yes,5,32,5,No,Medium,Distance
+21,101907,Small Business,Rajasthan,Urban,2,Yes,Yes,4,42,1,No,Medium,Digital Access
+28,421020,Daily Wage Worker,Madhya Pradesh,Rural,4,Yes,Yes,1,42,1,Yes,Medium,Awareness
+34,232967,Self Employed,Jharkhand,Rural,4,No,Yes,1,3,1,Yes,Medium,Digital Access
+55,356579,Student,Bihar,Urban,3,Yes,Yes,1,49,5,No,Medium,Awareness
+41,332775,Self Employed,Bihar,Urban,1,Yes,No,1,19,1,No,Medium,Documentation
+22,421182,Farmer,Madhya Pradesh,Urban,4,Yes,No,3,43,2,Yes,Medium,Documentation
+69,262604,Daily Wage Worker,West Bengal,Rural,5,Yes,Yes,2,29,5,No,Medium,Awareness
+51,312247,Student,Uttar Pradesh,Rural,1,Yes,No,2,50,5,No,High,Documentation
+23,94772,Small Business,Jharkhand,Rural,2,No,No,4,2,5,No,High,Digital Access
+39,156108,Homemaker,Bihar,Rural,3,Yes,Yes,3,9,3,Yes,Low,Application Complexity
+28,44382,Student,Jharkhand,Rural,2,Yes,Yes,1,17,3,No,Medium,Digital Access
+65,114291,Small Business,Bihar,Urban,2,Yes,No,1,46,3,No,High,Documentation
+33,393339,Homemaker,Jharkhand,Rural,1,Yes,Yes,5,36,4,No,Medium,Digital Access
+50,164828,Homemaker,Rajasthan,Urban,2,Yes,No,5,17,2,No,Medium,Documentation
+26,312753,Student,Bihar,Urban,4,Yes,No,4,49,5,Yes,High,Documentation
+23,177550,Self Employed,Jharkhand,Rural,2,Yes,Yes,1,12,5,No,Medium,Digital Access
+33,262050,Self Employed,Uttar Pradesh,Urban,3,Yes,No,4,20,3,No,Low,Documentation
+46,462882,Homemaker,Rajasthan,Urban,3,Yes,No,3,50,5,No,Medium,Documentation
+20,367827,Self Employed,Rajasthan,Rural,5,Yes,Yes,2,3,5,No,Medium,Awareness
+37,416858,Farmer,Uttar Pradesh,Rural,3,Yes,Yes,1,43,1,No,Medium,Awareness
+53,160330,Homemaker,Jharkhand,Rural,2,No,Yes,3,50,5,Yes,High,Digital Access
+36,101315,Homemaker,Madhya Pradesh,Rural,3,No,Yes,1,4,4,No,Medium,Digital Access
+43,369978,Small Business,Uttar Pradesh,Urban,1,No,Yes,5,17,3,Yes,Medium,Digital Access
+20,418349,Self Employed,Jharkhand,Rural,3,No,Yes,4,50,2,No,Medium,Digital Access
+36,44153,Homemaker,Uttar Pradesh,Urban,4,Yes,Yes,5,37,2,No,Low,Distance
+37,106325,Farmer,Uttar Pradesh,Urban,1,No,Yes,2,46,1,No,High,Digital Access
+49,270773,Small Business,Bihar,Rural,5,Yes,No,5,42,2,No,Medium,Documentation
+24,436215,Student,Jharkhand,Urban,4,Yes,No,1,15,2,No,Medium,Documentation
+69,85318,Homemaker,Madhya Pradesh,Rural,2,Yes,No,5,33,3,No,High,Documentation
+58,424030,Farmer,Bihar,Rural,2,Yes,Yes,1,16,3,No,Medium,Digital Access
+50,407177,Daily Wage Worker,Uttar Pradesh,Urban,2,No,No,2,11,4,No,High,Digital Access
+57,106077,Farmer,West Bengal,Rural,4,No,No,5,20,1,No,Medium,Documentation
+56,382618,Farmer,Uttar Pradesh,Rural,4,Yes,Yes,4,38,2,Yes,Medium,Distance
+35,163515,Small Business,Uttar Pradesh,Rural,4,No,Yes,4,24,4,Yes,Medium,Application Complexity
+57,499209,Student,Jharkhand,Rural,1,Yes,Yes,4,16,1,Yes,Medium,Digital Access
+18,236988,Daily Wage Worker,Jharkhand,Urban,1,Yes,No,5,30,2,Yes,High,Documentation
+28,365463,Self Employed,Bihar,Rural,2,Yes,Yes,5,34,2,No,Medium,Digital Access
+45,155885,Self Employed,Madhya Pradesh,Rural,3,Yes,Yes,5,1,3,No,Low,Documentation
+42,401921,Farmer,Bihar,Rural,2,No,Yes,1,24,5,No,High,Digital Access
+67,47368,Small Business,Rajasthan,Urban,5,No,Yes,2,24,1,Yes,Medium,Digital Access
+40,176400,Small Business,Uttar Pradesh,Rural,1,No,Yes,4,9,2,No,Medium,Digital Access
+48,218014,Self Employed,West Bengal,Rural,4,Yes,Yes,1,22,1,No,Low,Awareness
+47,121751,Daily Wage Worker,Uttar Pradesh,Rural,1,No,Yes,4,12,4,Yes,High,Digital Access
+59,260203,Student,Uttar Pradesh,Rural,4,Yes,No,1,17,4,No,High,Documentation
+52,319450,Daily Wage Worker,Bihar,Urban,5,No,Yes,5,25,5,No,Medium,Digital Access
+24,200987,Homemaker,West Bengal,Urban,5,Yes,Yes,4,28,2,No,Low,Documentation
+33,329363,Homemaker,West Bengal,Rural,1,Yes,Yes,5,15,3,No,Low,Digital Access
+43,241951,Student,West Bengal,Urban,4,Yes,Yes,4,30,2,No,Low,Distance
+65,225716,Self Employed,Bihar,Rural,5,Yes,Yes,3,27,1,Yes,Low,Application Complexity
+69,90279,Student,Uttar Pradesh,Urban,2,Yes,Yes,1,22,4,No,Medium,Digital Access
+66,345172,Small Business,Bihar,Urban,2,Yes,No,3,10,1,Yes,Medium,Documentation
+19,396407,Homemaker,Jharkhand,Rural,4,Yes,No,1,31,5,No,High,Documentation
+18,30126,Farmer,Jharkhand,Urban,1,Yes,No,2,27,4,No,High,Documentation
+65,344473,Farmer,Bihar,Urban,5,Yes,Yes,4,12,3,No,Low,Documentation
+29,57632,Self Employed,West Bengal,Rural,1,Yes,Yes,2,46,4,No,High,Digital Access
+22,226382,Small Business,Uttar Pradesh,Rural,2,Yes,No,2,31,2,No,High,Documentation
+54,139945,Daily Wage Worker,Bihar,Rural,5,Yes,Yes,1,32,2,Yes,Medium,Awareness
+49,347320,Small Business,Bihar,Urban,1,Yes,Yes,3,32,4,No,Medium,Digital Access
+26,280869,Farmer,Bihar,Urban,3,No,Yes,5,41,5,No,Medium,Digital Access
+58,247138,Farmer,Rajasthan,Urban,4,No,Yes,1,45,2,No,Medium,Digital Access
+52,205399,Homemaker,Jharkhand,Urban,4,Yes,Yes,5,35,2,No,Low,Distance
+36,492120,Small Business,West Bengal,Rural,3,No,No,2,46,3,Yes,High,Documentation
+65,164869,Small Business,Madhya Pradesh,Urban,2,No,Yes,5,21,4,Yes,High,Digital Access
+33,208954,Farmer,West Bengal,Urban,5,No,Yes,3,10,2,No,Low,Digital Access
+20,174790,Daily Wage Worker,Madhya Pradesh,Rural,4,Yes,No,1,16,5,No,High,Documentation
+37,64560,Self Employed,Rajasthan,Rural,3,Yes,No,3,7,1,Yes,Medium,Documentation
+41,368733,Self Employed,Bihar,Urban,3,Yes,Yes,3,4,4,No,Low,Application Complexity
+50,314260,Small Business,Rajasthan,Rural,2,Yes,Yes,1,27,3,No,Medium,Digital Access
+41,459460,Self Employed,Rajasthan,Urban,2,Yes,No,3,25,2,Yes,Medium,Documentation
+69,162717,Farmer,Uttar Pradesh,Rural,1,Yes,No,4,31,5,No,High,Documentation
+28,208595,Farmer,Jharkhand,Rural,4,No,Yes,4,11,4,No,Medium,Digital Access
+66,154085,Small Business,Madhya Pradesh,Urban,1,No,No,4,48,5,No,High,Digital Access
+25,409862,Small Business,Bihar,Rural,3,Yes,Yes,5,20,5,No,Low,Application Complexity
+53,311400,Homemaker,Madhya Pradesh,Rural,5,Yes,Yes,3,36,3,No,Low,Distance
+55,130158,Small Business,West Bengal,Rural,5,Yes,Yes,1,17,4,No,Medium,Awareness
+57,214245,Daily Wage Worker,Madhya Pradesh,Urban,2,No,Yes,1,45,2,Yes,High,Digital Access
+37,198502,Self Employed,West Bengal,Rural,5,Yes,No,5,11,3,Yes,Medium,Documentation
+52,462498,Small Business,Jharkhand,Urban,5,Yes,Yes,1,30,2,No,Medium,Awareness
+65,411863,Student,West Bengal,Rural,5,Yes,Yes,4,35,1,No,Low,Distance
+42,486590,Homemaker,Madhya Pradesh,Urban,3,Yes,Yes,3,41,5,Yes,Medium,Application Complexity
+52,360388,Student,Madhya Pradesh,Urban,5,Yes,Yes,1,38,1,No,Medium,Awareness
+42,172766,Farmer,West Bengal,Rural,5,Yes,Yes,1,22,5,Yes,Medium,Application Complexity
+46,348408,Self Employed,Rajasthan,Rural,5,No,Yes,2,43,3,No,Medium,Digital Access
+35,498276,Small Business,Jharkhand,Rural,1,No,Yes,2,48,2,No,High,Digital Access
+63,87545,Student,Uttar Pradesh,Rural,3,No,No,2,27,2,No,High,Documentation
+35,331368,Self Employed,Bihar,Rural,2,No,Yes,3,37,3,No,Medium,Digital Access
+19,390089,Farmer,Madhya Pradesh,Rural,1,Yes,Yes,4,46,4,Yes,High,Application Complexity
+52,43224,Daily Wage Worker,Bihar,Rural,4,Yes,No,4,49,1,No,Medium,Documentation
+33,70738,Homemaker,Uttar Pradesh,Rural,3,Yes,Yes,4,35,1,No,Low,Distance
+58,448366,Self Employed,Bihar,Rural,3,No,Yes,3,4,2,No,Low,Digital Access
+53,355875,Self Employed,Uttar Pradesh,Rural,4,Yes,No,3,16,2,Yes,Medium,Documentation
+50,210760,Daily Wage Worker,West Bengal,Urban,4,Yes,Yes,2,16,2,No,Low,Awareness
+21,269690,Self Employed,Rajasthan,Rural,4,Yes,Yes,1,21,3,Yes,Medium,Awareness
+50,496725,Farmer,Madhya Pradesh,Rural,2,Yes,Yes,5,26,4,No,Medium,Digital Access
+31,169649,Farmer,Uttar Pradesh,Rural,5,Yes,Yes,5,36,1,No,Low,Distance
+38,38070,Daily Wage Worker,Bihar,Urban,3,Yes,No,1,19,5,No,Medium,Documentation
+65,156161,Homemaker,Madhya Pradesh,Urban,5,Yes,Yes,2,17,3,No,Low,Awareness
+37,38666,Small Business,Rajasthan,Urban,5,Yes,No,1,45,1,Yes,High,Documentation
+25,349905,Student,West Bengal,Urban,4,No,No,1,26,4,Yes,High,Documentation
+24,328512,Small Business,Madhya Pradesh,Rural,2,Yes,Yes,5,22,3,No,Low,Digital Access
+20,167855,Self Employed,Uttar Pradesh,Urban,1,Yes,Yes,2,28,1,Yes,Medium,Digital Access
+34,71914,Student,Rajasthan,Urban,2,Yes,Yes,3,1,3,Yes,Medium,Digital Access
+50,231579,Daily Wage Worker,Bihar,Rural,5,No,Yes,5,44,1,No,Medium,Digital Access
+65,157738,Daily Wage Worker,Rajasthan,Urban,2,Yes,Yes,3,36,1,Yes,Medium,Digital Access
+29,276965,Homemaker,Rajasthan,Rural,4,No,No,2,43,4,No,High,Documentation
+68,359670,Student,Jharkhand,Urban,1,Yes,No,1,37,5,Yes,High,Documentation
+39,494051,Farmer,Rajasthan,Rural,4,No,Yes,4,2,4,No,Medium,Digital Access
+39,468981,Student,Rajasthan,Rural,1,No,Yes,4,17,1,No,Medium,Digital Access
+63,312100,Self Employed,Madhya Pradesh,Urban,5,Yes,No,2,40,3,No,Medium,Documentation
+47,248967,Farmer,Bihar,Rural,1,Yes,Yes,4,38,4,Yes,High,Application Complexity
+55,338384,Daily Wage Worker,Madhya Pradesh,Rural,1,Yes,No,3,21,5,No,High,Documentation
+55,413152,Student,Madhya Pradesh,Rural,1,Yes,Yes,4,9,1,No,Low,Digital Access
+62,460364,Small Business,Uttar Pradesh,Urban,2,Yes,Yes,2,13,4,No,Medium,Digital Access
+68,124270,Homemaker,Madhya Pradesh,Rural,2,Yes,No,2,11,4,No,High,Documentation
+25,296901,Small Business,Jharkhand,Rural,5,Yes,Yes,3,16,4,No,Low,Application Complexity
+44,49097,Homemaker,Jharkhand,Urban,1,Yes,No,4,16,4,Yes,High,Documentation
+44,171467,Self Employed,Uttar Pradesh,Urban,3,Yes,No,4,2,3,No,Low,Documentation
+51,177313,Small Business,West Bengal,Rural,5,Yes,Yes,1,42,5,No,Medium,Awareness
+38,396036,Student,Bihar,Urban,1,Yes,Yes,5,44,5,No,Medium,Digital Access
+47,188768,Student,Bihar,Urban,1,Yes,No,2,8,1,Yes,High,Documentation
+50,276726,Small Business,Madhya Pradesh,Urban,2,Yes,No,1,43,2,No,High,Documentation
+45,362624,Student,Madhya Pradesh,Rural,5,Yes,Yes,2,42,3,No,Medium,Awareness
+64,76163,Self Employed,West Bengal,Rural,1,No,No,1,13,1,Yes,High,Digital Access
+50,49816,Farmer,Madhya Pradesh,Rural,1,Yes,Yes,5,17,1,Yes,Medium,Digital Access
+22,473056,Self Employed,Bihar,Rural,5,Yes,Yes,1,39,4,Yes,High,Application Complexity
+65,263619,Homemaker,Rajasthan,Rural,3,Yes,No,2,24,2,No,Medium,Documentation
+36,344997,Self Employed,Jharkhand,Rural,5,No,Yes,4,3,2,Yes,Medium,Digital Access
+21,185989,Homemaker,Rajasthan,Rural,5,No,No,2,30,3,No,High,Documentation
+52,126731,Student,Rajasthan,Rural,3,No,Yes,3,13,2,No,Low,Digital Access
+66,182638,Farmer,Bihar,Rural,5,Yes,Yes,3,19,1,No,Low,Documentation
+34,236524,Student,Rajasthan,Urban,1,Yes,Yes,3,7,2,No,Low,Digital Access
+61,92823,Daily Wage Worker,West Bengal,Rural,5,Yes,Yes,3,9,2,Yes,Low,Application Complexity
+45,181878,Student,Uttar Pradesh,Rural,3,Yes,Yes,5,19,5,No,Low,Application Complexity
+47,236592,Homemaker,Madhya Pradesh,Urban,4,No,Yes,4,45,1,No,Medium,Digital Access
+46,31759,Student,Uttar Pradesh,Rural,5,Yes,Yes,4,40,2,No,Low,Distance
+63,287164,Student,Jharkhand,Urban,2,Yes,Yes,2,22,2,Yes,Medium,Digital Access
+23,465165,Farmer,Madhya Pradesh,Urban,1,Yes,Yes,1,18,4,No,Medium,Digital Access
+52,384518,Student,Rajasthan,Rural,1,No,No,2,23,2,No,High,Digital Access
+58,163554,Farmer,Jharkhand,Urban,2,Yes,Yes,2,2,2,No,Medium,Digital Access
+54,316586,Small Business,Madhya Pradesh,Rural,2,Yes,Yes,2,50,5,No,High,Digital Access
+41,456935,Daily Wage Worker,West Bengal,Rural,5,Yes,Yes,2,50,1,No,Medium,Awareness
+46,481282,Farmer,West Bengal,Rural,2,Yes,Yes,4,11,3,Yes,Medium,Digital Access
+66,123501,Homemaker,West Bengal,Rural,4,Yes,Yes,1,31,1,No,Medium,Awareness
+63,294223,Small Business,West Bengal,Urban,3,No,Yes,2,33,4,No,High,Digital Access
+48,425933,Farmer,Rajasthan,Rural,2,Yes,Yes,4,14,1,No,Low,Digital Access
+52,89676,Farmer,Uttar Pradesh,Rural,2,Yes,No,2,16,2,Yes,High,Documentation
+50,451168,Daily Wage Worker,Madhya Pradesh,Rural,4,Yes,No,3,11,4,No,Medium,Documentation
+69,247516,Homemaker,Rajasthan,Rural,1,Yes,Yes,2,33,1,Yes,High,Digital Access
+38,203532,Self Employed,West Bengal,Rural,1,No,Yes,2,7,4,No,High,Digital Access
+49,120397,Self Employed,Uttar Pradesh,Rural,5,No,Yes,5,31,3,No,Medium,Digital Access
+40,102847,Farmer,Jharkhand,Urban,4,Yes,Yes,3,48,1,Yes,Medium,Distance
+50,123607,Student,Jharkhand,Rural,3,No,Yes,1,46,2,No,Medium,Digital Access
+20,250178,Homemaker,Jharkhand,Rural,3,Yes,Yes,2,47,4,No,Medium,Awareness
+35,179521,Small Business,West Bengal,Rural,4,Yes,Yes,1,14,5,No,Medium,Awareness
+42,456752,Student,Jharkhand,Rural,3,Yes,Yes,3,28,4,No,Low,Application Complexity
+59,94077,Student,Bihar,Urban,1,Yes,Yes,2,43,5,No,High,Digital Access
+48,330402,Homemaker,Madhya Pradesh,Rural,3,Yes,Yes,5,16,2,No,Low,Documentation
+20,209374,Farmer,Madhya Pradesh,Rural,3,Yes,Yes,4,19,3,Yes,Low,Application Complexity
+57,287009,Farmer,West Bengal,Rural,4,Yes,Yes,5,17,5,No,Low,Application Complexity
+63,452081,Farmer,Bihar,Urban,4,Yes,Yes,5,26,3,No,Low,Documentation
+41,167717,Farmer,Rajasthan,Rural,3,Yes,Yes,4,6,4,No,Low,Application Complexity
+67,411915,Self Employed,Rajasthan,Rural,2,Yes,Yes,4,43,2,No,Medium,Digital Access
+49,68000,Farmer,Jharkhand,Urban,4,No,Yes,4,49,5,No,Medium,Digital Access
+64,56737,Self Employed,Uttar Pradesh,Rural,5,Yes,Yes,2,9,4,No,Medium,Awareness
+39,303629,Self Employed,Rajasthan,Urban,5,Yes,Yes,1,50,1,Yes,Medium,Awareness
+40,330709,Farmer,Uttar Pradesh,Urban,1,No,Yes,1,17,4,No,High,Digital Access
+19,448738,Daily Wage Worker,Madhya Pradesh,Rural,3,Yes,Yes,4,31,3,No,Low,Distance
+44,411758,Small Business,Uttar Pradesh,Rural,2,Yes,Yes,5,12,2,No,Low,Digital Access
+59,357299,Student,Madhya Pradesh,Rural,1,Yes,Yes,3,23,2,No,Low,Digital Access
+19,216240,Self Employed,Bihar,Rural,3,Yes,Yes,4,5,4,No,Low,Application Complexity
+43,82487,Homemaker,Bihar,Urban,4,Yes,No,5,43,1,No,Medium,Documentation
+34,422092,Homemaker,West Bengal,Rural,5,Yes,Yes,5,36,3,No,Low,Distance
+57,304486,Small Business,West Bengal,Rural,2,No,Yes,2,36,4,No,High,Digital Access
+50,332950,Homemaker,Jharkhand,Urban,5,No,No,2,3,4,No,High,Documentation
+26,340914,Daily Wage Worker,Rajasthan,Rural,4,No,No,1,24,2,No,High,Documentation
+60,108623,Homemaker,Jharkhand,Rural,3,Yes,Yes,1,17,3,No,Low,Awareness
+65,395321,Student,Madhya Pradesh,Rural,4,Yes,Yes,3,39,1,No,Low,Distance
+56,423170,Student,Jharkhand,Rural,4,Yes,Yes,3,26,2,No,Low,Documentation
+46,367773,Self Employed,Uttar Pradesh,Urban,5,Yes,Yes,3,4,4,No,Low,Application Complexity
+59,413137,Farmer,Madhya Pradesh,Rural,2,No,Yes,3,45,2,No,Medium,Digital Access
+43,213675,Daily Wage Worker,West Bengal,Rural,4,Yes,Yes,5,12,2,No,Low,Documentation
+52,419088,Self Employed,Bihar,Rural,5,Yes,Yes,5,1,5,No,Low,Application Complexity
+67,243046,Daily Wage Worker,West Bengal,Rural,2,Yes,No,1,21,2,No,High,Documentation
+42,135947,Farmer,Rajasthan,Rural,3,No,No,2,19,2,No,High,Documentation
+41,318543,Homemaker,Madhya Pradesh,Rural,3,No,Yes,2,21,3,Yes,Medium,Digital Access
+30,158177,Homemaker,Madhya Pradesh,Rural,1,Yes,Yes,4,18,2,No,Low,Digital Access
+24,246454,Farmer,Uttar Pradesh,Urban,5,No,Yes,5,43,1,No,Medium,Digital Access
+53,139575,Self Employed,Rajasthan,Rural,2,Yes,No,3,3,4,No,High,Documentation
+62,403048,Farmer,Bihar,Rural,4,Yes,Yes,3,49,3,No,Low,Distance
+37,237606,Small Business,Madhya Pradesh,Rural,3,No,Yes,4,44,2,Yes,Medium,Digital Access
+18,478322,Student,Madhya Pradesh,Urban,2,Yes,Yes,2,32,1,Yes,High,Digital Access
+25,322822,Self Employed,Uttar Pradesh,Urban,5,No,Yes,3,10,4,No,Medium,Digital Access
+63,106218,Daily Wage Worker,Jharkhand,Rural,1,Yes,Yes,2,40,3,No,Medium,Digital Access
+33,93230,Small Business,Bihar,Urban,3,Yes,No,4,15,1,No,Low,Documentation
+31,275756,Self Employed,West Bengal,Rural,2,No,Yes,2,5,2,No,Medium,Digital Access
+29,366199,Farmer,Rajasthan,Rural,2,Yes,Yes,2,4,5,No,Medium,Digital Access
+68,479589,Farmer,Madhya Pradesh,Rural,2,No,Yes,2,28,5,No,High,Digital Access
+40,192552,Farmer,Madhya Pradesh,Rural,5,No,Yes,3,4,3,Yes,Medium,Digital Access
+32,492052,Farmer,West Bengal,Urban,5,Yes,No,1,15,1,Yes,Medium,Documentation
+45,364402,Daily Wage Worker,Bihar,Rural,5,Yes,No,5,17,4,No,Medium,Documentation
+51,69986,Small Business,Jharkhand,Rural,4,Yes,No,2,44,1,No,High,Documentation
+19,185232,Homemaker,Madhya Pradesh,Urban,2,Yes,No,2,3,5,No,High,Documentation
+49,377739,Student,Bihar,Rural,3,Yes,Yes,2,10,3,No,Low,Awareness
+40,131358,Daily Wage Worker,West Bengal,Rural,5,Yes,Yes,1,47,2,No,Medium,Awareness
+39,357073,Daily Wage Worker,Uttar Pradesh,Rural,5,Yes,Yes,4,42,1,Yes,Medium,Distance
+68,103506,Homemaker,Jharkhand,Rural,2,Yes,No,3,23,5,No,High,Documentation
+42,64911,Homemaker,Rajasthan,Rural,5,No,Yes,1,18,4,No,Medium,Digital Access
+39,379271,Student,Madhya Pradesh,Urban,4,No,Yes,2,1,3,No,Medium,Digital Access
+39,455037,Student,Bihar,Rural,4,Yes,No,1,35,2,No,High,Documentation
+66,236111,Homemaker,Uttar Pradesh,Rural,5,Yes,Yes,1,31,1,No,Medium,Awareness
+69,483751,Farmer,Rajasthan,Urban,2,No,Yes,1,44,4,No,High,Digital Access
+59,405597,Daily Wage Worker,Bihar,Urban,2,Yes,Yes,4,1,2,Yes,Medium,Digital Access
+23,114458,Self Employed,Bihar,Rural,2,Yes,Yes,5,3,5,No,Medium,Digital Access
+32,42175,Student,Rajasthan,Rural,1,No,Yes,3,3,5,Yes,High,Digital Access
+60,411379,Student,Uttar Pradesh,Rural,5,Yes,No,4,37,4,No,High,Documentation
+54,346915,Homemaker,West Bengal,Rural,2,Yes,Yes,4,19,5,No,Medium,Digital Access
+50,419301,Small Business,Uttar Pradesh,Rural,4,No,No,5,29,3,No,Medium,Documentation
+25,151300,Self Employed,Jharkhand,Rural,3,No,Yes,4,25,4,No,Medium,Digital Access
+61,116925,Self Employed,Madhya Pradesh,Urban,3,Yes,Yes,1,33,5,Yes,High,Application Complexity
+61,274446,Student,Rajasthan,Rural,2,Yes,No,1,36,1,Yes,High,Documentation
+22,96358,Farmer,West Bengal,Urban,3,Yes,Yes,2,29,5,No,Medium,Awareness
+56,440543,Small Business,Rajasthan,Rural,3,Yes,Yes,4,26,3,Yes,Low,Application Complexity
+21,77057,Self Employed,Rajasthan,Urban,1,No,No,2,4,2,No,High,Digital Access
+23,298294,Student,Uttar Pradesh,Rural,4,Yes,Yes,3,49,2,Yes,Medium,Distance
+62,296569,Self Employed,Madhya Pradesh,Urban,4,No,Yes,1,14,5,No,Medium,Digital Access
+49,284726,Small Business,Jharkhand,Rural,1,Yes,Yes,3,50,2,No,Medium,Digital Access
+69,308176,Small Business,Bihar,Rural,1,Yes,Yes,5,27,5,No,Medium,Digital Access
+47,32198,Daily Wage Worker,Bihar,Rural,3,Yes,Yes,1,33,3,No,Medium,Awareness
+64,483716,Homemaker,Rajasthan,Urban,5,Yes,Yes,3,22,2,No,Low,Documentation
+52,214466,Homemaker,Madhya Pradesh,Rural,3,Yes,No,5,48,1,No,Medium,Documentation
+57,443295,Student,West Bengal,Rural,1,Yes,No,3,3,5,Yes,High,Documentation
+69,197292,Small Business,Uttar Pradesh,Rural,4,Yes,Yes,5,23,2,No,Low,Documentation
+33,465090,Daily Wage Worker,Madhya Pradesh,Rural,3,Yes,Yes,5,21,3,No,Low,Documentation
+30,174931,Daily Wage Worker,Madhya Pradesh,Rural,5,Yes,Yes,1,41,3,No,Medium,Awareness
+67,473676,Self Employed,Uttar Pradesh,Rural,3,No,Yes,2,23,1,No,Medium,Digital Access
+59,192491,Self Employed,Rajasthan,Urban,2,Yes,Yes,5,4,3,No,Low,Digital Access
+47,411009,Daily Wage Worker,Madhya Pradesh,Urban,3,Yes,No,5,21,3,No,Low,Documentation
+36,431921,Self Employed,Bihar,Urban,1,No,No,1,37,2,No,High,Digital Access
+34,466096,Small Business,Uttar Pradesh,Rural,4,No,Yes,2,43,5,No,High,Digital Access
+36,290910,Farmer,West Bengal,Urban,4,Yes,Yes,4,31,4,No,Medium,Distance
+45,53236,Small Business,Jharkhand,Urban,1,Yes,Yes,4,21,3,No,Low,Digital Access
+43,117955,Daily Wage Worker,Rajasthan,Urban,2,No,Yes,2,26,3,Yes,High,Digital Access
+54,246586,Daily Wage Worker,Uttar Pradesh,Rural,1,No,Yes,3,41,4,No,High,Digital Access
+43,133145,Small Business,Jharkhand,Rural,3,No,No,1,35,3,No,High,Documentation
+40,176430,Self Employed,Jharkhand,Urban,1,Yes,Yes,2,38,2,No,Medium,Digital Access
+26,260785,Self Employed,West Bengal,Rural,1,Yes,No,4,24,2,No,Medium,Documentation
+29,124914,Homemaker,Madhya Pradesh,Rural,2,Yes,Yes,5,11,4,No,Medium,Digital Access
+18,395014,Daily Wage Worker,West Bengal,Rural,3,Yes,Yes,4,41,3,No,Low,Distance
+18,237990,Student,Madhya Pradesh,Urban,5,Yes,Yes,5,29,3,No,Low,Documentation
+64,408387,Homemaker,Madhya Pradesh,Urban,5,No,Yes,1,47,5,No,High,Digital Access
+51,44596,Self Employed,Uttar Pradesh,Urban,4,Yes,Yes,5,3,3,No,Low,Documentation
+49,456788,Small Business,Uttar Pradesh,Rural,1,Yes,Yes,2,1,2,No,Medium,Digital Access
+65,162351,Self Employed,Rajasthan,Rural,4,Yes,No,5,19,1,No,Medium,Documentation
+42,224269,Small Business,Madhya Pradesh,Rural,2,Yes,Yes,3,46,1,No,Medium,Digital Access
+57,403640,Homemaker,Jharkhand,Rural,5,Yes,Yes,2,49,1,Yes,Medium,Awareness
+62,422417,Daily Wage Worker,Bihar,Rural,1,No,No,1,22,1,No,High,Digital Access
+18,485732,Self Employed,Rajasthan,Rural,2,Yes,No,2,14,3,No,High,Documentation
+33,168155,Small Business,Uttar Pradesh,Rural,2,Yes,No,3,49,3,No,High,Documentation
+56,150674,Daily Wage Worker,West Bengal,Rural,1,No,Yes,1,14,5,No,High,Digital Access
+22,412451,Student,Rajasthan,Urban,2,Yes,No,4,44,3,No,Medium,Documentation
+39,287529,Small Business,Rajasthan,Rural,1,Yes,Yes,3,16,1,No,Low,Digital Access
+46,270469,Homemaker,Rajasthan,Urban,1,No,Yes,1,33,4,No,High,Digital Access
+20,440987,Student,Rajasthan,Rural,3,Yes,Yes,5,13,4,Yes,Medium,Application Complexity
+29,453191,Student,Bihar,Rural,4,Yes,Yes,2,38,2,No,Medium,Awareness
+43,468864,Farmer,West Bengal,Rural,2,No,Yes,1,49,2,No,High,Digital Access
+33,286713,Self Employed,West Bengal,Rural,2,Yes,Yes,2,12,3,No,Medium,Digital Access
+68,471501,Small Business,West Bengal,Rural,3,Yes,Yes,5,38,4,No,Medium,Distance
+54,49063,Student,Madhya Pradesh,Urban,3,Yes,Yes,1,39,1,Yes,Medium,Awareness
+39,97642,Farmer,Jharkhand,Rural,3,No,Yes,4,33,1,No,Medium,Digital Access
+46,120093,Homemaker,West Bengal,Rural,5,Yes,No,3,33,1,No,Medium,Documentation
+31,247215,Daily Wage Worker,Rajasthan,Rural,5,Yes,No,1,29,3,No,Medium,Documentation
+45,460815,Small Business,Rajasthan,Urban,5,Yes,Yes,5,5,3,No,Low,Documentation
+22,212992,Student,West Bengal,Urban,1,Yes,No,1,6,5,No,High,Documentation
+64,189601,Self Employed,West Bengal,Urban,2,No,Yes,2,31,1,No,High,Digital Access
+66,65954,Farmer,Rajasthan,Rural,4,Yes,Yes,1,16,1,No,Low,Awareness
+47,57856,Student,Madhya Pradesh,Urban,1,Yes,Yes,4,31,3,No,Medium,Digital Access
+63,32573,Self Employed,Uttar Pradesh,Urban,2,Yes,Yes,1,25,3,No,Medium,Digital Access
+69,65367,Student,Uttar Pradesh,Rural,2,Yes,No,3,48,5,No,High,Documentation
+22,267804,Small Business,West Bengal,Urban,3,Yes,Yes,1,46,5,Yes,High,Application Complexity
+29,391752,Small Business,Bihar,Rural,3,No,Yes,2,33,2,No,Medium,Digital Access
+33,352918,Small Business,West Bengal,Urban,1,Yes,Yes,1,13,4,Yes,High,Application Complexity
+43,53752,Homemaker,West Bengal,Urban,3,No,Yes,4,10,1,Yes,Medium,Digital Access
+43,347173,Homemaker,Uttar Pradesh,Rural,2,No,No,5,24,1,No,High,Digital Access
+65,178757,Farmer,Rajasthan,Rural,3,Yes,No,1,10,5,No,High,Documentation
+38,422426,Small Business,West Bengal,Urban,5,Yes,Yes,1,41,5,Yes,High,Application Complexity
+56,343837,Self Employed,Rajasthan,Rural,3,No,No,3,31,2,No,High,Documentation
+53,146739,Student,Rajasthan,Rural,2,Yes,Yes,4,13,4,No,Medium,Digital Access
+50,348105,Daily Wage Worker,Bihar,Urban,1,No,No,5,3,2,No,Medium,Digital Access
+47,268009,Self Employed,Rajasthan,Rural,4,Yes,Yes,2,50,4,No,Medium,Awareness
+54,286028,Homemaker,Uttar Pradesh,Rural,3,Yes,Yes,1,34,1,No,Medium,Awareness
+40,237980,Homemaker,Madhya Pradesh,Rural,2,Yes,Yes,5,49,2,No,Medium,Digital Access
+27,286609,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,2,28,5,Yes,Medium,Application Complexity
+22,418822,Homemaker,Jharkhand,Rural,4,No,Yes,4,19,2,Yes,Medium,Digital Access
+53,366676,Small Business,West Bengal,Rural,5,Yes,Yes,4,23,2,Yes,Low,Application Complexity
+51,374138,Farmer,Uttar Pradesh,Rural,4,Yes,Yes,5,45,1,No,Low,Distance
+69,348277,Student,Rajasthan,Rural,2,No,No,2,32,5,No,High,Digital Access
+48,353412,Farmer,Madhya Pradesh,Urban,2,Yes,Yes,4,13,5,No,Medium,Digital Access
+27,461459,Student,Uttar Pradesh,Rural,3,Yes,Yes,5,33,3,No,Low,Distance
+36,218456,Student,Madhya Pradesh,Rural,3,No,Yes,4,34,3,No,Medium,Digital Access
+49,61653,Farmer,Rajasthan,Urban,3,Yes,No,4,33,3,No,Medium,Documentation
+18,187729,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,4,5,1,No,Low,Documentation
+22,463168,Student,West Bengal,Rural,4,Yes,No,3,3,2,No,Medium,Documentation
+62,445396,Farmer,West Bengal,Rural,5,Yes,No,2,7,5,Yes,High,Documentation
+21,258504,Student,Jharkhand,Urban,3,Yes,Yes,5,24,5,Yes,Medium,Application Complexity
+33,151829,Daily Wage Worker,Jharkhand,Rural,1,Yes,Yes,5,22,2,No,Low,Digital Access
+41,158377,Self Employed,Madhya Pradesh,Rural,5,Yes,Yes,2,45,5,No,Medium,Awareness
+33,31622,Small Business,Uttar Pradesh,Urban,1,Yes,Yes,2,23,2,No,Medium,Digital Access
+19,78756,Student,West Bengal,Rural,4,Yes,No,2,30,1,No,High,Documentation
+66,70809,Daily Wage Worker,Uttar Pradesh,Rural,5,Yes,No,2,18,1,No,Medium,Documentation
+45,46725,Small Business,Uttar Pradesh,Rural,5,Yes,Yes,1,32,1,No,Medium,Awareness
+49,222468,Small Business,Madhya Pradesh,Rural,2,No,Yes,5,7,2,No,Medium,Digital Access
+44,81226,Student,Uttar Pradesh,Urban,4,Yes,No,1,33,2,No,Medium,Documentation
+37,111182,Farmer,West Bengal,Rural,4,Yes,Yes,4,5,4,No,Low,Application Complexity
+41,59402,Student,Rajasthan,Rural,5,Yes,Yes,4,49,5,No,Medium,Distance
+29,34263,Daily Wage Worker,Jharkhand,Rural,4,Yes,Yes,5,28,5,No,Low,Application Complexity
+67,257595,Small Business,Rajasthan,Urban,5,Yes,Yes,4,8,4,No,Low,Application Complexity
+52,207900,Student,Uttar Pradesh,Rural,2,Yes,No,2,15,4,No,High,Documentation
+50,77924,Farmer,Rajasthan,Rural,5,Yes,Yes,1,4,1,No,Low,Awareness
+50,366326,Student,West Bengal,Rural,4,Yes,Yes,2,34,4,No,Medium,Awareness
+68,254137,Self Employed,West Bengal,Rural,4,No,No,4,5,2,Yes,High,Documentation
+60,482268,Farmer,Uttar Pradesh,Rural,5,Yes,Yes,1,33,3,No,Medium,Awareness
+54,434880,Daily Wage Worker,Madhya Pradesh,Rural,5,Yes,No,2,5,2,No,Medium,Documentation
+29,327881,Small Business,Rajasthan,Rural,5,No,Yes,5,38,4,No,Medium,Digital Access
+20,393476,Student,Madhya Pradesh,Rural,3,Yes,Yes,2,34,5,No,Medium,Awareness
+18,381707,Farmer,Madhya Pradesh,Rural,4,Yes,No,4,26,2,No,Medium,Documentation
+50,190445,Self Employed,Bihar,Urban,4,Yes,Yes,1,1,5,No,Medium,Awareness
+57,197469,Farmer,Uttar Pradesh,Rural,3,Yes,Yes,5,4,2,No,Low,Documentation
+27,420719,Homemaker,Jharkhand,Urban,5,Yes,Yes,1,39,5,No,Medium,Awareness
+60,131371,Self Employed,West Bengal,Rural,2,Yes,Yes,5,26,2,No,Low,Digital Access
+61,68709,Daily Wage Worker,West Bengal,Rural,5,Yes,Yes,1,33,5,No,Medium,Awareness
+46,222192,Small Business,Uttar Pradesh,Rural,5,Yes,No,4,33,3,No,Medium,Documentation
+30,180322,Daily Wage Worker,Jharkhand,Rural,3,Yes,No,5,8,1,No,Medium,Documentation
+29,51172,Student,West Bengal,Rural,4,No,No,3,20,2,Yes,High,Documentation
+48,41555,Farmer,Uttar Pradesh,Urban,5,Yes,Yes,1,16,3,Yes,Medium,Awareness
+63,83276,Homemaker,West Bengal,Rural,4,Yes,Yes,1,21,1,No,Low,Awareness
+19,87492,Self Employed,Madhya Pradesh,Urban,1,Yes,Yes,2,45,2,No,Medium,Digital Access
+68,214074,Self Employed,Rajasthan,Rural,4,Yes,No,5,26,3,No,Medium,Documentation
+67,286010,Farmer,Rajasthan,Urban,2,No,Yes,3,23,3,Yes,Medium,Digital Access
+52,381743,Homemaker,West Bengal,Rural,2,Yes,Yes,4,18,3,No,Low,Digital Access
+40,495571,Farmer,Bihar,Urban,5,Yes,No,2,31,4,No,High,Documentation
+34,252320,Student,Jharkhand,Rural,4,Yes,Yes,3,42,5,Yes,Medium,Application Complexity
+43,447978,Daily Wage Worker,Jharkhand,Urban,5,Yes,Yes,5,12,1,No,Low,Documentation
+25,41046,Self Employed,Jharkhand,Rural,3,Yes,No,3,1,5,No,Medium,Documentation
+46,258071,Student,Madhya Pradesh,Urban,2,Yes,No,1,42,5,No,High,Documentation
+43,408165,Daily Wage Worker,Jharkhand,Rural,5,Yes,Yes,1,9,5,No,Medium,Awareness
+27,451985,Student,Rajasthan,Urban,3,Yes,Yes,2,3,3,No,Low,Awareness
+43,214374,Homemaker,Madhya Pradesh,Rural,5,Yes,No,5,26,5,Yes,High,Documentation
+51,446366,Self Employed,Uttar Pradesh,Urban,4,No,Yes,5,9,4,No,Medium,Digital Access
+68,491463,Farmer,Jharkhand,Urban,4,Yes,Yes,3,42,2,Yes,Medium,Distance
+58,296997,Farmer,Jharkhand,Urban,4,Yes,Yes,2,16,3,No,Low,Awareness
+24,150900,Daily Wage Worker,Uttar Pradesh,Rural,4,Yes,Yes,5,24,1,Yes,Low,Application Complexity
+21,445008,Small Business,Jharkhand,Rural,1,Yes,Yes,1,50,2,No,Medium,Digital Access
+67,89129,Homemaker,Uttar Pradesh,Urban,3,Yes,Yes,3,14,2,No,Low,Documentation
+62,267091,Daily Wage Worker,Madhya Pradesh,Rural,3,No,Yes,4,3,2,Yes,Medium,Digital Access
+28,235550,Small Business,Rajasthan,Rural,4,Yes,Yes,1,34,5,No,Medium,Awareness
+46,274883,Student,Uttar Pradesh,Urban,1,No,No,2,33,5,No,High,Digital Access
+53,144130,Homemaker,Bihar,Urban,4,Yes,No,5,50,3,No,Medium,Documentation
+42,490514,Student,Uttar Pradesh,Rural,1,Yes,No,1,24,5,No,High,Documentation
+38,455203,Self Employed,Jharkhand,Urban,4,Yes,Yes,4,9,5,Yes,Medium,Application Complexity
+53,176922,Homemaker,Madhya Pradesh,Urban,2,Yes,Yes,4,13,5,No,Medium,Digital Access
+27,435328,Small Business,West Bengal,Rural,2,Yes,Yes,2,2,3,No,Medium,Digital Access
+54,151789,Self Employed,Madhya Pradesh,Urban,5,No,No,1,7,3,Yes,High,Documentation
+26,185130,Farmer,West Bengal,Rural,4,No,Yes,3,48,4,No,Medium,Digital Access
+41,206492,Small Business,Uttar Pradesh,Rural,3,No,Yes,1,21,4,No,Medium,Digital Access
+52,68890,Daily Wage Worker,Rajasthan,Rural,5,No,No,4,19,4,No,High,Documentation
+66,96017,Farmer,Bihar,Rural,2,Yes,Yes,2,25,4,No,Medium,Digital Access
+52,208376,Farmer,Madhya Pradesh,Urban,4,Yes,Yes,2,47,2,No,Medium,Awareness
+65,193993,Daily Wage Worker,Jharkhand,Rural,5,Yes,No,3,22,2,No,Medium,Documentation
+53,162596,Homemaker,West Bengal,Rural,4,Yes,No,2,11,4,Yes,High,Documentation
+35,130424,Farmer,Jharkhand,Rural,2,Yes,Yes,2,33,4,Yes,High,Application Complexity
+66,307192,Small Business,Rajasthan,Rural,5,Yes,No,2,32,1,Yes,High,Documentation
+56,458327,Self Employed,West Bengal,Rural,2,Yes,Yes,2,21,2,Yes,Medium,Digital Access
+49,198976,Farmer,Madhya Pradesh,Rural,1,Yes,No,2,39,1,Yes,High,Documentation
+41,347056,Small Business,Uttar Pradesh,Rural,2,Yes,Yes,4,20,1,No,Low,Digital Access
+40,64008,Student,Jharkhand,Urban,4,Yes,Yes,1,8,5,No,Medium,Awareness
+49,423276,Small Business,Rajasthan,Rural,3,Yes,Yes,5,42,3,No,Low,Distance
+54,235738,Self Employed,Madhya Pradesh,Rural,2,Yes,No,2,37,2,Yes,High,Documentation
+29,113559,Small Business,Madhya Pradesh,Rural,3,Yes,Yes,5,9,4,No,Low,Application Complexity
+66,85337,Daily Wage Worker,Madhya Pradesh,Urban,1,Yes,Yes,5,25,4,No,Medium,Digital Access
+30,402760,Self Employed,Madhya Pradesh,Rural,5,Yes,Yes,4,25,3,No,Low,Documentation
+40,305494,Homemaker,West Bengal,Rural,5,Yes,No,2,33,2,No,High,Documentation
+42,54354,Student,Madhya Pradesh,Rural,3,Yes,Yes,5,2,4,No,Low,Application Complexity
+52,75186,Daily Wage Worker,Jharkhand,Urban,5,Yes,Yes,2,19,4,No,Medium,Awareness
+58,58145,Homemaker,Rajasthan,Rural,2,Yes,Yes,3,46,5,No,Medium,Digital Access
+47,457236,Small Business,West Bengal,Urban,3,Yes,Yes,3,20,1,Yes,Low,Application Complexity
+34,116123,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,3,42,4,No,Medium,Distance
+66,236258,Student,Bihar,Rural,2,Yes,Yes,5,41,2,No,Medium,Digital Access
+37,246541,Daily Wage Worker,Bihar,Urban,2,Yes,Yes,3,42,3,Yes,Medium,Digital Access
+65,50581,Homemaker,Rajasthan,Rural,2,Yes,Yes,4,29,5,No,Medium,Digital Access
+42,118929,Homemaker,Uttar Pradesh,Urban,4,No,No,4,6,2,No,Medium,Documentation
+39,315195,Student,Uttar Pradesh,Urban,1,Yes,Yes,5,17,5,No,Medium,Digital Access
+30,81474,Small Business,West Bengal,Urban,5,No,Yes,2,25,1,Yes,Medium,Digital Access
+36,121748,Student,West Bengal,Rural,3,Yes,No,1,38,4,No,High,Documentation
+66,155995,Homemaker,West Bengal,Urban,1,Yes,Yes,2,4,2,No,Medium,Digital Access
+53,275690,Farmer,Uttar Pradesh,Rural,3,Yes,No,2,30,3,No,High,Documentation
+29,361770,Daily Wage Worker,Bihar,Urban,5,Yes,Yes,2,20,1,Yes,Medium,Awareness
+58,299104,Student,Uttar Pradesh,Rural,4,Yes,Yes,2,3,1,No,Low,Awareness
+36,458988,Homemaker,Jharkhand,Urban,2,Yes,Yes,1,23,5,No,Medium,Digital Access
+29,444736,Small Business,Madhya Pradesh,Rural,2,Yes,No,3,18,1,No,Medium,Documentation
+26,210553,Homemaker,West Bengal,Rural,4,Yes,Yes,2,26,2,Yes,Medium,Awareness
+24,66408,Small Business,Bihar,Rural,1,Yes,Yes,4,36,5,No,Medium,Digital Access
+45,386150,Student,Rajasthan,Urban,1,Yes,No,5,8,1,No,Medium,Documentation
+31,289568,Small Business,Rajasthan,Rural,3,Yes,Yes,5,17,3,Yes,Low,Application Complexity
+48,349278,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,4,31,2,No,Low,Distance
+69,181563,Self Employed,Bihar,Urban,1,Yes,Yes,2,37,3,No,Medium,Digital Access
+36,162413,Self Employed,Uttar Pradesh,Rural,4,No,No,1,45,3,No,High,Documentation
+64,205695,Farmer,Uttar Pradesh,Rural,5,No,Yes,3,33,5,No,Medium,Digital Access
+33,120327,Student,Jharkhand,Rural,2,Yes,Yes,5,27,4,Yes,Medium,Application Complexity
+22,423554,Homemaker,Jharkhand,Rural,2,Yes,Yes,3,45,5,No,Medium,Digital Access
+52,232503,Homemaker,Uttar Pradesh,Rural,2,No,Yes,1,4,2,No,Medium,Digital Access
+29,173326,Farmer,Rajasthan,Rural,4,Yes,No,5,22,2,No,Medium,Documentation
+42,212932,Small Business,West Bengal,Rural,4,Yes,No,3,26,5,No,Medium,Documentation
+69,41344,Farmer,Rajasthan,Rural,3,No,No,1,32,4,No,High,Documentation
+38,424966,Small Business,Jharkhand,Urban,2,Yes,No,3,24,5,No,Medium,Documentation
+53,477972,Small Business,Madhya Pradesh,Rural,3,Yes,Yes,2,46,2,No,Medium,Awareness
+40,97957,Daily Wage Worker,Uttar Pradesh,Rural,2,Yes,Yes,1,35,4,No,High,Digital Access
+33,135423,Homemaker,Jharkhand,Urban,3,Yes,No,3,37,2,No,Medium,Documentation
+56,350197,Self Employed,Jharkhand,Rural,3,No,Yes,2,32,4,No,High,Digital Access
+62,494071,Small Business,West Bengal,Rural,5,Yes,Yes,2,7,4,No,Medium,Awareness
+59,176968,Daily Wage Worker,Uttar Pradesh,Urban,3,Yes,No,1,33,5,Yes,High,Documentation
+56,216833,Homemaker,West Bengal,Urban,4,Yes,Yes,4,31,5,Yes,Medium,Application Complexity
+31,223624,Self Employed,Uttar Pradesh,Urban,3,Yes,No,5,12,5,No,Medium,Documentation
+48,281147,Small Business,West Bengal,Urban,2,Yes,Yes,1,11,4,Yes,High,Application Complexity
+22,107454,Small Business,Rajasthan,Urban,3,Yes,Yes,2,24,4,Yes,Medium,Application Complexity
+52,287594,Farmer,Madhya Pradesh,Rural,1,No,Yes,2,8,2,No,Medium,Digital Access
+40,382744,Farmer,Madhya Pradesh,Urban,2,Yes,Yes,1,32,3,Yes,High,Digital Access
+46,414876,Homemaker,Uttar Pradesh,Rural,1,Yes,No,4,38,5,No,High,Documentation
+60,451151,Self Employed,Bihar,Urban,2,Yes,Yes,5,22,2,No,Low,Digital Access
+28,67641,Small Business,Jharkhand,Rural,4,Yes,Yes,3,34,2,Yes,Medium,Distance
+35,59711,Homemaker,Jharkhand,Rural,4,No,Yes,1,19,1,No,Medium,Digital Access
+64,362486,Homemaker,Uttar Pradesh,Rural,4,Yes,Yes,5,20,5,Yes,Medium,Application Complexity
+29,399040,Student,West Bengal,Urban,1,No,Yes,5,14,2,No,Medium,Digital Access
+26,173254,Farmer,Bihar,Rural,5,Yes,No,2,33,1,No,High,Documentation
+27,117833,Self Employed,Rajasthan,Urban,2,Yes,Yes,3,10,5,Yes,Medium,Application Complexity
+61,348420,Small Business,West Bengal,Urban,4,Yes,No,1,16,4,Yes,High,Documentation
+34,311685,Homemaker,West Bengal,Rural,2,Yes,No,2,4,1,No,High,Documentation
+55,386601,Small Business,Uttar Pradesh,Urban,1,Yes,Yes,2,27,4,Yes,High,Application Complexity
+24,74813,Student,Uttar Pradesh,Urban,5,No,Yes,4,28,3,No,Low,Digital Access
+63,198270,Self Employed,Jharkhand,Rural,1,Yes,No,5,43,3,No,High,Documentation
+30,169892,Homemaker,Uttar Pradesh,Rural,2,No,Yes,1,16,3,No,Medium,Digital Access
+57,316214,Small Business,Uttar Pradesh,Rural,5,Yes,Yes,1,33,3,No,Medium,Awareness
+59,492984,Farmer,Uttar Pradesh,Rural,5,Yes,Yes,1,48,2,No,Medium,Awareness
+26,434338,Student,Jharkhand,Rural,1,Yes,No,2,19,3,No,High,Documentation
+67,372703,Self Employed,Rajasthan,Urban,4,Yes,No,4,21,2,Yes,Medium,Documentation
+44,234615,Student,Rajasthan,Rural,2,Yes,No,3,22,2,No,Medium,Documentation
+19,71786,Farmer,Uttar Pradesh,Urban,3,Yes,Yes,2,9,5,No,Medium,Awareness
+22,256006,Self Employed,Jharkhand,Rural,3,Yes,Yes,3,9,2,No,Low,Documentation
+46,260876,Student,Rajasthan,Rural,1,No,Yes,4,9,2,No,Medium,Digital Access
+54,429953,Daily Wage Worker,West Bengal,Urban,2,Yes,Yes,5,27,3,No,Low,Digital Access
+55,328206,Farmer,Rajasthan,Urban,2,No,Yes,1,17,2,No,Medium,Digital Access
+36,477453,Farmer,Rajasthan,Rural,1,No,No,3,44,4,No,High,Digital Access
+25,343715,Farmer,Jharkhand,Rural,2,Yes,No,2,45,3,No,High,Documentation
+65,317654,Daily Wage Worker,West Bengal,Rural,4,Yes,Yes,3,8,1,No,Low,Documentation
+62,311570,Daily Wage Worker,Jharkhand,Rural,1,Yes,Yes,5,16,3,Yes,Medium,Digital Access
+18,67265,Small Business,Uttar Pradesh,Rural,4,Yes,Yes,1,18,2,No,Low,Awareness
+39,441066,Homemaker,Madhya Pradesh,Rural,2,Yes,Yes,3,33,4,No,Medium,Digital Access
+69,279321,Student,Rajasthan,Rural,1,No,No,5,1,3,No,High,Digital Access
+34,96150,Small Business,Madhya Pradesh,Urban,2,Yes,No,2,12,4,No,High,Documentation
+24,117312,Student,Jharkhand,Rural,1,Yes,Yes,4,6,1,No,Low,Digital Access
+42,119613,Homemaker,Jharkhand,Rural,2,Yes,Yes,2,41,1,Yes,High,Digital Access
+62,367054,Daily Wage Worker,Jharkhand,Rural,4,Yes,Yes,1,5,5,No,Medium,Awareness
+21,344519,Homemaker,Madhya Pradesh,Urban,4,Yes,Yes,2,16,5,No,Medium,Awareness
+53,151826,Daily Wage Worker,Jharkhand,Urban,2,Yes,Yes,2,18,3,Yes,Medium,Digital Access
+23,65435,Homemaker,Uttar Pradesh,Rural,1,Yes,Yes,2,49,5,Yes,High,Application Complexity
+48,388587,Small Business,Jharkhand,Urban,3,Yes,Yes,2,18,4,No,Medium,Awareness
+36,480348,Self Employed,Bihar,Rural,4,Yes,No,1,1,5,No,High,Documentation
+61,240017,Small Business,Madhya Pradesh,Rural,4,Yes,Yes,5,19,4,No,Low,Application Complexity
+56,164055,Student,Bihar,Rural,3,Yes,Yes,3,8,5,No,Low,Application Complexity
+44,181734,Small Business,Jharkhand,Rural,2,Yes,Yes,4,3,5,No,Medium,Digital Access
+27,315654,Farmer,Uttar Pradesh,Urban,1,Yes,Yes,3,25,5,No,Medium,Digital Access
+43,239259,Student,Rajasthan,Urban,2,No,Yes,3,5,2,No,Medium,Digital Access
+36,202070,Homemaker,West Bengal,Rural,5,Yes,Yes,4,40,2,No,Low,Distance
+56,480062,Student,West Bengal,Rural,4,No,Yes,1,19,5,No,Medium,Digital Access
+20,124071,Self Employed,Jharkhand,Rural,5,Yes,Yes,4,18,4,No,Low,Application Complexity
+62,298784,Daily Wage Worker,Uttar Pradesh,Rural,4,Yes,No,1,50,3,No,High,Documentation
+30,336691,Homemaker,Madhya Pradesh,Rural,4,No,Yes,3,31,1,No,Medium,Digital Access
+67,346764,Student,Bihar,Rural,5,Yes,No,1,33,2,No,High,Documentation
+45,176389,Homemaker,Bihar,Rural,5,No,Yes,5,47,5,No,Medium,Digital Access
+37,145608,Homemaker,Bihar,Rural,2,Yes,Yes,4,18,1,No,Low,Digital Access
+45,299708,Homemaker,Madhya Pradesh,Rural,5,Yes,Yes,5,39,2,No,Low,Distance
+25,188417,Daily Wage Worker,West Bengal,Rural,2,No,Yes,3,16,3,No,Medium,Digital Access
+58,143824,Small Business,Uttar Pradesh,Urban,2,Yes,No,4,16,4,No,Medium,Documentation
+56,284444,Homemaker,Madhya Pradesh,Rural,2,Yes,No,3,47,5,No,High,Documentation
+18,109273,Farmer,Bihar,Urban,4,Yes,No,5,38,3,No,Medium,Documentation
+20,367003,Self Employed,Jharkhand,Rural,4,No,No,3,41,2,No,High,Documentation
+30,241837,Daily Wage Worker,Rajasthan,Urban,5,No,Yes,4,7,5,No,Medium,Digital Access
+45,140017,Student,Madhya Pradesh,Urban,4,Yes,Yes,4,14,1,Yes,Low,Application Complexity
+66,497254,Daily Wage Worker,Madhya Pradesh,Urban,5,No,Yes,3,43,4,No,Medium,Digital Access
+42,153618,Student,Uttar Pradesh,Rural,4,Yes,No,4,48,2,Yes,High,Documentation
+50,475609,Daily Wage Worker,Uttar Pradesh,Urban,1,Yes,No,4,25,4,Yes,High,Documentation
+55,489297,Student,Madhya Pradesh,Rural,1,Yes,Yes,3,32,5,No,Medium,Digital Access
+23,155341,Homemaker,Bihar,Rural,5,Yes,No,5,38,3,No,Medium,Documentation
+61,321574,Small Business,Rajasthan,Rural,4,Yes,Yes,4,22,4,No,Low,Application Complexity
+62,236604,Student,Uttar Pradesh,Rural,4,Yes,Yes,4,16,1,Yes,Low,Application Complexity
+49,57788,Student,Bihar,Rural,2,Yes,Yes,4,29,2,Yes,Medium,Digital Access
+62,256577,Farmer,Jharkhand,Urban,3,Yes,Yes,4,16,1,No,Low,Documentation
+64,471759,Student,Uttar Pradesh,Urban,5,Yes,No,3,12,4,No,Medium,Documentation
+38,437135,Farmer,Bihar,Rural,3,Yes,Yes,5,17,3,No,Low,Documentation
+33,361490,Self Employed,Bihar,Urban,3,Yes,Yes,5,37,3,No,Low,Distance
+38,388266,Homemaker,Rajasthan,Rural,5,No,Yes,1,27,1,No,Medium,Digital Access
+28,69974,Farmer,Rajasthan,Urban,4,No,Yes,4,25,5,No,Medium,Digital Access
+54,399453,Small Business,Jharkhand,Rural,5,Yes,Yes,4,13,5,No,Low,Application Complexity
+53,46371,Homemaker,Bihar,Rural,3,No,Yes,1,8,3,No,Medium,Digital Access
+52,337228,Farmer,West Bengal,Urban,4,Yes,Yes,5,5,1,No,Low,Documentation
+36,452845,Homemaker,Bihar,Urban,1,Yes,Yes,2,12,1,No,Medium,Digital Access
+37,212256,Homemaker,Rajasthan,Urban,5,No,Yes,2,41,1,No,Medium,Digital Access
+35,354060,Homemaker,West Bengal,Urban,5,Yes,No,5,3,4,No,Medium,Documentation
+64,103972,Self Employed,Uttar Pradesh,Urban,4,No,Yes,4,35,5,No,Medium,Digital Access
+58,223259,Small Business,Uttar Pradesh,Rural,1,Yes,Yes,2,33,5,No,High,Digital Access
+66,305128,Daily Wage Worker,Madhya Pradesh,Urban,1,No,Yes,3,22,4,Yes,High,Digital Access
+31,325183,Daily Wage Worker,Rajasthan,Urban,4,Yes,Yes,3,50,2,No,Low,Distance
+32,115431,Farmer,Madhya Pradesh,Rural,2,Yes,Yes,1,44,4,No,High,Digital Access
+48,375835,Homemaker,West Bengal,Urban,5,Yes,No,5,9,1,No,Low,Documentation
+18,350750,Farmer,Rajasthan,Rural,5,Yes,No,5,41,4,No,High,Documentation
+20,433832,Self Employed,Jharkhand,Urban,3,Yes,No,2,18,1,Yes,Medium,Documentation
+33,394809,Self Employed,Bihar,Urban,4,No,Yes,4,50,3,No,Medium,Digital Access
+40,135373,Student,Jharkhand,Urban,3,Yes,Yes,5,29,1,No,Low,Documentation
+28,211144,Self Employed,West Bengal,Urban,3,Yes,No,2,39,5,Yes,High,Documentation
+29,316718,Student,Rajasthan,Urban,1,Yes,Yes,2,27,4,No,Medium,Digital Access
+27,426646,Small Business,West Bengal,Rural,5,Yes,Yes,5,36,1,No,Low,Distance
+49,280195,Farmer,Bihar,Urban,3,No,No,2,45,2,No,High,Documentation
+33,173748,Small Business,Uttar Pradesh,Rural,1,Yes,Yes,1,17,3,No,Medium,Digital Access
+25,434032,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,1,34,2,No,Medium,Awareness
+55,62733,Small Business,West Bengal,Rural,3,Yes,Yes,5,46,2,Yes,Medium,Distance
+29,246752,Small Business,Madhya Pradesh,Rural,5,Yes,Yes,4,3,2,No,Low,Documentation
+41,32050,Small Business,Rajasthan,Rural,3,No,Yes,1,5,3,No,Medium,Digital Access
+45,139996,Self Employed,Rajasthan,Urban,4,Yes,Yes,1,14,3,Yes,Medium,Awareness
+25,63933,Homemaker,Uttar Pradesh,Rural,3,Yes,Yes,5,3,3,No,Low,Documentation
+45,54951,Small Business,Jharkhand,Rural,5,No,Yes,3,23,3,No,Low,Digital Access
+53,62413,Student,Bihar,Rural,1,No,Yes,2,39,2,No,High,Digital Access
+43,195873,Self Employed,Jharkhand,Rural,5,Yes,No,1,30,5,No,High,Documentation
+25,216691,Small Business,Jharkhand,Rural,1,Yes,Yes,3,50,5,No,Medium,Digital Access
+67,456129,Homemaker,West Bengal,Rural,2,Yes,Yes,4,45,3,No,Medium,Digital Access
+45,404717,Self Employed,Uttar Pradesh,Rural,5,Yes,Yes,3,23,4,No,Low,Application Complexity
+45,463816,Daily Wage Worker,Uttar Pradesh,Rural,5,No,No,5,27,1,No,Medium,Documentation
+54,218847,Homemaker,Uttar Pradesh,Rural,4,Yes,Yes,4,10,4,No,Low,Application Complexity
+58,251888,Student,West Bengal,Rural,3,Yes,Yes,4,25,4,No,Low,Application Complexity
+53,291044,Small Business,Madhya Pradesh,Rural,1,Yes,Yes,3,13,4,No,Medium,Digital Access
+44,251165,Daily Wage Worker,Jharkhand,Urban,1,Yes,No,5,16,5,No,Medium,Documentation
+34,273662,Daily Wage Worker,West Bengal,Urban,4,Yes,Yes,1,41,1,No,Medium,Awareness
+26,196472,Self Employed,Rajasthan,Rural,4,Yes,Yes,3,34,4,No,Medium,Distance
+50,427710,Daily Wage Worker,Bihar,Urban,3,Yes,Yes,1,37,3,Yes,Medium,Awareness
+37,241760,Student,Madhya Pradesh,Rural,3,Yes,Yes,3,22,5,No,Low,Application Complexity
+30,152744,Student,Rajasthan,Rural,5,Yes,No,1,17,3,No,Medium,Documentation
+45,381575,Farmer,Jharkhand,Urban,2,Yes,No,3,23,3,No,Medium,Documentation
+65,235763,Student,Uttar Pradesh,Rural,3,Yes,Yes,4,36,4,No,Medium,Distance
+46,73001,Homemaker,Jharkhand,Urban,4,Yes,No,2,49,3,No,Medium,Documentation
+30,97364,Daily Wage Worker,West Bengal,Rural,3,Yes,Yes,4,9,1,Yes,Low,Application Complexity
+63,417132,Student,Bihar,Rural,1,Yes,Yes,1,2,3,No,Medium,Digital Access
+52,337172,Self Employed,West Bengal,Rural,2,Yes,Yes,5,32,4,Yes,High,Application Complexity
+23,268506,Farmer,Madhya Pradesh,Urban,5,Yes,Yes,4,50,3,Yes,Medium,Distance
+35,258731,Daily Wage Worker,Madhya Pradesh,Rural,1,No,No,2,22,5,No,High,Digital Access
+68,460789,Farmer,Bihar,Urban,1,No,Yes,1,43,5,No,High,Digital Access
+22,161878,Daily Wage Worker,Rajasthan,Rural,2,Yes,Yes,4,13,5,Yes,Medium,Application Complexity
+64,416487,Self Employed,Rajasthan,Rural,5,Yes,Yes,3,8,2,Yes,Low,Application Complexity
+42,217710,Farmer,Madhya Pradesh,Rural,4,No,Yes,5,1,5,No,Medium,Digital Access
+19,158301,Small Business,Madhya Pradesh,Rural,5,Yes,Yes,1,17,5,No,Medium,Awareness
+27,418439,Homemaker,Uttar Pradesh,Urban,3,Yes,Yes,4,12,2,Yes,Low,Application Complexity
+47,190829,Homemaker,Rajasthan,Rural,1,Yes,No,1,4,5,No,High,Documentation
+67,64636,Daily Wage Worker,Bihar,Urban,3,No,Yes,3,13,4,No,Medium,Digital Access
+62,241169,Small Business,Rajasthan,Urban,4,Yes,Yes,2,31,5,No,Medium,Awareness
+22,209352,Farmer,Uttar Pradesh,Rural,3,Yes,No,4,41,5,No,High,Documentation
+50,316406,Small Business,West Bengal,Rural,5,Yes,No,1,7,2,Yes,High,Documentation
+18,372579,Small Business,Madhya Pradesh,Rural,3,No,Yes,1,23,4,No,Medium,Digital Access
+35,223283,Farmer,Madhya Pradesh,Rural,4,Yes,No,1,24,3,No,Medium,Documentation
+49,478058,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,2,5,1,No,Low,Awareness
+64,420727,Small Business,Bihar,Rural,4,Yes,Yes,1,5,4,No,Medium,Awareness
+66,480195,Small Business,Madhya Pradesh,Rural,5,Yes,Yes,5,17,3,No,Low,Documentation
+28,275596,Self Employed,Jharkhand,Rural,4,Yes,No,5,30,4,Yes,High,Documentation
+38,461413,Small Business,Madhya Pradesh,Rural,1,Yes,Yes,1,9,3,Yes,Medium,Digital Access
+43,333988,Small Business,Jharkhand,Rural,4,No,Yes,5,6,3,Yes,Medium,Digital Access
+42,356898,Small Business,Uttar Pradesh,Urban,3,Yes,Yes,4,25,4,No,Low,Application Complexity
+39,457373,Homemaker,Uttar Pradesh,Urban,3,Yes,No,5,19,2,No,Low,Documentation
+44,369273,Student,Madhya Pradesh,Rural,3,Yes,Yes,1,16,4,No,Medium,Awareness
+66,332186,Self Employed,Rajasthan,Rural,5,Yes,Yes,3,21,4,Yes,Medium,Application Complexity
+30,91665,Small Business,Jharkhand,Urban,3,Yes,Yes,4,2,3,No,Low,Documentation
+50,276584,Homemaker,Bihar,Rural,5,Yes,No,2,10,1,No,Medium,Documentation
+51,146953,Self Employed,Madhya Pradesh,Urban,5,Yes,No,1,16,3,No,Medium,Documentation
+58,188448,Daily Wage Worker,Bihar,Rural,4,Yes,Yes,2,37,5,No,Medium,Awareness
+52,216626,Daily Wage Worker,Madhya Pradesh,Rural,1,Yes,Yes,3,15,4,Yes,Medium,Application Complexity
+18,175271,Small Business,Rajasthan,Rural,4,No,No,2,13,4,No,High,Documentation
+38,148533,Homemaker,Rajasthan,Rural,4,No,Yes,1,13,2,No,Medium,Digital Access
+65,474164,Homemaker,Rajasthan,Rural,5,Yes,No,1,32,3,Yes,High,Documentation
+23,103781,Self Employed,West Bengal,Rural,5,Yes,No,3,45,2,No,Medium,Documentation
+45,495966,Self Employed,Rajasthan,Urban,3,Yes,Yes,1,47,4,No,Medium,Awareness
+34,96262,Homemaker,Uttar Pradesh,Urban,3,No,Yes,3,46,3,No,Medium,Digital Access
+22,338744,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,3,8,3,No,Low,Documentation
+48,106898,Homemaker,West Bengal,Urban,2,No,Yes,1,43,5,Yes,High,Digital Access
+22,485699,Student,Jharkhand,Rural,2,Yes,Yes,5,18,5,No,Medium,Digital Access
+55,179369,Homemaker,Bihar,Rural,3,No,Yes,3,36,1,No,Medium,Digital Access
+20,60448,Daily Wage Worker,Madhya Pradesh,Urban,2,No,Yes,1,26,5,Yes,High,Digital Access
+40,318316,Self Employed,Madhya Pradesh,Rural,3,No,Yes,5,10,3,No,Low,Digital Access
+54,466090,Homemaker,West Bengal,Rural,5,Yes,Yes,3,31,5,Yes,Medium,Application Complexity
+54,37657,Homemaker,Uttar Pradesh,Rural,4,Yes,Yes,5,33,1,No,Low,Distance
+27,286689,Self Employed,Madhya Pradesh,Rural,1,Yes,No,4,29,4,Yes,High,Documentation
+27,448641,Student,Uttar Pradesh,Urban,4,Yes,Yes,4,5,5,Yes,Medium,Application Complexity
+36,449901,Student,Jharkhand,Urban,3,Yes,No,5,13,3,No,Low,Documentation
+34,404999,Self Employed,Bihar,Urban,3,Yes,Yes,3,1,4,Yes,Medium,Application Complexity
+38,447794,Farmer,Jharkhand,Urban,4,Yes,Yes,1,23,3,No,Low,Awareness
+31,189903,Self Employed,West Bengal,Rural,3,Yes,No,2,40,4,Yes,High,Documentation
+26,37906,Self Employed,Rajasthan,Rural,2,Yes,Yes,1,3,3,No,Medium,Digital Access
+63,353557,Student,Rajasthan,Rural,2,Yes,Yes,2,3,5,Yes,High,Application Complexity
+18,84028,Student,Rajasthan,Rural,3,No,Yes,2,7,5,Yes,High,Application Complexity
+68,299431,Self Employed,Jharkhand,Rural,3,Yes,Yes,3,36,1,No,Low,Distance
+62,325804,Self Employed,Madhya Pradesh,Urban,2,Yes,Yes,5,35,4,No,Medium,Digital Access
+30,498974,Self Employed,Bihar,Rural,3,Yes,Yes,1,15,1,No,Low,Awareness
+21,352648,Student,Rajasthan,Rural,3,No,Yes,5,40,2,No,Medium,Digital Access
+18,220792,Self Employed,West Bengal,Rural,4,Yes,Yes,4,3,5,Yes,Medium,Application Complexity
+66,132979,Self Employed,West Bengal,Rural,1,Yes,Yes,3,29,4,No,Medium,Digital Access
+57,64701,Small Business,Rajasthan,Urban,2,Yes,Yes,3,30,1,Yes,Medium,Digital Access
+49,113300,Farmer,Rajasthan,Rural,4,Yes,Yes,4,39,1,Yes,Medium,Distance
+51,271249,Daily Wage Worker,Bihar,Rural,1,Yes,Yes,1,18,2,No,Medium,Digital Access
+45,178746,Farmer,Rajasthan,Urban,3,No,No,4,11,1,No,Medium,Documentation
+48,113560,Small Business,Bihar,Rural,3,No,Yes,1,43,3,No,Medium,Digital Access
+25,272615,Daily Wage Worker,West Bengal,Rural,4,Yes,Yes,2,49,5,Yes,High,Application Complexity
+56,447090,Self Employed,Rajasthan,Urban,3,Yes,Yes,3,38,1,No,Low,Distance
+43,73642,Small Business,Jharkhand,Urban,5,Yes,No,1,40,1,No,Medium,Documentation
+51,357304,Self Employed,Jharkhand,Rural,4,Yes,Yes,5,1,2,No,Low,Documentation
+20,309746,Student,West Bengal,Urban,1,Yes,No,5,29,3,Yes,Medium,Documentation
+67,395464,Homemaker,Bihar,Urban,4,Yes,Yes,3,10,1,No,Low,Documentation
+29,118801,Small Business,Jharkhand,Rural,2,No,Yes,4,28,5,No,Medium,Digital Access
+18,318075,Student,Bihar,Urban,4,No,No,4,31,5,No,High,Documentation
+61,124377,Small Business,Jharkhand,Urban,3,Yes,Yes,1,19,1,No,Low,Awareness
+22,321336,Small Business,Jharkhand,Urban,3,Yes,Yes,4,3,3,No,Low,Documentation
+47,338686,Student,Bihar,Urban,5,Yes,No,3,36,5,No,Medium,Documentation
+47,419159,Daily Wage Worker,Madhya Pradesh,Rural,5,Yes,No,1,43,5,No,High,Documentation
+34,334664,Farmer,Jharkhand,Rural,5,Yes,Yes,2,15,3,No,Low,Awareness
+65,356916,Self Employed,Rajasthan,Rural,1,Yes,Yes,4,33,3,Yes,Medium,Digital Access
+64,481978,Small Business,West Bengal,Rural,5,No,No,4,41,1,Yes,High,Documentation
+40,342250,Self Employed,Madhya Pradesh,Rural,1,Yes,Yes,1,43,4,No,High,Digital Access
+32,111121,Homemaker,Bihar,Urban,5,Yes,No,5,45,2,No,Medium,Documentation
+54,55559,Student,Madhya Pradesh,Urban,1,Yes,Yes,4,26,4,No,Medium,Digital Access
+38,397739,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,3,16,4,Yes,Medium,Application Complexity
+31,63742,Student,Uttar Pradesh,Urban,4,Yes,No,4,36,5,No,Medium,Documentation
+19,361813,Self Employed,Jharkhand,Urban,3,Yes,Yes,2,33,3,Yes,Medium,Awareness
+28,182826,Farmer,Jharkhand,Rural,1,Yes,Yes,4,20,5,No,Medium,Digital Access
+68,165044,Farmer,Rajasthan,Rural,2,Yes,Yes,5,13,2,No,Low,Digital Access
+56,362975,Farmer,West Bengal,Rural,3,Yes,Yes,4,33,1,Yes,Medium,Distance
+55,142217,Farmer,Madhya Pradesh,Urban,4,No,Yes,1,5,2,Yes,Medium,Digital Access
+51,71873,Farmer,Uttar Pradesh,Rural,1,Yes,No,4,37,5,No,High,Documentation
+55,398676,Farmer,Jharkhand,Urban,5,Yes,Yes,5,14,5,No,Low,Application Complexity
+67,418411,Student,West Bengal,Rural,2,Yes,Yes,1,27,5,No,Medium,Digital Access
+51,433119,Small Business,Madhya Pradesh,Urban,4,Yes,No,3,23,5,No,Medium,Documentation
+35,164092,Self Employed,Jharkhand,Urban,3,Yes,Yes,1,14,4,No,Medium,Awareness
+47,333899,Farmer,Jharkhand,Urban,1,No,Yes,2,40,1,Yes,High,Digital Access
+32,378100,Student,Uttar Pradesh,Urban,2,No,Yes,1,4,4,No,High,Digital Access
+44,116988,Student,Uttar Pradesh,Urban,1,Yes,No,3,39,5,No,High,Documentation
+68,75648,Student,Jharkhand,Urban,5,Yes,Yes,4,19,3,No,Low,Documentation
+51,155991,Small Business,Bihar,Urban,3,Yes,Yes,1,47,4,No,Medium,Awareness
+69,432732,Self Employed,Jharkhand,Urban,1,Yes,Yes,1,4,5,Yes,High,Application Complexity
+55,407149,Small Business,West Bengal,Urban,4,No,Yes,1,30,5,No,High,Digital Access
+50,32396,Daily Wage Worker,Jharkhand,Rural,3,Yes,Yes,1,19,1,No,Low,Awareness
+41,114082,Student,Rajasthan,Rural,4,Yes,Yes,3,31,2,No,Low,Distance
+32,442345,Daily Wage Worker,Rajasthan,Rural,1,Yes,Yes,5,31,4,No,Medium,Digital Access
+47,158322,Homemaker,Rajasthan,Rural,3,Yes,No,5,9,4,No,Medium,Documentation
+59,162663,Farmer,Bihar,Rural,4,No,Yes,1,13,4,No,Medium,Digital Access
+68,41303,Farmer,Bihar,Urban,5,Yes,Yes,3,14,5,No,Low,Application Complexity
+34,191633,Small Business,Jharkhand,Urban,5,No,Yes,3,46,1,No,Medium,Digital Access
+22,363863,Self Employed,Rajasthan,Urban,1,Yes,Yes,1,10,5,No,Medium,Digital Access
+46,279690,Daily Wage Worker,Bihar,Rural,3,No,Yes,2,48,5,No,High,Digital Access
+21,289820,Self Employed,Uttar Pradesh,Rural,2,Yes,Yes,1,31,3,No,Medium,Digital Access
+27,129616,Small Business,Jharkhand,Rural,3,Yes,Yes,2,37,1,Yes,Medium,Awareness
+34,416309,Farmer,West Bengal,Rural,5,No,No,1,23,4,Yes,High,Documentation
+27,116231,Self Employed,Madhya Pradesh,Rural,4,Yes,Yes,2,27,2,No,Low,Awareness
+34,299458,Self Employed,Jharkhand,Rural,2,Yes,Yes,2,6,4,No,Medium,Digital Access
+37,49623,Farmer,Madhya Pradesh,Urban,1,Yes,Yes,1,26,5,No,Medium,Digital Access
+41,228747,Daily Wage Worker,Rajasthan,Urban,2,Yes,Yes,2,2,1,No,Medium,Digital Access
+22,488298,Farmer,Madhya Pradesh,Rural,1,Yes,Yes,4,45,1,Yes,Medium,Digital Access
+51,135228,Self Employed,Rajasthan,Rural,2,No,Yes,5,13,1,No,Medium,Digital Access
+23,456346,Daily Wage Worker,Uttar Pradesh,Rural,1,Yes,Yes,3,50,3,No,Medium,Digital Access
+19,212828,Daily Wage Worker,Madhya Pradesh,Rural,1,Yes,No,2,19,4,No,High,Documentation
+30,389768,Farmer,Jharkhand,Urban,2,No,Yes,2,1,3,Yes,High,Digital Access
+60,187364,Self Employed,Rajasthan,Rural,2,Yes,Yes,3,40,2,Yes,Medium,Digital Access
+60,403929,Small Business,Jharkhand,Rural,1,No,Yes,2,32,5,No,High,Digital Access
+65,378350,Self Employed,Bihar,Rural,5,No,Yes,3,22,3,Yes,Medium,Digital Access
+28,99274,Student,Rajasthan,Rural,2,Yes,Yes,1,48,3,Yes,High,Digital Access
+68,163541,Homemaker,Madhya Pradesh,Rural,3,Yes,No,4,29,5,Yes,High,Documentation
+64,83947,Small Business,Rajasthan,Urban,4,Yes,Yes,4,2,1,No,Low,Documentation
+40,183606,Daily Wage Worker,Jharkhand,Urban,1,Yes,No,5,40,5,No,High,Documentation
+33,224692,Small Business,Uttar Pradesh,Rural,1,No,No,2,38,4,No,High,Digital Access
+48,78874,Daily Wage Worker,Rajasthan,Rural,4,Yes,Yes,5,48,5,No,Medium,Distance
+28,79708,Daily Wage Worker,Madhya Pradesh,Rural,5,Yes,Yes,1,11,1,No,Low,Awareness
+33,104553,Small Business,Bihar,Urban,4,Yes,Yes,4,17,5,Yes,Medium,Application Complexity
+25,98344,Daily Wage Worker,West Bengal,Rural,2,No,Yes,1,43,3,No,High,Digital Access
+21,341282,Daily Wage Worker,Uttar Pradesh,Rural,4,Yes,No,1,8,2,No,Medium,Documentation
+57,215374,Student,Bihar,Rural,1,Yes,Yes,2,22,3,No,Medium,Digital Access
+21,77638,Self Employed,Rajasthan,Rural,4,Yes,No,1,4,2,Yes,High,Documentation
+42,108249,Self Employed,Jharkhand,Rural,3,No,Yes,4,11,5,Yes,Medium,Application Complexity
+20,398009,Homemaker,Jharkhand,Rural,2,Yes,No,5,8,4,No,High,Documentation
+49,32719,Homemaker,Madhya Pradesh,Rural,4,Yes,No,4,9,5,No,Medium,Documentation
+20,183962,Student,Jharkhand,Urban,1,Yes,Yes,2,26,1,Yes,Medium,Digital Access
+44,459725,Homemaker,Uttar Pradesh,Rural,2,Yes,Yes,4,2,5,No,Medium,Digital Access
+46,72534,Small Business,Jharkhand,Urban,1,Yes,Yes,3,16,2,No,Low,Digital Access
+49,122241,Farmer,Madhya Pradesh,Rural,5,No,No,5,31,3,No,High,Documentation
+67,442003,Farmer,West Bengal,Urban,3,Yes,No,3,6,4,No,Medium,Documentation
+68,156209,Farmer,Rajasthan,Urban,5,Yes,No,3,21,5,Yes,Medium,Documentation
+36,472061,Student,Rajasthan,Rural,3,Yes,Yes,2,26,5,Yes,Medium,Application Complexity
+38,219004,Student,Jharkhand,Urban,4,Yes,Yes,1,19,3,Yes,Medium,Awareness
+22,122124,Daily Wage Worker,Bihar,Rural,2,No,No,3,28,4,No,High,Digital Access
+35,121659,Farmer,Rajasthan,Urban,4,Yes,Yes,4,8,5,Yes,Medium,Application Complexity
+45,194134,Small Business,West Bengal,Rural,3,Yes,No,1,14,5,No,High,Documentation
+59,105713,Homemaker,Jharkhand,Rural,3,Yes,Yes,4,24,2,Yes,Low,Application Complexity
+39,248335,Small Business,Madhya Pradesh,Rural,3,Yes,Yes,4,48,2,No,Low,Distance
+38,483677,Homemaker,West Bengal,Urban,1,Yes,Yes,1,44,1,No,Medium,Digital Access
+23,105418,Farmer,Jharkhand,Rural,2,Yes,Yes,1,37,3,Yes,High,Digital Access
+18,489888,Farmer,West Bengal,Rural,4,Yes,Yes,4,26,4,Yes,Medium,Application Complexity
+22,158232,Farmer,Rajasthan,Urban,4,Yes,Yes,2,31,5,No,Medium,Awareness
+58,458048,Student,Madhya Pradesh,Urban,5,Yes,Yes,5,32,5,No,Medium,Distance
+29,193038,Homemaker,Jharkhand,Rural,3,Yes,Yes,5,50,1,Yes,Medium,Distance
+43,495761,Student,Uttar Pradesh,Rural,3,No,Yes,2,41,5,No,High,Digital Access
+63,436203,Student,Madhya Pradesh,Rural,3,Yes,No,1,2,3,No,Medium,Documentation
+51,198383,Self Employed,Uttar Pradesh,Rural,4,No,No,4,25,1,No,Medium,Documentation
+66,323719,Small Business,West Bengal,Rural,5,Yes,No,5,44,3,No,Medium,Documentation
+31,355996,Small Business,Bihar,Urban,1,Yes,No,4,2,1,No,Medium,Documentation
+43,288722,Daily Wage Worker,Madhya Pradesh,Rural,2,Yes,Yes,2,42,5,No,High,Digital Access
+62,162079,Student,West Bengal,Urban,1,Yes,Yes,4,1,1,No,Low,Digital Access
+44,232053,Homemaker,Uttar Pradesh,Rural,4,Yes,Yes,2,36,2,No,Medium,Awareness
+26,106242,Self Employed,Rajasthan,Rural,3,No,No,1,12,4,Yes,High,Documentation
+43,208589,Self Employed,Rajasthan,Rural,2,Yes,Yes,2,9,5,No,Medium,Digital Access
+64,59257,Small Business,Bihar,Rural,4,Yes,Yes,2,36,4,No,Medium,Awareness
+39,465423,Student,Madhya Pradesh,Urban,4,Yes,No,5,41,5,No,Medium,Documentation
+64,174353,Daily Wage Worker,Madhya Pradesh,Urban,4,Yes,Yes,4,28,4,Yes,Medium,Application Complexity
+47,353390,Student,Madhya Pradesh,Rural,2,Yes,Yes,5,38,2,Yes,Medium,Digital Access
+60,293579,Farmer,West Bengal,Urban,2,Yes,Yes,3,33,4,Yes,High,Application Complexity
+65,259947,Student,Bihar,Urban,5,No,Yes,2,42,1,Yes,High,Digital Access
+34,261758,Farmer,Madhya Pradesh,Rural,5,No,Yes,3,46,4,No,Medium,Digital Access
+43,121357,Farmer,West Bengal,Urban,1,Yes,Yes,5,22,5,No,Medium,Digital Access
+53,187732,Daily Wage Worker,Rajasthan,Rural,2,Yes,Yes,4,25,3,No,Low,Digital Access
+18,428300,Homemaker,Uttar Pradesh,Rural,2,No,Yes,5,18,4,Yes,High,Digital Access
+25,436723,Small Business,West Bengal,Urban,2,No,No,4,6,4,Yes,High,Digital Access
+66,233667,Student,Rajasthan,Rural,5,Yes,No,4,18,4,Yes,High,Documentation
+52,113807,Farmer,Rajasthan,Rural,4,No,Yes,1,16,5,No,Medium,Digital Access
+69,468755,Student,Uttar Pradesh,Urban,3,Yes,No,2,15,4,No,Medium,Documentation
+32,408097,Homemaker,Rajasthan,Rural,5,No,Yes,5,48,5,Yes,High,Application Complexity
+64,168563,Small Business,Bihar,Rural,2,Yes,Yes,4,8,5,Yes,Medium,Application Complexity
+39,288778,Homemaker,Uttar Pradesh,Urban,5,Yes,Yes,5,13,3,No,Low,Documentation
+31,211264,Small Business,Rajasthan,Rural,1,No,Yes,5,43,1,No,Medium,Digital Access
+43,415941,Self Employed,Jharkhand,Rural,2,Yes,Yes,4,7,5,No,Medium,Digital Access
+45,356032,Small Business,West Bengal,Urban,1,Yes,Yes,3,17,2,No,Low,Digital Access
+40,103609,Daily Wage Worker,Rajasthan,Rural,2,Yes,Yes,2,50,4,Yes,High,Application Complexity
+31,301221,Homemaker,Bihar,Rural,5,No,No,2,32,2,No,High,Documentation
+41,278512,Farmer,Madhya Pradesh,Urban,4,No,Yes,1,22,4,No,Medium,Digital Access
+19,283973,Self Employed,Rajasthan,Urban,3,Yes,Yes,1,13,3,No,Low,Awareness
+62,313097,Daily Wage Worker,Madhya Pradesh,Rural,1,Yes,Yes,1,47,5,No,High,Digital Access
+43,406826,Student,Jharkhand,Urban,5,No,Yes,2,23,1,Yes,Medium,Digital Access
+31,360033,Homemaker,Rajasthan,Urban,4,Yes,Yes,3,29,5,No,Low,Application Complexity
+68,184893,Farmer,Uttar Pradesh,Rural,5,Yes,Yes,2,22,4,No,Medium,Awareness
+24,460783,Small Business,Madhya Pradesh,Rural,1,Yes,Yes,2,1,1,No,Medium,Digital Access
+20,145374,Farmer,Jharkhand,Rural,3,Yes,No,2,29,5,No,High,Documentation
+64,54860,Student,Uttar Pradesh,Urban,5,Yes,Yes,2,48,1,No,Medium,Awareness
+40,182267,Self Employed,Uttar Pradesh,Rural,2,Yes,No,3,5,4,No,High,Documentation
+63,107475,Self Employed,Uttar Pradesh,Rural,4,Yes,Yes,1,35,3,No,Medium,Awareness
+60,379410,Homemaker,Uttar Pradesh,Urban,5,No,Yes,5,10,3,Yes,Medium,Digital Access
+64,182499,Self Employed,Rajasthan,Urban,4,Yes,Yes,1,19,5,No,Medium,Awareness
+62,392876,Homemaker,West Bengal,Rural,2,Yes,Yes,1,37,2,No,Medium,Digital Access
+35,319227,Homemaker,Rajasthan,Rural,3,Yes,Yes,5,7,4,Yes,Medium,Application Complexity
+55,248118,Homemaker,Rajasthan,Rural,3,Yes,Yes,2,46,5,No,Medium,Awareness

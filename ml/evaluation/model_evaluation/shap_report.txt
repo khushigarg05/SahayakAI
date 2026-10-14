@@ -1,0 +1,27 @@
+SAHAYAKAI SHAP MODEL EXPLAINABILITY REPORT
+============================================================
+
+Model: XGBoost
+Model Accuracy: 0.935
+
+Test Samples: 200
+Features: 31
+
+Top 15 SHAP Features:
+------------------------------------------------------------
+                                    feature  importance
+                num__application_complexity    0.677245
+                      num__scheme_awareness    0.627434
+            num__distance_to_service_center    0.584042
+                 cat__documents_complete_No    0.579182
+                      num__digital_literacy    0.388396
+       cat__previous_application_failure_No    0.353550
+                    cat__internet_access_No    0.301547
+cat__primary_barrier_Application Complexity    0.252121
+        cat__primary_barrier_Digital Access    0.188550
+             cat__primary_barrier_Awareness    0.168636
+                cat__documents_complete_Yes    0.151169
+                  cat__rural_or_urban_Rural    0.113528
+      cat__previous_application_failure_Yes    0.103624
+              cat__primary_barrier_Distance    0.100115
+                                   num__age    0.074853

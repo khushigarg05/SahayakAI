@@ -1,0 +1,27 @@
+SahayakAI MODEL EVALUATION REPORT
+==================================================
+
+Model: XGBoost
+Test Samples: 200
+Features: 31
+Accuracy: 0.9350
+Accuracy Percentage: 93.50%
+
+Classification Report
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+         Low       1.00      0.93      0.97        45
+      Medium       0.92      0.95      0.94       103
+        High       0.90      0.90      0.90        52
+
+    accuracy                           0.94       200
+   macro avg       0.94      0.93      0.94       200
+weighted avg       0.94      0.94      0.94       200
+
+
+Confusion Matrix
+--------------------------------------------------
+[[42  3  0]
+ [ 0 98  5]
+ [ 0  5 47]]

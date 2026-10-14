@@ -1,0 +1,32 @@
+feature,importance
+num__application_complexity,0.67724466
+num__scheme_awareness,0.6274336
+num__distance_to_service_center,0.5840416
+cat__documents_complete_No,0.57918227
+num__digital_literacy,0.38839638
+cat__previous_application_failure_No,0.35355043
+cat__internet_access_No,0.30154723
+cat__primary_barrier_Application Complexity,0.25212148
+cat__primary_barrier_Digital Access,0.18855047
+cat__primary_barrier_Awareness,0.16863555
+cat__documents_complete_Yes,0.15116912
+cat__rural_or_urban_Rural,0.11352801
+cat__previous_application_failure_Yes,0.103624105
+cat__primary_barrier_Distance,0.100115284
+num__age,0.07485323
+cat__internet_access_Yes,0.06896334
+num__annual_income,0.068225235
+cat__primary_barrier_Documentation,0.06387836
+cat__rural_or_urban_Urban,0.02477449
+cat__state_Rajasthan,0.021771114
+cat__state_Uttar Pradesh,0.02151248
+cat__state_Madhya Pradesh,0.014931307
+cat__occupation_Student,0.012334859
+cat__occupation_Small Business,0.0117148785
+cat__occupation_Self Employed,0.011696724
+cat__state_Jharkhand,0.009556846
+cat__state_West Bengal,0.009555613
+cat__state_Bihar,0.009537066
+cat__occupation_Homemaker,0.00884944
+cat__occupation_Daily Wage Worker,0.0069908514
+cat__occupation_Farmer,0.006503243
