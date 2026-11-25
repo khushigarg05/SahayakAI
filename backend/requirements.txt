@@ -16,3 +16,6 @@ pandas
 numpy
 python-dotenv
 httpx
+qrcode
+Pillow
+redis
