@@ -1,0 +1,34 @@
+# Git & OS artifacts
+.git
+.github
+.gitignore
+.DS_Store
+*.log
+
+# Caches & virtual environments
+node_modules
+.next
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+venv
+.venv
+env
+
+# Local databases & secrets
+*.db
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+.env
+.env.local
+
+# IDE & testing
+.vscode
+.cursor
+.agents
+testsprite_tests
+old_chat_history.md

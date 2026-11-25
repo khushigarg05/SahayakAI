@@ -1,0 +1,55 @@
+# ==============================================================
+# SahayakAI - Multi-Container Orchestration (Docker Compose)
+# Academic Capstone & Cloud Production Blueprint
+# ==============================================================
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sahayakai-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - PROJECT_NAME=SahayakAI
+      - DEBUG=False
+      - CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+      - SECRET_KEY=sahayakai_capstone_academic_secret_jwt_2026_key
+      - DATABASE_URL=sqlite:///./sahayak.db
+      - API_SETU_MODE=sandbox
+    volumes:
+      - backend-storage:/app
+    networks:
+      - sahayakai-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: sahayakai-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - sahayakai-network
+
+volumes:
+  backend-storage:
+
+networks:
+  sahayakai-network:
+    driver: bridge

@@ -140,6 +140,23 @@ npm run dev
 ```
 The citizen web application will be accessible at `http://localhost:3000`.
 
+### C. One-Command Docker Setup (Recommended for Evaluation)
+Run the entire full-stack platform (FastAPI + ML Intelligence + Next.js 15) in isolated production-ready containers with a single command:
+
+```bash
+# Build and run all services in the background
+docker compose up --build -d
+
+# View live streaming container logs
+docker compose logs -f
+
+# Stop all containers
+docker compose down
+```
+- **Citizen Web App**: `http://localhost:3000`
+- **FastAPI Backend & Interactive Swagger Docs**: `http://localhost:8000/docs`
+- **Backend Health Check**: `http://localhost:8000/health`
+
 ---
 
 ## 🧪 6. Testing & Automated Verification
