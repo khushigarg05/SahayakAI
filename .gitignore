@@ -64,6 +64,11 @@ data/processed/*
 # IDEs & System files
 .vscode/
 .idea/
+.cursor/
+.agents/mcp_config.json
+mcp.json
 .DS_Store
 *.DS_Store
 Thumbs.db
+testsprite_tests/tmp/
+testsprite_tests/tmp/config.json

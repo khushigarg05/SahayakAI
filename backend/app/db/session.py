@@ -14,10 +14,13 @@ if settings.sync_database_url.startswith("sqlite"):
         "timeout": 30                 # 30 seconds wait karega agar traffic jam ho, crash nahi hoga
     }
 
-# Engine Creation with Health Check
+# Engine Creation with High-Concurrency Pool Settings (Supports 150+ concurrent users)
 engine = create_engine(
     settings.sync_database_url,
     connect_args=connect_args,
+    pool_size=50,
+    max_overflow=100,
+    pool_timeout=60,
     pool_pre_ping=True,  # Broken connection auto-detect & auto-reconnect
     echo=False
 )

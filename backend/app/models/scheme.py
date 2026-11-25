@@ -36,3 +36,10 @@ class Scheme(Base):
     # Official portal link & application fee
     official_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, index=True, nullable=False)
+
+    # Verification & Provenance Metadata
+    data_source: Mapped[Optional[str]] = mapped_column(String(150), default="statutory_seed_baseline", nullable=True)
+    is_verified_rule: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    rule_complexity: Mapped[Optional[str]] = mapped_column(String(50), default="simplified_statutory", nullable=True)
+    last_verified_at: Mapped[Optional[str]] = mapped_column(String(50), default="2026-11-24", nullable=True)
+    rule_disclaimer: Mapped[Optional[str]] = mapped_column(Text, nullable=True)

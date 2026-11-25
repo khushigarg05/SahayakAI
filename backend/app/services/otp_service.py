@@ -58,7 +58,7 @@ class OTPService:
         """
         clean_mobile = self._sanitize_mobile(mobile)
         if not self._validate_indian_mobile(clean_mobile):
-            raise ValueError("Kripya 10 anko ka valid Indian Mobile Number dalein (shuruat 6, 7, 8 ya 9 se honi chahiye).")
+            raise ValueError("Please enter a valid 10-digit Indian Mobile Number (starting with 6, 7, 8, or 9).")
 
         now = time.time()
 
@@ -71,7 +71,7 @@ class OTPService:
                 elapsed = now - existing["created_at"]
                 if elapsed < self.resend_cooldown:
                     remaining_cooldown = int(self.resend_cooldown - elapsed)
-                    raise ValueError(f"OTP pehle hi bheja ja chuka hai. Kripya {remaining_cooldown} seconds baad dobara try karein.")
+                    raise ValueError(f"OTP has already been sent. Please retry after {remaining_cooldown} seconds.")
 
             # Cryptographically secure 6-digit numeric code (100000 - 999999)
             otp_code = str(secrets.randbelow(900000) + 100000)
@@ -87,7 +87,7 @@ class OTPService:
                 "mobile": clean_mobile,
                 "expires_in_seconds": self.otp_ttl,
                 "resend_available_in_seconds": self.resend_cooldown,
-                "message": f"OTP safalta-purvak dispatch kar diya gaya hai (+91 {clean_mobile[:5]}-XXXXX par).",
+                "message": f"OTP dispatched successfully to +91 {clean_mobile[:5]}-XXXXX.",
                 # For presentation and sandbox testing, return demo_otp so evaluator can test immediately
                 "demo_otp": otp_code
             }
@@ -107,23 +107,23 @@ class OTPService:
 
         clean_otp = otp_code.strip()
         if not clean_otp.isdigit() or len(clean_otp) != 6:
-            return False, "OTP 6 anko ka numeric code hona chahiye."
+            return False, "OTP must be a 6-digit numeric code."
 
         now = time.time()
 
         with self._lock:
             record = self._store.get(clean_mobile)
             if not record:
-                return False, "Is mobile number par koi active OTP nahi mila. Kripya naya OTP request karein."
+                return False, "No active OTP found for this mobile number. Please request a new OTP."
 
             # Check if locked due to too many attempts
             if record.get("locked") or record.get("attempts", 0) >= self.max_attempts:
-                return False, "Adhik galat prayason ke karan yeh OTP block ho gaya hai. Kripya naya OTP mangwayen."
+                return False, "This OTP is blocked due to excessive incorrect attempts. Please request a new OTP."
 
             # Check expiration
             if now - record["created_at"] > self.otp_ttl:
                 del self._store[clean_mobile]
-                return False, "Yeh OTP expire ho chuka hai (5 minute samapt). Kripya naya OTP bhejein."
+                return False, "This OTP has expired (5-minute validity elapsed). Please request a new OTP."
 
             # Check match
             if record["otp"] != clean_otp:
@@ -131,12 +131,12 @@ class OTPService:
                 remaining_attempts = self.max_attempts - record["attempts"]
                 if remaining_attempts <= 0:
                     record["locked"] = True
-                    return False, "Galat OTP! Maximum attempts samapt ho gaye hain. Naya OTP request karein."
-                return False, f"Galat OTP darj kiya gaya hai. Aapke paas {remaining_attempts} prayas bache hain."
+                    return False, "Incorrect OTP. Maximum attempts exceeded. Please request a new OTP."
+                return False, f"Incorrect OTP entered. You have {remaining_attempts} attempts remaining."
 
             # Success: Immediately invalidate the OTP to prevent replay attacks
             del self._store[clean_mobile]
-            return True, "OTP safalta-purvak satyapit (verified) ho gaya!"
+            return True, "OTP verified successfully!"
 
 
 # Global Singleton Instance

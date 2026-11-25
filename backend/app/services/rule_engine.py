@@ -91,13 +91,68 @@ class RuleEngine:
                 is_strictly_eligible = False
                 unmatched_criteria.append(f"Sirf {scheme.target_caste} varg ke liye")
 
+        # 6. Occupation Targeting (Crucial for PM-KISAN & Farmer Welfare)
+        if scheme.category.lower() in ["agriculture", "farming"] or scheme.scheme_code == "PM-KISAN":
+            total_rules += 1
+            occupation = citizen_data.get("occupation", "Farmer")
+            if occupation and occupation.lower() == "farmer":
+                passed_rules += 1
+                matched_criteria.append("Kisan / Krishi Karya (Farmer Profession)")
+            else:
+                is_strictly_eligible = False
+                unmatched_criteria.append(f"Sirf Kisanon ke liye (Aapka pesha: {occupation or 'Non-Farmer'})")
+
+        # 7. Rural / Urban Location Targeting (PMAY-G Gramin Housing)
+        if scheme.scheme_code == "PMAY-G":
+            total_rules += 1
+            area = citizen_data.get("rural_or_urban", "Rural")
+            if area and area.lower() == "rural":
+                passed_rules += 1
+                matched_criteria.append("Gramin kshetra ke niwasi (Rural Resident)")
+            else:
+                is_strictly_eligible = False
+                unmatched_criteria.append(f"Sirf Gramin (Rural) labharthiyo ke liye (Aapka kshetra: {area})")
+
+        # 8. Mandatory Income Certificate Proof
+        if scheme.max_annual_income is not None or scheme.requires_bpl:
+            if "has_income_certificate" in citizen_data and citizen_data.get("has_income_certificate") is not None:
+                total_rules += 1
+                if citizen_data.get("has_income_certificate"):
+                    passed_rules += 1
+                    matched_criteria.append("Aamdani praman patra (Income Certificate) uplabdh")
+                else:
+                    is_strictly_eligible = False
+                    unmatched_criteria.append("Aamdani praman patra (Income Certificate) missing - Navinikaran anivarya")
+
+        # 9. DBT Bank Account Seeding Proof (PFMS requirement for direct transfers)
+        if scheme.scheme_code in ["PM-KISAN", "IGNOAPS"] or scheme.category.lower() in ["agriculture", "social security"]:
+            if "bank_account_aadhaar_linked" in citizen_data and citizen_data.get("bank_account_aadhaar_linked") is not None:
+                total_rules += 1
+                if citizen_data.get("bank_account_aadhaar_linked"):
+                    passed_rules += 1
+                    matched_criteria.append("Bank account Aadhaar (DBT) linked hai")
+                else:
+                    is_strictly_eligible = False
+                    unmatched_criteria.append("Bank account Aadhaar (DBT) se linked nahi hai")
+
+        # 10. Caste Certificate Verification
+        if scheme.target_caste and scheme.target_caste.lower() not in ["all", "any", "general"]:
+            if "has_caste_certificate" in citizen_data and citizen_data.get("has_caste_certificate") is not None:
+                total_rules += 1
+                if citizen_data.get("has_caste_certificate"):
+                    passed_rules += 1
+                    matched_criteria.append("Jaati praman patra (Caste Certificate) uplabdh")
+                else:
+                    is_strictly_eligible = False
+                    unmatched_criteria.append("Jaati praman patra (Caste Certificate) missing")
+
         # Calculate Match Percentage
         if total_rules == 0:
             match_percentage = 100
         else:
             base_score = int((passed_rules / total_rules) * 100)
-            # Agar strictly eligible hai toh 90-100% ke beech boost
-            match_percentage = max(90, base_score) if is_strictly_eligible else min(base_score, 75)
+            # Agar strictly eligible hai toh 90-100% ke beech boost, warna partial score capped at 70%
+            match_percentage = max(90, base_score) if is_strictly_eligible else min(base_score, 70)
 
         # Extract required documents safely from JSON field
         docs = scheme.required_documents if isinstance(scheme.required_documents, list) else []

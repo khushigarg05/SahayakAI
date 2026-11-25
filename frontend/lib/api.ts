@@ -74,6 +74,31 @@ export async function verifyOTP(
   return await res.json();
 }
 
+export async function firebaseLogin(
+  mobile: string,
+  idToken?: string,
+  fullName?: string
+): Promise<{
+  access_token: string;
+  token_type: string;
+  user_id: number;
+  mobile: string;
+  role: string;
+  is_new_user: boolean;
+  message: string;
+}> {
+  const res = await fetch(`${API_BASE_URL}/api/v1/auth/firebase-login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mobile, id_token: idToken, full_name: fullName }),
+  });
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.detail || "Firebase login failed");
+  }
+  return await res.json();
+}
+
 export async function registerUser(data: {
   mobile: string;
   password?: string;
@@ -82,7 +107,7 @@ export async function registerUser(data: {
   full_name?: string;
   role?: string;
   auto_generate_password?: boolean;
-}): Promise<any> {
+}): Promise<Record<string, unknown>> {
   const res = await fetch(`${API_BASE_URL}/api/v1/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -107,6 +132,12 @@ export interface SchemeMatchParams {
   bpl_status: boolean;
   gender: string;
   caste_category: string;
+  occupation?: string;
+  rural_or_urban?: string;
+  has_income_certificate?: boolean;
+  bank_account_aadhaar_linked?: boolean;
+  has_caste_certificate?: boolean;
+  has_bpl_ration_card?: boolean;
   state?: string;
   district?: string;
 }
@@ -148,7 +179,11 @@ export async function getAllSchemes(): Promise<MatchedScheme[]> {
     const res = await fetch(`${API_BASE_URL}/api/v1/schemes`);
     if (!res.ok) throw new Error("Failed to fetch schemes catalog");
     const data = await res.json();
-    return data;
+    return data.map((s: MatchedScheme & { id?: number }) => ({
+      ...s,
+      scheme_id: s.scheme_id || s.id || 0,
+      id: s.id || s.scheme_id || 0
+    }));
   } catch (err) {
     console.warn("Using default central schemes:", err);
     return [
@@ -241,9 +276,12 @@ export interface AssessRiskParams {
 export interface SHAPBarrier {
   factor_key: string;
   factor: string;
+  factor_hi?: string;
   impact_percentage: string;
   description: string;
+  description_hi?: string;
   remedy: string;
+  remedy_hi?: string;
 }
 
 export interface ActionStep {
@@ -283,12 +321,17 @@ export async function assessRisk(data: AssessRiskParams): Promise<AssessRiskResp
 export interface Kiosk {
   id: number;
   center_name: string;
+  name?: string;
   vle_operator_name: string;
+  operator_name?: string;
   phone: string;
+  contact_number?: string;
   address: string;
   district: string;
   state: string;
   pincode: string;
+  latitude?: number;
+  longitude?: number;
   operating_hours?: string;
   supported_services?: string;
   distance_km?: number;
@@ -357,13 +400,53 @@ export async function bookKioskToken(data: BookTokenParams): Promise<TokenRespon
   return await res.json();
 }
 
+export interface TrackingStepData {
+  name: string;
+  name_hi?: string;
+  date: string;
+  date_hi?: string;
+  completed: boolean;
+  current?: boolean;
+  error?: string;
+  error_hi?: string;
+}
+
+export interface TrackingDetailData {
+  id: string;
+  scheme_name: string;
+  scheme_name_hi: string;
+  type: string;
+  type_hi: string;
+  status: string;
+  status_hi: string;
+  kiosk_name: string;
+  date: string;
+  date_hi: string;
+  progress: number;
+  qr_code_base64?: string;
+  operator_phone?: string;
+  steps: TrackingStepData[];
+}
+
+export async function fetchTrackingDetail(referenceId: string): Promise<TrackingDetailData> {
+  const encoded = encodeURIComponent(referenceId.trim());
+  const res = await fetch(`${API_BASE_URL}/api/v1/kiosks/track/${encoded}`);
+  if (!res.ok) {
+    throw new Error(`Failed to track reference: ${res.statusText}`);
+  }
+  return await res.json();
+}
+
 // --- MODULE 5: MULTILINGUAL AI CHATBOT (RAG) ---
 export interface ChatResponse {
   answer: string;
+  response?: string;
   detected_language: string;
   matched_scheme?: string;
   confidence_score?: number;
   source_gazette?: string;
+  source_guidelines?: string[];
+  suggested_action?: string;
 }
 
 export async function sendChatMessage(message: string, language: string = "hi"): Promise<ChatResponse> {
@@ -375,5 +458,180 @@ export async function sendChatMessage(message: string, language: string = "hi"):
   if (!res.ok) {
     throw new Error(`Failed to send chat: ${res.statusText}`);
   }
+  const data = await res.json();
+  return {
+    ...data,
+    answer: data.answer || data.response || "",
+    response: data.response || data.answer || ""
+  };
+}
+
+export async function fetchSpeechAudio(text: string, voiceId?: string): Promise<Blob> {
+  const res = await fetch(`${API_BASE_URL}/api/v1/chat/tts`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, voice_id: voiceId }),
+  });
+  if (!res.ok) {
+    throw new Error(`TTS generation failed: ${res.statusText}`);
+  }
+  return await res.blob();
+}
+
+export interface DocumentAuditResult {
+  document_type: string;
+  filename: string;
+  is_valid: boolean;
+  confidence_score: number;
+  clarity_rating: string;
+  hologram_or_seal_detected: boolean;
+  masked_identifier: string;
+  raw_identifier?: string;
+  detected_name?: string;
+  detected_dob?: string;
+  detected_age?: number;
+  detected_gender?: string;
+  detected_date: string;
+  is_expired: boolean;
+  findings: string[];
+  recommendation: string;
+}
+
+export async function verifyUploadedDocument(file: File, documentType: string = "income"): Promise<DocumentAuditResult> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("document_type", documentType);
+
+  const res = await fetch(`${API_BASE_URL}/api/v1/documents/verify`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text().catch(() => "Unknown error");
+    throw new Error(`Document audit failed: ${errorText}`);
+  }
+
   return await res.json();
 }
+
+// --- API SETU DEVELOPER SANDBOX APIS ---
+export interface ApiSetuDocRequest {
+  doc_type: string; // income, ration, dbt, caste
+  doc_number: string;
+  state?: string;
+  citizen_name?: string;
+  aadhaar_last_four?: string;
+}
+
+export interface ApiSetuDocResponse {
+  status: "verified" | "expired" | "rejected" | "not_found";
+  is_valid: boolean;
+  is_expired: boolean;
+  doc_type: string;
+  doc_number: string;
+  holder_name: string;
+  authority: string;
+  issue_date?: string;
+  expiry_date?: string;
+  verified_via: string;
+  signature_hash: string;
+  metadata: Record<string, unknown>;
+  message: string;
+  message_hi: string;
+}
+
+export interface ApiSetuSampleItem {
+  doc_type: string;
+  doc_number: string;
+  label: string;
+  label_hi: string;
+  expected_status: string;
+  details: string;
+  details_hi: string;
+  auto_fill: Record<string, unknown>;
+}
+
+export async function verifyDocumentWithApiSetu(payload: ApiSetuDocRequest): Promise<ApiSetuDocResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/v1/apisetu/verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "API Setu verification request failed");
+  }
+  return await res.json();
+}
+
+export async function getApiSetuSamples(): Promise<{ sandbox_mode: boolean; samples: ApiSetuSampleItem[] }> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/apisetu/samples`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load sample documents");
+    return await res.json();
+  } catch (err) {
+    return {
+      sandbox_mode: true,
+      samples: [
+        {
+          doc_type: "income",
+          doc_number: "UP/INC/2026/89412",
+          label: "Valid UP Income Certificate",
+          label_hi: "वैध उत्तर प्रदेश आय प्रमाण पत्र",
+          expected_status: "verified",
+          details: "₹65,000/yr • UP Revenue Dept • Valid until 2029",
+          details_hi: "₹65,000/वर्ष • राजस्व विभाग उ.प्र. • 2029 तक वैध",
+          auto_fill: { income: 65000, has_income_certificate: true }
+        },
+        {
+          doc_type: "dbt",
+          doc_number: "DBT-ACTIVE-9102",
+          label: "Active NPCI Aadhaar DBT Account",
+          label_hi: "सक्रिय NPCI आधार DBT बैंक खाता",
+          expected_status: "verified",
+          details: "SBI • DBT Active • Direct Welfare Transfer OK",
+          details_hi: "SBI बैंक • DBT सक्रिय • सीधा नकद भुगतान सुरक्षित",
+          auto_fill: { has_bank_account: true, dbt_active: true }
+        }
+      ]
+    };
+  }
+}
+
+export interface RegionalStatsResponse {
+  is_live_data?: boolean;
+  data_mode?: "LIVE_DATABASE" | "DEMO_BASELINE" | "NO_DATA_AVAILABLE";
+  demo_notice?: string | null;
+  database_live_metrics?: {
+    citizens_registered: number;
+    csc_tokens_dispatched: number;
+    active_districts: number;
+  };
+  kpis: {
+    citizens_audited: number;
+    high_risk_cases: number;
+    csc_tokens_dispatched: number;
+    dbt_success_rate: number;
+  };
+  district_risk_breakdown: Array<{
+    district: string;
+    low_risk: number;
+    medium_risk: number;
+    high_risk: number;
+  }>;
+  scheme_adoption_share: Array<{
+    name: string;
+    share_percentage: number;
+    beneficiaries: number;
+  }>;
+}
+
+export async function getRegionalStats(): Promise<RegionalStatsResponse> {
+  const res = await fetch(`${API_BASE_URL}/api/v1/dashboard/regional-stats`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch regional stats: ${res.statusText}`);
+  }
+  return await res.json();
+}
+

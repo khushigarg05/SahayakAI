@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { Navigation, Phone, ExternalLink, Building2, MapPin } from "lucide-react";
+import { Phone, Building2 } from "lucide-react";
 import { Kiosk } from "@/lib/api";
 
 // 100% Offline-Safe SVG Pin Icons (No external CDN image downloads needed!)
@@ -96,7 +95,7 @@ export default function DynamicMap({ kiosks = [], onSelectKiosk }: DynamicMapPro
                       CSC JAN SEVA KENDRA
                     </span>
                     <h3 className="font-bold text-sm text-slate-900 mt-1">
-                      {kiosk.center_name || (kiosk as any).name}
+                      {kiosk.center_name || kiosk.name}
                     </h3>
                     <p className="text-slate-500 text-[11px] mt-0.5">{kiosk.address}</p>
                   </div>
@@ -104,11 +103,11 @@ export default function DynamicMap({ kiosks = [], onSelectKiosk }: DynamicMapPro
                   <div className="space-y-1 text-slate-700 text-[11px]">
                     <div className="flex items-center space-x-1.5">
                       <Phone className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{kiosk.phone || (kiosk as any).contact_number || "+91 94150 12345"}</span>
+                      <span>{kiosk.phone || kiosk.contact_number || "+91 94150 12345"}</span>
                     </div>
                     <div className="flex items-center space-x-1.5">
                       <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                      <span>संचालक: {kiosk.vle_operator_name || (kiosk as any).operator_name || "सुरेंद्र यादव"}</span>
+                      <span>संचालक: {kiosk.vle_operator_name || kiosk.operator_name || "सुरेंद्र यादव"}</span>
                     </div>
                   </div>
 

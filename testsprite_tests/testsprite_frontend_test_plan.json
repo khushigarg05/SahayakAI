@@ -1,0 +1,957 @@
+[
+  {
+    "id": "TC001",
+    "title": "Complete onboarding and receive matched schemes with risk guidance",
+    "description": "A citizen completes onboarding and receives matched welfare schemes, required documents, and a rejection risk assessment to decide whether to apply online or seek CSC support.",
+    "category": "Citizen Onboarding and Socioeconomic Profiling",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the onboarding flow"
+      },
+      {
+        "type": "action",
+        "description": "Complete the first onboarding step with valid personal details"
+      },
+      {
+        "type": "action",
+        "description": "Complete the second onboarding step with valid socioeconomic details"
+      },
+      {
+        "type": "action",
+        "description": "Complete the third onboarding step with valid document readiness and digital literacy details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify matched schemes are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a rejection risk assessment with explanation data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Display risk score and SHAP barriers for a completed profile",
+    "description": "A citizen receives a risk score, risk band, and top contributing barriers so they can decide between online filing and CSC assistance.",
+    "category": "Access Risk Meter and SHAP Explainability",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the risk assessment flow"
+      },
+      {
+        "type": "action",
+        "description": "Complete the profile with valid risk input values"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a risk score is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify SHAP barrier explanations are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Book a priority token at a selected CSC kiosk",
+    "description": "A citizen can choose a listed kiosk, submit booking details, and receive an immutable appointment token with QR pass details.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the CSC kiosk locator"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid district or pincode filter"
+      },
+      {
+        "type": "action",
+        "description": "Search for nearby kiosks"
+      },
+      {
+        "type": "action",
+        "description": "Select a kiosk from the results"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the citizen booking details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the token booking"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an appointment token is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify QR pass details are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Analyze a valid document for readiness issues",
+    "description": "A citizen can upload a supported document image and receive extracted details and pre-screening findings that help decide whether the document is ready for filing.",
+    "category": "Dynamic Document Pre-Screening and OCR",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the document pre-screening feature"
+      },
+      {
+        "type": "action",
+        "description": "Upload a supported document image"
+      },
+      {
+        "type": "action",
+        "description": "Run the document analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify extracted document information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify document readiness findings are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Get a grounded scheme answer in a supported language",
+    "description": "A citizen can ask a welfare question in Hindi, English, or Hinglish and receive a grounded answer with cited scheme guidance.",
+    "category": "Multilingual Voice-Enabled RAG Scheme Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the scheme chatbot"
+      },
+      {
+        "type": "action",
+        "description": "Enter a welfare question in a supported language"
+      },
+      {
+        "type": "action",
+        "description": "Send the question"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a grounded answer is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cited scheme guidance is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Find nearby CSC kiosks using a district or pincode filter",
+    "description": "A citizen can search for nearby CSC locations and see a list of matching kiosks with distance and contact details.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the CSC kiosk locator"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid district or pincode filter"
+      },
+      {
+        "type": "action",
+        "description": "Search for nearby kiosks"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify nearby kiosk results are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify kiosk distance and contact details are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Show validation when onboarding is incomplete",
+    "description": "A citizen leaving required onboarding fields blank sees validation feedback and cannot complete the matching flow.",
+    "category": "Citizen Onboarding and Socioeconomic Profiling",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the onboarding flow"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to continue without filling required profile fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify onboarding validation errors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no matched schemes are shown"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Review OCR findings for missing or expired document details",
+    "description": "A citizen can inspect the analysis output to identify missing identity fields or expired certificate indicators before applying.",
+    "category": "Dynamic Document Pre-Screening and OCR",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the document pre-screening feature"
+      },
+      {
+        "type": "action",
+        "description": "Upload a supported document image"
+      },
+      {
+        "type": "action",
+        "description": "Run the document analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify issue indicators are displayed when the document is not fully ready"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the analysis highlights missing or expired fields when present"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Show matched scheme details and required documents",
+    "description": "A citizen reviews a successful match result and can see the scheme benefits and required documents needed to proceed.",
+    "category": "Deterministic Scheme Matching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the scheme matching flow"
+      },
+      {
+        "type": "action",
+        "description": "Complete the profile with valid eligible inputs"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify matched scheme recommendations are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify required document information is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Track a CSC booking after it is created",
+    "description": "A citizen can use the booking reference to view the current status of an appointment or kiosk visit after booking.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the CSC kiosk locator"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid district or pincode filter"
+      },
+      {
+        "type": "action",
+        "description": "Search for nearby kiosks"
+      },
+      {
+        "type": "action",
+        "description": "Select a kiosk from the results"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the citizen booking details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the token booking"
+      },
+      {
+        "type": "action",
+        "description": "Open the booking tracking view"
+      },
+      {
+        "type": "action",
+        "description": "Enter the booking reference"
+      },
+      {
+        "type": "action",
+        "description": "Request the booking status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the current booking status is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Play voice output for a chatbot answer",
+    "description": "A citizen can generate speech from a chatbot response and receive audio output for the assistant's answer.",
+    "category": "Multilingual Voice-Enabled RAG Scheme Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the scheme chatbot"
+      },
+      {
+        "type": "action",
+        "description": "Enter a welfare question in a supported language"
+      },
+      {
+        "type": "action",
+        "description": "Send the question"
+      },
+      {
+        "type": "action",
+        "description": "Generate voice output for the assistant response"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify synthesized audio output is available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC012",
+    "title": "Verify API Setu integration readiness",
+    "description": "A developer can submit verification data and receive a clear confirmation that the integration is ready to use.",
+    "category": "API Setu Developer Sandbox Gateway",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Setu sandbox gateway page."
+      },
+      {
+        "type": "action",
+        "description": "Open the verification workflow."
+      },
+      {
+        "type": "action",
+        "description": "Fill in valid verification data."
+      },
+      {
+        "type": "action",
+        "description": "Submit the verification request."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an integration readiness confirmation is displayed."
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC013",
+    "title": "Keep scheme results consistent across repeated review",
+    "description": "A citizen revisits the matching result and sees the same scheme recommendations and document requirements for the same profile.",
+    "category": "Deterministic Scheme Matching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the scheme matching flow"
+      },
+      {
+        "type": "action",
+        "description": "Complete the profile with valid eligible inputs"
+      },
+      {
+        "type": "action",
+        "description": "Return to the matching result view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify matched scheme recommendations are still displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify required document information is still displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC014",
+    "title": "Reject malformed risk input during onboarding review",
+    "description": "A citizen submitting an incomplete risk assessment payload sees schema validation feedback and no risk result.",
+    "category": "Access Risk Meter and SHAP Explainability",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the risk assessment flow"
+      },
+      {
+        "type": "action",
+        "description": "Submit the risk form with missing required profile fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify risk input validation errors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no risk prediction is shown"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Block scheme matching when eligibility data conflicts",
+    "description": "A citizen entering conflicting or invalid eligibility information sees rule validation feedback and no scheme recommendations.",
+    "category": "Deterministic Scheme Matching",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the scheme matching flow"
+      },
+      {
+        "type": "action",
+        "description": "Submit eligibility details with conflicting category information"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify scheme rule validation errors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no scheme recommendations are shown"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Inspect API Setu sample payloads",
+    "description": "A developer can open the API Setu sample section and review example request and response payloads for integration testing.",
+    "category": "API Setu Developer Sandbox Gateway",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Setu sandbox gateway page."
+      },
+      {
+        "type": "action",
+        "description": "Open the sample payloads section."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sample request payloads are displayed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify sample response payloads are displayed."
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Reject an unsupported document format",
+    "description": "A citizen receives a validation outcome when trying to analyze a file type that the document pre-screening flow does not support.",
+    "category": "Dynamic Document Pre-Screening and OCR",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the document pre-screening feature"
+      },
+      {
+        "type": "action",
+        "description": "Upload an unsupported file format"
+      },
+      {
+        "type": "action",
+        "description": "Run the document analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an unsupported file format error is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Reject incomplete CSC booking details",
+    "description": "A citizen receives booking validation feedback when required kiosk or citizen details are missing during token booking.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the CSC kiosk locator"
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid district or pincode filter"
+      },
+      {
+        "type": "action",
+        "description": "Search for nearby kiosks"
+      },
+      {
+        "type": "action",
+        "description": "Select a kiosk from the results"
+      },
+      {
+        "type": "action",
+        "description": "Leave one or more required booking fields blank"
+      },
+      {
+        "type": "action",
+        "description": "Submit the token booking"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify booking validation errors are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC019",
+    "title": "Reject out-of-range risk values",
+    "description": "A citizen entering invalid numeric values for risk assessment sees constraint feedback and no prediction is produced.",
+    "category": "Access Risk Meter and SHAP Explainability",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the risk assessment flow"
+      },
+      {
+        "type": "action",
+        "description": "Enter out-of-range values in the risk inputs"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify risk input constraint errors are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no risk prediction is shown"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC020",
+    "title": "Show a processing error for unreadable document content",
+    "description": "A citizen receives a file processing error when the uploaded document image cannot be analyzed.",
+    "category": "Dynamic Document Pre-Screening and OCR",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the document pre-screening feature"
+      },
+      {
+        "type": "action",
+        "description": "Upload an unreadable or corrupted file"
+      },
+      {
+        "type": "action",
+        "description": "Run the document analysis"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a file processing error is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no analysis results are shown"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC021",
+    "title": "Review API Setu gateway status",
+    "description": "A developer can check the current API Setu gateway status and see that the sandbox is ready or unavailable as reported by the app.",
+    "category": "API Setu Developer Sandbox Gateway",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Setu sandbox gateway page."
+      },
+      {
+        "type": "action",
+        "description": "Request the current gateway status."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the gateway status is displayed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the status response details are displayed."
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC022",
+    "title": "Reject invalid kiosk search filters",
+    "description": "A citizen receives filter validation feedback when searching nearby CSC kiosks with incomplete or invalid location input.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the CSC kiosk locator"
+      },
+      {
+        "type": "action",
+        "description": "Enter an invalid or incomplete location filter"
+      },
+      {
+        "type": "action",
+        "description": "Search for nearby kiosks"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify kiosk filter validation errors are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC023",
+    "title": "Reject unsupported or empty chatbot input",
+    "description": "A citizen receives validation feedback when sending an empty message or unsupported language to the welfare chatbot.",
+    "category": "Multilingual Voice-Enabled RAG Scheme Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the scheme chatbot"
+      },
+      {
+        "type": "action",
+        "description": "Leave the message empty or use an unsupported language"
+      },
+      {
+        "type": "action",
+        "description": "Send the message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify chat input validation errors are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC024",
+    "title": "Show not found status for an unknown CSC tracking reference",
+    "description": "A citizen receives a not found result when tracking a CSC booking with an unknown reference ID.",
+    "category": "CSC Kiosk Locator and Priority Booking",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the booking tracking view"
+      },
+      {
+        "type": "action",
+        "description": "Enter an unknown booking reference"
+      },
+      {
+        "type": "action",
+        "description": "Request the booking status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a not found tracking result is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC025",
+    "title": "Handle malformed API Setu verification input",
+    "description": "A developer sees validation feedback when the API Setu verification form is submitted with malformed or incomplete data.",
+    "category": "API Setu Developer Sandbox Gateway",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Setu sandbox gateway page."
+      },
+      {
+        "type": "action",
+        "description": "Open the verification workflow."
+      },
+      {
+        "type": "action",
+        "description": "Submit the verification form without required fields."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a validation error is displayed."
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC026",
+    "title": "Reject overly long text for voice generation",
+    "description": "A citizen receives a validation outcome when requesting text-to-speech for an overly long assistant response.",
+    "category": "Multilingual Voice-Enabled RAG Scheme Chatbot",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the scheme chatbot"
+      },
+      {
+        "type": "action",
+        "description": "Enter or obtain a long assistant response text"
+      },
+      {
+        "type": "action",
+        "description": "Generate voice output for the text"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text-to-speech validation errors are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC027",
+    "title": "Handle unsupported API Setu credentials",
+    "description": "A developer sees an authentication or authorization failure message when verification is attempted with invalid credentials.",
+    "category": "API Setu Developer Sandbox Gateway",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the API Setu sandbox gateway page."
+      },
+      {
+        "type": "action",
+        "description": "Open the verification workflow."
+      },
+      {
+        "type": "action",
+        "description": "Fill in invalid credentials."
+      },
+      {
+        "type": "action",
+        "description": "Submit the verification request."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a verification failure message is displayed."
+      }
+    ],
+    "priority": "Low"
+  }
+]

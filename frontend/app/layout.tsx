@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import TickerBar from "@/components/TickerBar";
 import AIAssistantWidget from "../components/AIAssistantWidget";
 import { LanguageProvider } from "@/context/LanguageContext";
+import RefreshRedirect from "@/components/RefreshRedirect";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
           defaultTheme="light"
         >
           <LanguageProvider>
+            <RefreshRedirect />
             {/* Main App Shell Container */}
             <div className="relative flex min-h-screen flex-col overflow-x-hidden">
               <GovBanner />

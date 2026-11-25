@@ -24,11 +24,19 @@ class Settings(BaseSettings):
 
     # Database: Default SQLite
     DATABASE_URL: str = "sqlite:///./sahayak.db"
+    REDIS_URL: str = ""  # e.g., "redis://localhost:6379/0" for distributed multi-worker rate limiting
 
     # AI & LLM Service Keys (Optional)
     GEMINI_API_KEY: str = ""
     OPENAI_API_KEY: str = ""
     GROQ_API_KEY: str = ""
+    ELEVENLABS_API_KEY: str = ""
+    ELEVENLABS_VOICE_ID: str = "pNInz6obpgDQGcFmaJgB"  # Adam (official free-tier premade voice)
+
+    # API Setu Gateway Settings (MeitY National API Exchange)
+    API_SETU_MODE: str = "sandbox"  # "sandbox" or "production"
+    API_SETU_CLIENT_ID: str = ""
+    API_SETU_API_KEY: str = ""
 
     # ML & Artifacts Paths
     VECTOR_STORE_PATH: str = "./app/ml_artifacts/vector_store"

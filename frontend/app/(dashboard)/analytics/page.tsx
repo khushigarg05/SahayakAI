@@ -1,19 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
-import { Users, AlertTriangle, TrendingUp, ShieldCheck, Building2, Download } from "lucide-react";
+import { Users, AlertTriangle, TrendingUp, ShieldCheck, Download } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import { getRegionalStats } from "@/lib/api";
 
-const districtRiskData = [
-  { name: "Varanasi", high: 450, medium: 800, low: 1200 },
-  { name: "Prayagraj", high: 600, medium: 500, low: 800 },
-  { name: "Gorakhpur", high: 300, medium: 600, low: 900 },
-  { name: "Lucknow", high: 400, medium: 700, low: 1100 },
-  { name: "Patna", high: 700, medium: 400, low: 500 },
+const DEFAULT_DISTRICT_DATA = [
+  { name: "Varanasi", high: 420, medium: 950, low: 2400 },
+  { name: "Prayagraj", high: 680, medium: 1100, low: 1900 },
+  { name: "Gorakhpur", high: 390, medium: 820, low: 2100 },
+  { name: "Lucknow", high: 280, medium: 650, low: 3200 },
+  { name: "Patna", high: 640, medium: 1200, low: 1850 },
 ];
 
-const schemeAdoptionData = [
+const DEFAULT_SCHEME_DATA = [
   { name: "PM-KISAN", value: 45 },
   { name: "Ayushman Bharat", value: 30 },
   { name: "PMAY-G Housing", value: 15 },
@@ -23,7 +24,61 @@ const schemeAdoptionData = [
 const COLORS = ["#1e40af", "#059669", "#d97706", "#7c3aed"];
 
 export default function AnalyticsDashboard() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
+  const [districtRiskData, setDistrictRiskData] = useState(DEFAULT_DISTRICT_DATA);
+  const [schemeAdoptionData, setSchemeAdoptionData] = useState(DEFAULT_SCHEME_DATA);
+  const [kpis, setKpis] = useState({
+    citizens_audited: 14850,
+    high_risk_cases: 2410,
+    csc_tokens_dispatched: 9640,
+    dbt_success_rate: 98.2,
+  });
+  const [isLiveData, setIsLiveData] = useState(false);
+  const [demoNotice, setDemoNotice] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchStats() {
+      try {
+        const data = await getRegionalStats();
+        if (isMounted && data) {
+          if (data.kpis) {
+            setKpis(data.kpis);
+          }
+          if (data.district_risk_breakdown && data.district_risk_breakdown.length > 0) {
+            setDistrictRiskData(
+              data.district_risk_breakdown.map((d) => ({
+                name: d.district,
+                high: d.high_risk,
+                medium: d.medium_risk,
+                low: d.low_risk,
+              }))
+            );
+          }
+          if (data.scheme_adoption_share && data.scheme_adoption_share.length > 0) {
+            setSchemeAdoptionData(
+              data.scheme_adoption_share.map((s) => ({
+                name: s.name,
+                value: s.share_percentage,
+              }))
+            );
+          }
+          setIsLiveData(Boolean(data.is_live_data));
+          setDemoNotice(data.demo_notice || null);
+        }
+      } catch (err) {
+        console.warn("Using default baseline for regional stats:", err);
+        if (isMounted) {
+          setIsLiveData(false);
+          setDemoNotice("OFFLINE MODE: Displaying local baseline projection. Backend database is unreachable.");
+        }
+      }
+    }
+    fetchStats();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-slate-50/50 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 font-sans">
@@ -58,13 +113,24 @@ export default function AnalyticsDashboard() {
           </div>
         </div>
 
+        {/* DATA INTEGRITY NOTICE (Explicitly separates real DB data from demo projections) */}
+        {demoNotice && (
+          <div className="bg-amber-50 border border-amber-200/90 rounded-2xl p-4 px-5 flex items-start sm:items-center gap-3 text-xs text-amber-900 shadow-2xs">
+            <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5 sm:mt-0" />
+            <div className="flex-1">
+              <span className="font-bold uppercase tracking-wide text-amber-800 mr-2">[Data Lineage Notice]</span>
+              <span>{demoNotice}</span>
+            </div>
+          </div>
+        )}
+
         {/* 4 KPI CARDS */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {[
-            { title: t.analytics.kpiAudited, value: "14,850", icon: Users, color: "text-blue-700", bg: "bg-blue-50" },
-            { title: t.analytics.kpiHighRisk, value: "2,410", icon: AlertTriangle, color: "text-red-700", bg: "bg-red-50" },
-            { title: t.analytics.kpiTokens, value: "9,640", icon: ShieldCheck, color: "text-emerald-700", bg: "bg-emerald-50" },
-            { title: t.analytics.kpiDbtRate, value: "98.2%", icon: TrendingUp, color: "text-purple-700", bg: "bg-purple-50" },
+            { title: t.analytics.kpiAudited, value: kpis.citizens_audited.toLocaleString("en-IN"), icon: Users, color: "text-blue-700", bg: "bg-blue-50" },
+            { title: t.analytics.kpiHighRisk, value: kpis.high_risk_cases.toLocaleString("en-IN"), icon: AlertTriangle, color: "text-red-700", bg: "bg-red-50" },
+            { title: t.analytics.kpiTokens, value: kpis.csc_tokens_dispatched.toLocaleString("en-IN"), icon: ShieldCheck, color: "text-emerald-700", bg: "bg-emerald-50" },
+            { title: t.analytics.kpiDbtRate, value: `${kpis.dbt_success_rate}%`, icon: TrendingUp, color: "text-purple-700", bg: "bg-purple-50" },
           ].map((kpi, idx) => (
             <div
               key={idx}
@@ -93,8 +159,13 @@ export default function AnalyticsDashboard() {
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">{t.analytics.chartRiskSub}</p>
               </div>
-              <span className="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
-                {t.analytics.liveBadge}
+              <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded flex items-center gap-1.5 ${
+                isLiveData
+                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                  : "bg-amber-50 text-amber-700 border border-amber-200"
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${isLiveData ? "bg-emerald-500 animate-pulse" : "bg-amber-500"}`} />
+                {isLiveData ? "🟢 Live Database Metrics" : "⚠️ DEMO PROJECTION MODEL"}
               </span>
             </div>
 

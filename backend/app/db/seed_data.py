@@ -22,7 +22,12 @@ INITIAL_SCHEMES = [
         "target_gender": "All",
         "target_caste": "All",
         "required_documents": ["Aadhaar Card", "Bank Account Passbook (Aadhaar linked)", "BPL Ration Card", "Land Possession Proof"],
-        "official_url": "https://pmayg.nic.in"
+        "official_url": "https://pmayg.nic.in",
+        "data_source": "Ministry of Rural Development (Statutory Baseline)",
+        "is_verified_rule": True,
+        "rule_complexity": "standard_statutory",
+        "last_verified_at": "2026-11-24",
+        "rule_disclaimer": "Verified against PMAY-G operational guidelines. Beneficiary selection relies on Awaas+ SECC 2011 priority ranking."
     },
     {
         "scheme_code": "PM-KISAN",
@@ -38,7 +43,12 @@ INITIAL_SCHEMES = [
         "target_gender": "All",
         "target_caste": "All",
         "required_documents": ["Aadhaar Card", "Land Ownership Record (Khatauni)", "Bank Passbook with DBT active"],
-        "official_url": "https://pmkisan.gov.in"
+        "official_url": "https://pmkisan.gov.in",
+        "data_source": "Ministry of Agriculture & Farmers Welfare (Statutory Baseline)",
+        "is_verified_rule": False,
+        "rule_complexity": "simplified_model",
+        "last_verified_at": "2026-11-24",
+        "rule_disclaimer": "Simplified Rule: Operational guidelines exclude institutional landholders and income tax payees rather than a flat Rs. 2,50,000 threshold."
     },
     {
         "scheme_code": "IGNOAPS",
@@ -54,7 +64,12 @@ INITIAL_SCHEMES = [
         "target_gender": "All",
         "target_caste": "All",
         "required_documents": ["Aadhaar Card", "Age Proof Certificate (Voter ID/Birth Cert)", "BPL Ration Card", "Bank Passbook"],
-        "official_url": "https://nsap.nic.in"
+        "official_url": "https://nsap.nic.in",
+        "data_source": "National Social Assistance Programme (NSAP Guidelines)",
+        "is_verified_rule": True,
+        "rule_complexity": "standard_statutory",
+        "last_verified_at": "2026-11-24",
+        "rule_disclaimer": "Central contribution is Rs. 200/mo (age 60-79) or Rs. 500/mo (age 80+); state governments add supplemental pensions to reach Rs. 1,000-2,500/mo."
     },
     {
         "scheme_code": "PM-JAY",
@@ -70,7 +85,12 @@ INITIAL_SCHEMES = [
         "target_gender": "All",
         "target_caste": "All",
         "required_documents": ["Aadhaar Card", "Ration Card (SECC 2011 Listing)", "Registered Mobile Number"],
-        "official_url": "https://pmjay.gov.in"
+        "official_url": "https://pmjay.gov.in",
+        "data_source": "National Health Authority (AB PM-JAY Guidelines)",
+        "is_verified_rule": True,
+        "rule_complexity": "standard_statutory",
+        "last_verified_at": "2026-11-24",
+        "rule_disclaimer": "Eligibility based on SECC 2011 deprivation criteria (D1-D7) or active RSBY ration card."
     },
     {
         "scheme_code": "PMUY",
@@ -86,7 +106,12 @@ INITIAL_SCHEMES = [
         "target_gender": "Female",
         "target_caste": "All",
         "required_documents": ["Aadhaar Card of Woman Beneficiary", "BPL Ration Card", "Bank Passbook with Aadhaar Seeding"],
-        "official_url": "https://pmuy.gov.in"
+        "official_url": "https://pmuy.gov.in",
+        "data_source": "Ministry of Petroleum & Natural Gas (Ujjwala 2.0 Guidelines)",
+        "is_verified_rule": True,
+        "rule_complexity": "standard_statutory",
+        "last_verified_at": "2026-11-24",
+        "rule_disclaimer": "Connection is released strictly in the name of an adult woman member of poor/BPL household with 14-point declaration."
     }
 ]
 
@@ -150,6 +175,21 @@ INITIAL_KIOSKS = [
         "operating_hours": "09:00 AM - 07:00 PM",
         "supported_services": "All Central & State Karnataka Welfare Schemes, Aadhaar",
         "is_active": True
+    },
+    {
+        "center_name": "Connaught Place CSC Jan Seva Kendra",
+        "vle_operator_name": "Amitabh Sen",
+        "phone": "+91 98101 23456",
+        "email": "delhi.csc@sahayak.in",
+        "address": "Block B, Inner Circle, Connaught Place",
+        "district": "Delhi",
+        "state": "Delhi",
+        "pincode": "110001",
+        "latitude": 28.6315,
+        "longitude": 77.2167,
+        "operating_hours": "09:00 AM - 06:00 PM",
+        "supported_services": "All Central & State Delhi Welfare Schemes, Aadhaar, DBT",
+        "is_active": True
     }
 ]
 
@@ -162,6 +202,13 @@ def seed_database(db: Session):
             scheme = Scheme(**data)
             db.add(scheme)
             scheme_count += 1
+        else:
+            # Update provenance & verification metadata
+            existing.data_source = data.get("data_source")
+            existing.is_verified_rule = data.get("is_verified_rule", False)
+            existing.rule_complexity = data.get("rule_complexity")
+            existing.last_verified_at = data.get("last_verified_at")
+            existing.rule_disclaimer = data.get("rule_disclaimer")
 
     # 2. Seed Kiosks
     kiosk_count = 0

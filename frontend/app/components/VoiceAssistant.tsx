@@ -1,8 +1,29 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Mic, Volume2, X, MessageSquare, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+interface SpeechRecognitionEventLike {
+  resultIndex: number;
+  results: {
+    [index: number]: {
+      [index: number]: {
+        transcript: string;
+      };
+    };
+  };
+}
+
+interface SpeechRecognitionLike {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+}
 
 export default function VoiceAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,41 +32,10 @@ export default function VoiceAssistant() {
   const [response, setResponse] = useState("Namaste! Main SahayakAI hoon. Aapki kya madad kar sakta hoon?");
   const [language, setLanguage] = useState<'hi-IN' | 'en-IN'>('hi-IN');
   
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
   const synthesisRef = useRef<SpeechSynthesis | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    // Initialize Speech Recognition
-    if (typeof window !== "undefined") {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      if (SpeechRecognition) {
-        recognitionRef.current = new SpeechRecognition();
-        recognitionRef.current.continuous = false;
-        recognitionRef.current.interimResults = false;
-
-        recognitionRef.current.onresult = (event: any) => {
-          const current = event.resultIndex;
-          const transcriptText = event.results[current][0].transcript;
-          setTranscript(transcriptText);
-          handleVoiceCommand(transcriptText);
-        };
-
-        recognitionRef.current.onend = () => {
-          setIsListening(false);
-        };
-      }
-      
-      synthesisRef.current = window.speechSynthesis;
-    }
-  }, [language]);
-
-  const toggleLanguage = () => {
-    setLanguage(prev => prev === 'hi-IN' ? 'en-IN' : 'hi-IN');
-    setResponse(language === 'hi-IN' ? "Hello! I am SahayakAI. How can I help you?" : "Namaste! Main SahayakAI hoon. Aapki kya madad kar sakta hoon?");
-  };
-
-  function speak(text: string) {
+  const speak = useCallback((text: string) => {
     if (synthesisRef.current) {
       synthesisRef.current.cancel(); // stop current speech
       const utterance = new SpeechSynthesisUtterance(text);
@@ -58,9 +48,9 @@ export default function VoiceAssistant() {
       }
       synthesisRef.current.speak(utterance);
     }
-  };
+  }, [language]);
 
-  function handleVoiceCommand(text: string) {
+  const handleVoiceCommand = useCallback((text: string) => {
     const lowerText = text.toLowerCase();
     let reply = "";
 
@@ -85,6 +75,40 @@ export default function VoiceAssistant() {
 
     setResponse(reply);
     speak(reply);
+  }, [language, speak]);
+
+  useEffect(() => {
+    // Initialize Speech Recognition
+    if (typeof window !== "undefined") {
+      const win = window as unknown as {
+        SpeechRecognition?: new () => SpeechRecognitionLike;
+        webkitSpeechRecognition?: new () => SpeechRecognitionLike;
+      };
+      const SpeechRecognitionConstructor = win.SpeechRecognition || win.webkitSpeechRecognition;
+      if (SpeechRecognitionConstructor) {
+        recognitionRef.current = new SpeechRecognitionConstructor();
+        recognitionRef.current.continuous = false;
+        recognitionRef.current.interimResults = false;
+
+        recognitionRef.current.onresult = (event: SpeechRecognitionEventLike) => {
+          const current = event.resultIndex;
+          const transcriptText = event.results[current][0].transcript;
+          setTranscript(transcriptText);
+          handleVoiceCommand(transcriptText);
+        };
+
+        recognitionRef.current.onend = () => {
+          setIsListening(false);
+        };
+      }
+      
+      synthesisRef.current = window.speechSynthesis;
+    }
+  }, [handleVoiceCommand, language]);
+
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'hi-IN' ? 'en-IN' : 'hi-IN');
+    setResponse(language === 'hi-IN' ? "Hello! I am SahayakAI. How can I help you?" : "Namaste! Main SahayakAI hoon. Aapki kya madad kar sakta hoon?");
   };
 
   const toggleListening = () => {

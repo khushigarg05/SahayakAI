@@ -114,9 +114,9 @@ export default function SchemeExplorerPage() {
 
         {/* SCHEMES CARDS LIST */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {filteredSchemes.map((scheme) => (
+          {filteredSchemes.map((scheme, sIdx) => (
             <div
-              key={scheme.scheme_id}
+              key={scheme.scheme_code || scheme.scheme_id || `scheme-${sIdx}`}
               className="bg-white border border-slate-200/90 hover:border-blue-400 rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col justify-between transition-all"
             >
               <div>
@@ -143,7 +143,7 @@ export default function SchemeExplorerPage() {
                     <div className="flex flex-wrap gap-1.5">
                       {scheme.required_documents.map((doc, idx) => (
                         <span
-                          key={idx}
+                          key={`${scheme.scheme_code || 'doc'}-${idx}-${doc}`}
                           className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200"
                         >
                           {doc}

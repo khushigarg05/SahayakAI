@@ -19,10 +19,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Language>("hi");
 
   useEffect(() => {
-    // Initial read from localStorage
+    // Initial read from localStorage deferred via microtask to avoid cascading render
     const saved = localStorage.getItem("sahayak_lang");
     if (saved === "en" || saved === "hi") {
-      setLangState(saved);
+      queueMicrotask(() => {
+        setLangState(saved);
+      });
     }
 
     // Sync across window events

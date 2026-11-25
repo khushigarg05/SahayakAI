@@ -1,5 +1,5 @@
 from typing import Optional, List, Dict, Any
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 class ChatMessage(BaseModel):
     role: str = Field(..., description="'user' or 'assistant'")
@@ -28,8 +28,19 @@ class ChatResponse(BaseModel):
     RAG Verified Conversational Response
     """
     response: str
+    answer: Optional[str] = None
     detected_language: str
     matched_scheme: Optional[str] = None
     confidence_score: float
     source_guidelines: List[str]
     suggested_action: Optional[str] = None
+
+    @model_validator(mode="after")
+    def sync_answer(self):
+        if not self.answer:
+            self.answer = self.response
+        return self
+
+class TTSRequest(BaseModel):
+    text: str = Field(..., min_length=1, max_length=2000, description="Text to convert into speech")
+    voice_id: Optional[str] = Field(None, description="Optional ElevenLabs voice ID")

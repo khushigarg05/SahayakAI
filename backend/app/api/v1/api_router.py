@@ -9,7 +9,8 @@ from app.api.v1 import (
     grievances,
     documents,
     profile,
-    dashboard
+    dashboard,
+    api_setu
 )
 
 api_router = APIRouter()
@@ -43,3 +44,6 @@ api_router.include_router(profile.router, prefix="/profile", tags=["Citizen Prof
 
 # 10. Consolidated Dashboard & Regional Analytics (/api/v1/dashboard)
 api_router.include_router(dashboard.router, prefix="/dashboard", tags=["Welfare Dashboard & Analytics"])
+
+# 11. API Setu Developer Sandbox & Verification (/api/v1/apisetu)
+api_router.include_router(api_setu.router, prefix="/apisetu", tags=["API Setu Developer Sandbox"])

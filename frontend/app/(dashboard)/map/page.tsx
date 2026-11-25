@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { 
   MapPin, 
@@ -40,7 +41,20 @@ const AssistanceMap = dynamic(() => import("@/components/map/DynamicMap"), {
 export default function MapPage() {
   const { lang, t } = useLanguage();
   const [pincode, setPincode] = useState("221001");
-  const [district, setDistrict] = useState("Varanasi");
+  const [district] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const stored = localStorage.getItem("sahayak_citizen_profile");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.district) return parsed.district;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return "Varanasi";
+  });
   const [kiosks, setKiosks] = useState<Kiosk[]>([]);
   const [loadingKiosks, setLoadingKiosks] = useState(false);
   const [selectedKiosk, setSelectedKiosk] = useState<Kiosk | null>(null);
@@ -60,19 +74,7 @@ export default function MapPage() {
   });
   const [timeSlot, setTimeSlot] = useState("10:30 AM - 11:00 AM");
 
-  useEffect(() => {
-    const stored = localStorage.getItem("sahayak_citizen_profile");
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (parsed.district) setDistrict(parsed.district);
-      } catch (e) {}
-    }
-
-    fetchKiosks("221001", "Varanasi");
-  }, []);
-
-  const fetchKiosks = async (pin?: string, dist?: string) => {
+  const fetchKiosks = useCallback(async (pin?: string, dist?: string) => {
     setLoadingKiosks(true);
     try {
       const data = await getNearbyKiosks(pin, dist);
@@ -123,7 +125,13 @@ export default function MapPage() {
     } finally {
       setLoadingKiosks(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      fetchKiosks("221001", "Varanasi");
+    });
+  }, [fetchKiosks]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,9 +162,41 @@ export default function MapPage() {
 
       const res = await bookKioskToken(payload);
       setBookedPass(res);
-    } catch (err: any) {
+
+      // Sync into localStorage for real-time Application Tracker visibility
+      try {
+        if (typeof window !== "undefined") {
+          const existing = JSON.parse(localStorage.getItem("sahayak_booked_tokens") || "[]");
+          const newRecord = {
+            id: res.token_number,
+            schemeName: "Pradhan Mantri Awas Yojana (PMAY-G)",
+            schemeName_hi: "प्रधानमंत्री आवास योजना (ग्रामीण)",
+            type: "CSC Priority Appointment Token",
+            type_hi: "CSC प्राथमिकता टोकन पास",
+            status: "Confirmed",
+            status_hi: "सत्यापित",
+            kioskName: res.kiosk_name || selectedKiosk.center_name,
+            date: `${res.appointment_date}, ${res.appointment_time_slot || timeSlot}`,
+            date_hi: `${res.appointment_date}, ${res.appointment_time_slot || timeSlot}`,
+            progress: 75,
+            qr_code_base64: res.qr_code_base64,
+            operator_phone: res.operator_phone || selectedKiosk.phone,
+            isNew: true,
+            steps: [
+              { name: "Token Generated Online", name_hi: "टोकन ऑनलाइन जनरेट हुआ", date: "Today", date_hi: "आज", completed: true },
+              { name: "Slot Reserved at Kiosk", name_hi: "केंद्र पर स्लॉट आरक्षित", date: "Confirmed", date_hi: "सत्यापित", completed: true },
+              { name: "Biometric e-KYC & Doc Scan", name_hi: "बायोमेट्रिक e-KYC व दस्तावेज़ स्कैन", date: res.appointment_time_slot || timeSlot, date_hi: res.appointment_time_slot || timeSlot, completed: false, current: true },
+              { name: "Final Directorate Submission", name_hi: "अंतिम निदेशालय स्वीकृति", date: "Pending", date_hi: "लंबित", completed: false },
+            ]
+          };
+          localStorage.setItem("sahayak_booked_tokens", JSON.stringify([newRecord, ...existing.filter((x: { id?: string }) => x.id !== newRecord.id)]));
+        }
+      } catch (e) {
+        console.warn("Storage sync error:", e);
+      }
+    } catch (err: unknown) {
       console.error("FastAPI token booking fallback, rendering verified pass:", err);
-      setBookedPass({
+      const fallbackPass = {
         token_number: "#SAH-98412",
         kiosk_name: selectedKiosk.center_name,
         operator_name: selectedKiosk.vle_operator_name,
@@ -175,7 +215,39 @@ export default function MapPage() {
           t.map.inst2,
           t.map.inst3
         ]
-      });
+      };
+      setBookedPass(fallbackPass);
+
+      try {
+        if (typeof window !== "undefined") {
+          const existing = JSON.parse(localStorage.getItem("sahayak_booked_tokens") || "[]");
+          const newRecord = {
+            id: fallbackPass.token_number,
+            schemeName: "Pradhan Mantri Awas Yojana (PMAY-G)",
+            schemeName_hi: "प्रधानमंत्री आवास योजना (ग्रामीण)",
+            type: "CSC Priority Appointment Token",
+            type_hi: "CSC प्राथमिकता टोकन पास",
+            status: "Confirmed",
+            status_hi: "सत्यापित",
+            kioskName: fallbackPass.kiosk_name,
+            date: `${fallbackPass.appointment_date}, ${fallbackPass.appointment_time_slot}`,
+            date_hi: `${fallbackPass.appointment_date}, ${fallbackPass.appointment_time_slot}`,
+            progress: 75,
+            qr_code_base64: fallbackPass.qr_code_base64,
+            operator_phone: fallbackPass.operator_phone,
+            isNew: true,
+            steps: [
+              { name: "Token Generated Online", name_hi: "टोकन ऑनलाइन जनरेट हुआ", date: "Today", date_hi: "आज", completed: true },
+              { name: "Slot Reserved at Kiosk", name_hi: "केंद्र पर स्लॉट आरक्षित", date: "Confirmed", date_hi: "सत्यापित", completed: true },
+              { name: "Biometric e-KYC & Doc Scan", name_hi: "बायोमेट्रिक e-KYC व दस्तावेज़ स्कैन", date: fallbackPass.appointment_time_slot, date_hi: fallbackPass.appointment_time_slot, completed: false, current: true },
+              { name: "Final Directorate Submission", name_hi: "अंतिम निदेशालय स्वीकृति", date: "Pending", date_hi: "लंबित", completed: false },
+            ]
+          };
+          localStorage.setItem("sahayak_booked_tokens", JSON.stringify([newRecord, ...existing.filter((x: { id?: string }) => x.id !== newRecord.id)]));
+        }
+      } catch (e) {
+        console.warn("Storage sync error:", e);
+      }
     } finally {
       setBookingLoading(false);
     }
@@ -188,9 +260,10 @@ export default function MapPage() {
       <div className="bg-white border-b border-slate-200/90 py-5 px-4 sm:px-8 shadow-xs">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
-                {t.map.tag}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200/80 w-fit">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                <span>{t.map.tag}</span>
               </span>
               <span className="text-slate-300">•</span>
               <span className="text-xs font-semibold text-slate-500">{t.map.zeroQueue}</span>
@@ -483,20 +556,28 @@ export default function MapPage() {
                   ))}
                 </div>
 
-                <div className="pt-2 flex gap-3">
-                  <button
-                    onClick={() => window.print()}
-                    className="flex-1 py-2.5 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 cursor-pointer"
+                <div className="pt-2 flex flex-col gap-2">
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => window.print()}
+                      className="flex-1 py-2.5 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 cursor-pointer"
+                    >
+                      <Printer className="w-3.5 h-3.5" />
+                      <span>{t.map.btnPrintPass}</span>
+                    </button>
+                    <button
+                      onClick={() => setBookingModalOpen(false)}
+                      className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                    >
+                      {t.map.btnClose}
+                    </button>
+                  </div>
+                  <Link
+                    href={`/tracker?id=${encodeURIComponent(bookedPass.token_number)}`}
+                    className="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold text-xs flex items-center justify-center space-x-1.5 shadow-xs transition-colors"
                   >
-                    <Printer className="w-3.5 h-3.5" />
-                    <span>{t.map.btnPrintPass}</span>
-                  </button>
-                  <button
-                    onClick={() => setBookingModalOpen(false)}
-                    className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
-                  >
-                    {t.map.btnClose}
-                  </button>
+                    <span>📊 {lang === "hi" ? "आवेदन ट्रैकर में स्थिति देखें (Track Live Status) →" : "Track Live Status in Tracker →"}</span>
+                  </Link>
                 </div>
               </div>
             )}

@@ -8,60 +8,112 @@ import {
   CheckCircle2, 
   AlertTriangle, 
   ShieldCheck, 
-  Search, 
   Loader2, 
   Trash2,
-  Building2,
-  Lock
+  Lock,
+  User,
+  Calendar,
+  ArrowRight
 } from "lucide-react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { verifyUploadedDocument, DocumentAuditResult } from "@/lib/api";
 
 type ScanStatus = "idle" | "scanning" | "success" | "error";
 
 export default function DocumentAssistantPage() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [scanStatus, setScanStatus] = useState<ScanStatus>("idle");
   const [scanProgress, setScanProgress] = useState(0);
   const [docType, setDocType] = useState<string>("Aadhaar Card");
+  const [auditResult, setAuditResult] = useState<DocumentAuditResult | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       setFile(acceptedFiles[0]);
       setScanStatus("idle");
+      setAuditResult(null);
+      setErrorMessage(null);
     }
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png"],
+      "image/*": [".jpeg", ".jpg", ".png", ".webp"],
       "application/pdf": [".pdf"],
     },
     maxFiles: 1,
   });
 
-  const simulateScan = () => {
-    setScanStatus("scanning");
-    setScanProgress(0);
+  const handleScanDocument = async () => {
+    if (!file) return;
 
-    const interval = setInterval(() => {
+    setScanStatus("scanning");
+    setScanProgress(15);
+    setErrorMessage(null);
+
+    const progressTimer = setInterval(() => {
       setScanProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setScanStatus("success");
-          return 100;
-        }
-        return prev + 10;
+        if (prev < 80) return prev + 15;
+        return prev;
       });
-    }, 150);
+    }, 180);
+
+    try {
+      const mappedDocType = docType.toLowerCase().includes("aadhaar")
+        ? "aadhaar"
+        : docType.toLowerCase().includes("income")
+        ? "income"
+        : docType.toLowerCase().includes("ration")
+        ? "ration"
+        : docType.toLowerCase().includes("caste")
+        ? "caste"
+        : "bank";
+
+      // Real in-memory OCR & audit via FastAPI
+      const result = await verifyUploadedDocument(file, mappedDocType);
+
+      clearInterval(progressTimer);
+      setScanProgress(100);
+      setAuditResult(result);
+      setScanStatus("success");
+
+      // Save verified credentials to localStorage for auto-filling onboarding
+      try {
+        if (typeof window !== "undefined" && result.is_valid) {
+          localStorage.setItem("sahayak_verified_identity", JSON.stringify({
+            documentType: result.document_type,
+            maskedIdentifier: result.masked_identifier,
+            rawIdentifier: result.raw_identifier,
+            detectedName: result.detected_name,
+            detectedDob: result.detected_dob,
+            detectedAge: result.detected_age,
+            detectedGender: result.detected_gender,
+            confidenceScore: result.confidence_score,
+            verifiedAt: new Date().toISOString()
+          }));
+        }
+      } catch (storageErr) {
+        console.warn("Storage sync error:", storageErr);
+      }
+    } catch (err: unknown) {
+      clearInterval(progressTimer);
+      console.error("Document audit error:", err);
+      const msg = err instanceof Error ? err.message : "Failed to audit document";
+      setErrorMessage(msg);
+      setScanStatus("error");
+    }
   };
 
   const removeFile = () => {
     setFile(null);
     setScanStatus("idle");
     setScanProgress(0);
+    setAuditResult(null);
+    setErrorMessage(null);
   };
 
   return (
@@ -103,7 +155,11 @@ export default function DocumentAssistantPage() {
                 </label>
                 <select
                   value={docType}
-                  onChange={(e) => setDocType(e.target.value)}
+                  onChange={(e) => {
+                    setDocType(e.target.value);
+                    setScanStatus("idle");
+                    setAuditResult(null);
+                  }}
                   className="w-full h-11 px-3 rounded-xl border border-slate-300 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white cursor-pointer"
                 >
                   <option value="Aadhaar Card">{t.documents.typeAadhaar}</option>
@@ -144,15 +200,18 @@ export default function DocumentAssistantPage() {
                   <div className="flex items-center space-x-2">
                     {scanStatus === "idle" && (
                       <button
-                        onClick={simulateScan}
-                        className="px-3.5 py-1.5 rounded-lg bg-blue-800 text-white font-bold text-xs shadow-xs hover:bg-blue-900 cursor-pointer"
+                        type="button"
+                        onClick={handleScanDocument}
+                        className="px-4 py-2 rounded-xl bg-blue-800 text-white font-bold text-xs shadow-xs hover:bg-blue-900 active:bg-blue-950 transition-all cursor-pointer"
                       >
                         {t.documents.btnVerify}
                       </button>
                     )}
                     <button
+                      type="button"
                       onClick={removeFile}
                       className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 cursor-pointer"
+                      title="Remove file"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -164,7 +223,10 @@ export default function DocumentAssistantPage() {
               {scanStatus === "scanning" && (
                 <div className="space-y-2 pt-2">
                   <div className="flex justify-between text-xs font-bold text-blue-800">
-                    <span>{t.documents.scanningNotice}</span>
+                    <span className="flex items-center space-x-1.5">
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-700" />
+                      <span>{t.documents.scanningNotice}</span>
+                    </span>
                     <span>{scanProgress}%</span>
                   </div>
                   <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -173,6 +235,19 @@ export default function DocumentAssistantPage() {
                       style={{ width: `${scanProgress}%` }}
                     />
                   </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {scanStatus === "error" && (
+                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-xs text-red-800 space-y-1">
+                  <div className="font-bold flex items-center space-x-1.5">
+                    <AlertTriangle className="w-4 h-4 text-red-600" />
+                    <span>{t.documents.scanErrorTitle || "Verification Warning"}</span>
+                  </div>
+                  <p className="text-[11px] text-red-700">
+                    {errorMessage || t.documents.scanErrorDesc}
+                  </p>
                 </div>
               )}
 
@@ -192,42 +267,143 @@ export default function DocumentAssistantPage() {
 
           {/* VERIFICATION REPORT (5 COLS) */}
           <div className="md:col-span-5">
-            {scanStatus === "success" ? (
-              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4">
+            {scanStatus === "success" && auditResult ? (
+              <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-xs space-y-4 animate-in fade-in zoom-in-95">
                 <div className="flex items-center space-x-2 pb-3 border-b border-slate-100">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                  <h3 className="font-bold text-sm text-slate-900">{t.documents.verifiedTitle}</h3>
+                  {auditResult.is_valid ? (
+                    <>
+                      <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                      <h3 className="font-bold text-sm text-slate-900">{t.documents.verifiedTitle}</h3>
+                    </>
+                  ) : (
+                    <>
+                      <AlertTriangle className="w-5 h-5 text-amber-600" />
+                      <h3 className="font-bold text-sm text-amber-900">Document Review Required</h3>
+                    </>
+                  )}
                 </div>
 
                 <div className="space-y-2.5 text-xs">
+                  {/* Document Type */}
                   <div className="flex justify-between py-1 border-b border-slate-50">
                     <span className="text-slate-500">{t.documents.docLabel}</span>
-                    <span className="font-bold text-slate-800">{docType}</span>
+                    <span className="font-bold text-slate-800">{auditResult.document_type}</span>
                   </div>
+
+                  {/* REAL EXTRACTED IDENTIFIER (e.g. XXXX-XXXX-2134) */}
                   <div className="flex justify-between py-1 border-b border-slate-50">
                     <span className="text-slate-500">{t.documents.idLabel}</span>
-                    <span className="font-mono font-bold text-slate-800">XXXX-XXXX-4819</span>
+                    {auditResult.masked_identifier ? (
+                      <span className="font-mono font-bold text-blue-900 text-[13px] bg-blue-50 px-2 py-0.5 rounded">
+                        {auditResult.masked_identifier}
+                      </span>
+                    ) : (
+                      <span className="font-mono text-amber-700 text-[11px] bg-amber-50 px-2 py-0.5 rounded">
+                        Not Detected
+                      </span>
+                    )}
                   </div>
+
+                  {/* Citizen Name (if detected via OCR) */}
+                  {auditResult.detected_name && (
+                    <div className="flex justify-between py-1 border-b border-slate-50">
+                      <span className="text-slate-500">{t.documents.nameLabel || "Citizen Name:"}</span>
+                      <span className="font-bold text-slate-900 flex items-center space-x-1">
+                        <User className="w-3.5 h-3.5 text-blue-700" />
+                        <span>{auditResult.detected_name}</span>
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Date of Birth (if detected via OCR) */}
+                  {auditResult.detected_dob && (
+                    <div className="flex justify-between py-1 border-b border-slate-50">
+                      <span className="text-slate-500">{t.documents.dobLabel || "Date of Birth:"}</span>
+                      <span className="font-bold text-slate-800 flex items-center space-x-1">
+                        <Calendar className="w-3.5 h-3.5 text-slate-500" />
+                        <span>
+                          {auditResult.detected_dob}
+                          {auditResult.detected_age ? ` (${auditResult.detected_age} yrs)` : ""}
+                        </span>
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Gender (if detected) */}
+                  {auditResult.detected_gender && (
+                    <div className="flex justify-between py-1 border-b border-slate-50">
+                      <span className="text-slate-500">{t.documents.genderLabel || "Gender:"}</span>
+                      <span className="font-bold text-slate-800">{auditResult.detected_gender}</span>
+                    </div>
+                  )}
+
+                  {/* Clarity Score */}
                   <div className="flex justify-between py-1 border-b border-slate-50">
                     <span className="text-slate-500">{t.documents.clarityLabel}</span>
-                    <span className="font-bold text-emerald-700">98%</span>
+                    <span className={`font-bold ${auditResult.confidence_score >= 80 ? "text-emerald-700" : "text-amber-700"}`}>
+                      {auditResult.confidence_score}% ({auditResult.clarity_rating})
+                    </span>
                   </div>
+
+                  {/* Official Seal / QR Barcode */}
                   <div className="flex justify-between py-1">
                     <span className="text-slate-500">{t.documents.sealLabel}</span>
-                    <span className="font-bold text-emerald-700">{t.documents.sealVerified}</span>
+                    <span className={`font-bold flex items-center space-x-1 ${auditResult.hologram_or_seal_detected ? "text-emerald-700" : "text-amber-700"}`}>
+                      {auditResult.hologram_or_seal_detected ? (
+                        <>
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>{t.documents.sealVerified}</span>
+                        </>
+                      ) : (
+                        <span>Needs Clearer Photo</span>
+                      )}
+                    </span>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 font-medium leading-relaxed">
-                  ✅ {t.documents.validNotice}
+                {/* Audit Findings Bullet Points */}
+                {auditResult.findings && auditResult.findings.length > 0 && (
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700 space-y-1">
+                    <p className="font-bold text-slate-900">
+                      {t.documents.findingsLabel || "Statutory Audit Findings:"}
+                    </p>
+                    {auditResult.findings.map((f, idx) => (
+                      <p key={idx} className="flex items-start space-x-1.5 leading-snug">
+                        <span className="text-emerald-600 font-bold">•</span>
+                        <span>{f}</span>
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {/* Recommendation Notice */}
+                <div className={`p-3 rounded-xl border text-[11px] font-medium leading-relaxed ${
+                  auditResult.is_valid 
+                    ? "bg-emerald-50 border-emerald-200 text-emerald-950" 
+                    : "bg-amber-50 border-amber-200 text-amber-950"
+                }`}>
+                  {auditResult.is_valid ? "✅ " : "⚠️ "}
+                  {auditResult.recommendation || t.documents.validNotice}
                 </div>
 
-                <Link
-                  href="/onboarding"
-                  className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 transition-colors block text-center"
-                >
-                  <span>{t.documents.btnCheckEligibility}</span>
-                </Link>
+                {/* Direct Action Link */}
+                {auditResult.is_valid ? (
+                  <Link
+                    href="/onboarding"
+                    className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 transition-colors block text-center"
+                  >
+                    <span>{t.documents.btnCheckEligibility}</span>
+                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={removeFile}
+                    className="w-full py-2.5 rounded-xl bg-blue-800 hover:bg-blue-900 active:bg-blue-950 text-white font-bold text-xs shadow-xs flex items-center justify-center space-x-1.5 transition-colors cursor-pointer"
+                  >
+                    <span>Upload Clearer Photo</span>
+                  </button>
+                )}
               </div>
             ) : (
               <div className="bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center space-y-2 h-full flex flex-col items-center justify-center text-slate-400 text-xs min-h-[220px]">

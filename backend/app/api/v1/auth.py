@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models.user import User
@@ -12,7 +12,8 @@ from app.schemas.auth import (
     OTPSendRequest,
     OTPSendResponse,
     OTPVerifyRequest,
-    OTPVerifyResponse
+    OTPVerifyResponse,
+    FirebaseLoginRequest
 )
 from app.core.security import (
     get_password_hash,
@@ -23,6 +24,7 @@ from app.core.security import (
 from app.core.config import settings
 from app.api.deps import get_current_user
 from app.services.otp_service import otp_service
+from app.core.rate_limiter import enforce_rate_limit
 
 router = APIRouter()
 
@@ -50,7 +52,7 @@ def register(user_in: UserRegisterRequest, db: Session = Depends(get_db)):
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Mobile number {clean_mobile} pehle se registered hai. Kripya login karein."
+            detail=f"Mobile number {clean_mobile} is already registered. Please log in."
         )
 
     # 2. Check duplicate email agar provided hai
@@ -59,7 +61,7 @@ def register(user_in: UserRegisterRequest, db: Session = Depends(get_db)):
         if existing_email:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Email {user_in.email} pehle se registered hai."
+                detail=f"Email {user_in.email} is already registered."
             )
 
     # 3. Password handling: User provided OR Auto-generated
@@ -114,32 +116,38 @@ def register(user_in: UserRegisterRequest, db: Session = Depends(get_db)):
     response_model=TokenResponse,
     summary="Mobile aur Password se Login karein aur JWT Token payein"
 )
-def login(login_in: UserLoginRequest, db: Session = Depends(get_db)):
+def login(login_in: UserLoginRequest, request: Request, db: Session = Depends(get_db)):
     """
     User Login API:
     - Mobile aur Password verify karta hai
     - Sahi hone par digital JWT Token return karta hai
+    - Sliding-window rate limiting: 10 attempts/minute per mobile to block brute-force
     """
+    # 0. Enforce Rate Limiting against brute-force attacks
+    clean_mobile = login_in.mobile.strip()
+    enforce_rate_limit(request=request, scope="login_mobile", max_requests=10, window_seconds=60, custom_identifier=clean_mobile)
+    enforce_rate_limit(request=request, scope="login_ip", max_requests=25, window_seconds=60)
+
     # 1. Find user by mobile
     user = db.query(User).filter(User.mobile == login_in.mobile).first()
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Mobile number ya password galat hai."
+            detail="Incorrect mobile number or password."
         )
 
     # 2. Check if user is active
     if not user.is_active:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Aapka account deactivate hai. Kripya admin se sampark karein."
+            detail="Your account is deactivated. Please contact support."
         )
 
     # 3. Verify Password
     if not verify_password(login_in.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Mobile number ya password galat hai."
+            detail="Incorrect mobile number or password."
         )
 
     # 4. Generate JWT Token
@@ -215,7 +223,7 @@ def verify_otp_and_login(verify_in: OTPVerifyRequest, db: Session = Depends(get_
         if not user.is_active:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Aapka account deactivate hai. Kripya helpline se sampark karein."
+                detail="Your account is deactivated. Please contact support."
             )
     else:
         # 3. New Citizen Auto-Registration
@@ -253,6 +261,83 @@ def verify_otp_and_login(verify_in: OTPVerifyRequest, db: Session = Depends(get_
         "Naya Citizen Khata ban gaya aur aap login ho gaye hain!"
         if is_new
         else "OTP satyapit ho gaya! Welcome to SahayakAI."
+    )
+
+    return OTPVerifyResponse(
+        access_token=access_token,
+        token_type="bearer",
+        user_id=user.id,
+        mobile=user.mobile,
+        role=user.role,
+        is_new_user=is_new,
+        message=welcome_msg
+    )
+
+@router.post(
+    "/firebase-login",
+    response_model=OTPVerifyResponse,
+    summary="Firebase Phone Auth Verify karke JWT Token issue karein"
+)
+def firebase_login(login_in: FirebaseLoginRequest, db: Session = Depends(get_db)):
+    """
+    Firebase Phone Authentication endpoint:
+    - Frontend Firebase SDK ke zariye real SMS OTP verify karta hai
+    - Successful OTP verify ke baad yeh endpoint backend database me user register/fetch karta hai
+    - User ko SahayakAI ka official JWT token issue karta hai
+    """
+    clean_mobile = otp_service._sanitize_mobile(login_in.mobile)
+    if len(clean_mobile) != 10:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid mobile number. 10-digit number is required."
+        )
+
+    # 1. Check if user already exists
+    user = db.query(User).filter(User.mobile == clean_mobile).first()
+    is_new = False
+
+    if user:
+        if not user.is_active:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Your account is deactivated. Please contact support."
+            )
+    else:
+        # 2. Auto-create new citizen user
+        is_new = True
+        auto_pwd = generate_strong_password(length=12)
+        hashed_pwd = get_password_hash(auto_pwd)
+
+        user = User(
+            mobile=clean_mobile,
+            hashed_password=hashed_pwd,
+            role="citizen",
+            is_active=True
+        )
+        db.add(user)
+        db.flush()
+
+        citizen_name = (login_in.full_name or "").strip() or f"Citizen {clean_mobile[-4:]}"
+        citizen_profile = Citizen(
+            user_id=user.id,
+            name=citizen_name
+        )
+        db.add(citizen_profile)
+        db.commit()
+        db.refresh(user)
+
+    # 3. Generate JWT Token
+    token_data = {
+        "sub": user.mobile,
+        "user_id": user.id,
+        "role": user.role
+    }
+    access_token = create_access_token(data=token_data)
+
+    welcome_msg = (
+        "Naya Citizen Khata ban gaya aur aap login ho gaye hain!"
+        if is_new
+        else "Firebase Phone Auth safal! Welcome to SahayakAI."
     )
 
     return OTPVerifyResponse(

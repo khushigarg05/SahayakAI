@@ -28,13 +28,79 @@ export default function RegisterPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
+  // Dynamic Language Translation Helper for Errors
+  const getLocalizedErrorMessage = (msg: string | null): string => {
+    if (!msg) return "";
+    const lower = msg.toLowerCase();
+
+    // Already registered / duplicate mobile
+    if (lower.includes("already registered") || lower.includes("pehle se registered") || lower.includes("already exists")) {
+      const mobileMatch = msg.match(/\d{10}/);
+      const num = mobileMatch ? mobileMatch[0] : (mobile || "");
+      return lang === "hi"
+        ? `मोबाइल नंबर ${num ? num + " " : ""}पहले से पंजीकृत है। कृपया लॉगिन करें।`
+        : `Mobile number ${num ? num + " " : ""}is already registered. Please log in.`;
+    }
+
+    // Duplicate email
+    if (lower.includes("email") && (lower.includes("already") || lower.includes("pehle se"))) {
+      return lang === "hi"
+        ? "यह ईमेल आईडी पहले से पंजीकृत है।"
+        : "This email address is already registered.";
+    }
+
+    // Weak password
+    if (lower.includes("weak password") || lower.includes("password kamzor") || lower.includes("minimum 8")) {
+      return lang === "hi"
+        ? "पासवर्ड कमजोर है: कम से कम 8 अक्षर, बड़ा अक्षर, छोटा अक्षर, संख्या और विशेष चिन्ह अनिवार्य हैं।"
+        : "Weak password: Must be at least 8 characters with uppercase, lowercase, number, and special symbol.";
+    }
+
+    // Password mismatch
+    if (lower.includes("match") || lower.includes("mismatch")) {
+      return lang === "hi"
+        ? "पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते।"
+        : "Passwords do not match. Please verify both fields.";
+    }
+
+    // Invalid mobile
+    if (lower.includes("invalid mobile") || lower.includes("10-digit") || lower.includes("amanaya")) {
+      return lang === "hi"
+        ? "कृपया 10 अंकों का वैध भारतीय मोबाइल नंबर दर्ज करें।"
+        : "Please enter a valid 10-digit Indian Mobile Number.";
+    }
+
+    // Deactivated account
+    if (lower.includes("deactivate") || lower.includes("inactive")) {
+      return lang === "hi"
+        ? "आपका खाता निष्क्रिय है। कृपया सहायता केंद्र से संपर्क करें।"
+        : "Your account is deactivated. Please contact support.";
+    }
+
+    return msg;
+  };
+
+  const getLocalizedSuccessMessage = (msg: string | null): string => {
+    if (!msg) return "";
+    if (msg.toLowerCase().includes("safalta") || msg.toLowerCase().includes("success") || msg.toLowerCase().includes("ban gaya")) {
+      return lang === "hi"
+        ? "खाता सफलतापूर्वक बन गया है! लॉगिन पृष्ठ पर भेजा जा रहा है..."
+        : "Account created successfully! Redirecting to login...";
+    }
+    return msg;
+  };
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
     setSuccessMsg(null);
 
     if (password.length < 8) {
-      setErrorMsg("Password kamzor hai: Kam se kam 8 characters hone chahiye.");
+      setErrorMsg(
+        lang === "hi"
+          ? "पासवर्ड कमजोर है: कम से कम 8 अक्षर होने चाहिए।"
+          : "Weak password: Must be at least 8 characters long."
+      );
       return;
     }
 
@@ -54,10 +120,16 @@ export default function RegisterPage() {
       };
 
       const res = await registerUser(payload);
-      setSuccessMsg(res.message || t.auth.accountCreated);
+      setSuccessMsg(typeof res.message === "string" ? res.message : String(t.auth.accountCreated || "Account created successfully"));
       setTimeout(() => router.push("/login"), 1500);
-    } catch (err: any) {
-      setErrorMsg(err.message || "Registration failed. Kripya details check karein.");
+    } catch (err: unknown) {
+      setErrorMsg(
+        (err instanceof Error ? err.message : null) || (
+          lang === "hi"
+            ? "पंजीकरण विफल रहा। कृपया दर्ज की गई जानकारी जांचें।"
+            : "Registration failed. Please verify your details."
+        )
+      );
     } finally {
       setLoading(false);
     }
@@ -81,14 +153,14 @@ export default function RegisterPage() {
         {errorMsg && (
           <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-center space-x-2">
             <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-            <span>{errorMsg}</span>
+            <span className="font-medium">{getLocalizedErrorMessage(errorMsg)}</span>
           </div>
         )}
 
         {successMsg && (
           <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center space-x-2 font-bold">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-            <span>{successMsg}</span>
+            <span>{getLocalizedSuccessMessage(successMsg)}</span>
           </div>
         )}
 

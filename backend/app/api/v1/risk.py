@@ -35,6 +35,26 @@ def generate_action_plan(barriers: List[dict], scheme: Scheme) -> List[ActionSte
         ))
         step_num += 1
 
+    # Step for Missing Caste Certificate
+    if "has_caste_certificate" in barrier_keys:
+        steps.append(ActionStep(
+            step_number=step_num,
+            title="Jaati Praman Patra (Caste Certificate) Banwayein",
+            instruction="e-District portal ya Tehsil karyalaya se pramanit jaati praman patra prapt karein.",
+            action_type="document"
+        ))
+        step_num += 1
+
+    # Step for Missing Ration Card
+    if "has_bpl_ration_card" in barrier_keys:
+        steps.append(ActionStep(
+            step_number=step_num,
+            title="BPL / Rashan Card Aavedan Karein",
+            instruction="Khadya evam Rasad vibhag portal ya CSC center jakar naya rashan card aavedan karein.",
+            action_type="document"
+        ))
+        step_num += 1
+
     # Step for Unlinked Bank Account
     if "bank_account_aadhaar_linked" in barrier_keys:
         steps.append(ActionStep(
@@ -46,7 +66,7 @@ def generate_action_plan(barriers: List[dict], scheme: Scheme) -> List[ActionSte
         step_num += 1
 
     # Step for Distance or Digital Literacy -> Kiosk Appointment
-    if "distance_to_csc_km" in barrier_keys or "digital_literacy_score" in barrier_keys:
+    if "distance_to_csc_km" in barrier_keys or "digital_literacy_score" in barrier_keys or "digital_literacy" in barrier_keys:
         steps.append(ActionStep(
             step_number=step_num,
             title="Nazdeeki CSC Kiosk par Appointment Book Karein",
@@ -95,14 +115,18 @@ def assess_risk(request: AssessRiskRequest, db: Session = Depends(get_db)):
             "bpl_status": request.bpl_status if request.bpl_status is not None else citizen.bpl_status,
             "gender": request.gender or citizen.gender,
             "caste_category": request.caste_category or citizen.caste_category,
-            "state": citizen.state,
-            "district": citizen.district,
+            "state": request.state or citizen.state or "Uttar Pradesh",
+            "district": request.district or citizen.district or "Varanasi",
+            "occupation": request.occupation or getattr(citizen, "occupation", None) or "Farmer",
+            "rural_or_urban": request.rural_or_urban or getattr(citizen, "rural_or_urban", None) or "Rural",
             "digital_literacy": request.digital_literacy or citizen.digital_literacy,
             "distance_to_csc_km": request.distance_to_csc_km,
             "has_income_certificate": request.has_income_certificate,
             "bank_account_aadhaar_linked": request.bank_account_aadhaar_linked,
             "has_caste_certificate": request.has_caste_certificate,
-            "prior_rejections_count": request.prior_rejections_count
+            "has_bpl_ration_card": request.has_bpl_ration_card,
+            "prior_rejections_count": request.prior_rejections_count,
+            "lang": request.lang or "en"
         }
     else:
         citizen_data = {
@@ -111,12 +135,18 @@ def assess_risk(request: AssessRiskRequest, db: Session = Depends(get_db)):
             "bpl_status": request.bpl_status,
             "gender": request.gender or "Male",
             "caste_category": request.caste_category or "General",
+            "state": request.state or "Uttar Pradesh",
+            "district": request.district or "Varanasi",
+            "occupation": request.occupation or "Farmer",
+            "rural_or_urban": request.rural_or_urban or "Rural",
             "distance_to_csc_km": request.distance_to_csc_km,
             "digital_literacy": request.digital_literacy or "Low",
             "has_income_certificate": request.has_income_certificate,
             "bank_account_aadhaar_linked": request.bank_account_aadhaar_linked,
             "has_caste_certificate": request.has_caste_certificate,
-            "prior_rejections_count": request.prior_rejections_count
+            "has_bpl_ration_card": request.has_bpl_ration_card,
+            "prior_rejections_count": request.prior_rejections_count,
+            "lang": request.lang or "en"
         }
 
     # 3. Rule Engine: Deterministic Eligibility Check
@@ -125,8 +155,8 @@ def assess_risk(request: AssessRiskRequest, db: Session = Depends(get_db)):
     # 4. ML Model: Predict Access Risk Score (0.0 to 1.0)
     risk_score, risk_level = ml_risk_service.predict_risk(citizen_data)
 
-    # 5. SHAP Service: Calculate Top Mathematical Barriers
-    raw_barriers = shap_service.explain_barriers(citizen_data, top_k=3)
+    # 5. SHAP Service: Calculate Top Mathematical Barriers (Dynamic top 5)
+    raw_barriers = shap_service.explain_barriers(citizen_data, top_k=5)
     top_barriers = [SHAPBarrierItem(**b) for b in raw_barriers]
 
     # 6. Action Plan Generator

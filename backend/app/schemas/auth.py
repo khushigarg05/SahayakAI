@@ -27,31 +27,31 @@ class UserRegisterRequest(BaseModel):
 
         # Rule 1: Length (8 to 72 chars)
         if len(pwd) < 8:
-            raise ValueError("Password kamzor hai: Kam se kam 8 characters hone chahiye.")
+            raise ValueError("Weak password: Minimum 8 characters required.")
         if len(pwd) > 72:
-            raise ValueError("Password bohot lamba hai: Maximum 72 characters allowed hain.")
+            raise ValueError("Password too long: Maximum 72 characters allowed.")
 
         # Rule 2: At least 1 Uppercase
         if not re.search(r"[A-Z]", pwd):
-            raise ValueError("Password kamzor hai: Kam se kam 1 Bada Letter (A-Z) hona chahiye.")
+            raise ValueError("Weak password: Must include at least 1 uppercase letter (A-Z).")
 
         # Rule 3: At least 1 Lowercase
         if not re.search(r"[a-z]", pwd):
-            raise ValueError("Password kamzor hai: Kam se kam 1 Chhota Letter (a-z) hona chahiye.")
+            raise ValueError("Weak password: Must include at least 1 lowercase letter (a-z).")
 
         # Rule 4: At least 1 Number
         if not re.search(r"[0-9]", pwd):
-            raise ValueError("Password kamzor hai: Kam se kam 1 Number (0-9) hona chahiye.")
+            raise ValueError("Weak password: Must include at least 1 number (0-9).")
 
         # Rule 5: At least 1 Special Symbol
         if not re.search(r"[@$!%*?&#]", pwd):
-            raise ValueError("Password kamzor hai: Kam se kam 1 Special Symbol (@, $, !, %, *, ?, &, #) hona chahiye.")
+            raise ValueError("Weak password: Must include at least 1 special character (@, $, !, %, *, ?, &, #).")
 
-        # Rule 6: Re-confirm Password match hona chahiye
+        # Rule 6: Re-confirm Password match
         if not self.confirm_password:
-            raise ValueError("Confirm Password zaroori hai: Kripya 'confirm_password' field bharein.")
+            raise ValueError("Confirm password is required.")
         if self.password != self.confirm_password:
-            raise ValueError("Password match nahi hua: 'password' aur 'confirm_password' bilkul same hone chahiye.")
+            raise ValueError("Passwords do not match.")
 
         return self
 
@@ -129,4 +129,12 @@ class OTPVerifyResponse(BaseModel):
     role: str
     is_new_user: bool = False
     message: str
+
+class FirebaseLoginRequest(BaseModel):
+    """
+    Schema for Firebase verified Phone Auth login
+    """
+    mobile: str = Field(..., description="10-digit Indian Mobile Number", examples=["9876543210"])
+    id_token: Optional[str] = Field(None, description="Firebase ID Token")
+    full_name: Optional[str] = Field(None, description="Citizen's full name")
 

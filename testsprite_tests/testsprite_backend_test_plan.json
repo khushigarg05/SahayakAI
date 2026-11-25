@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TC001",
+    "title": "validate deterministic scheme matching",
+    "description": "POST /api/v1/schemes/match with a complete valid citizen profile and verify the response includes eligible schemes, match percentages, benefits, and required documents. Also submit missing or conflicting eligibility fields and verify a 400 response with validation errors and no recommendations."
+  },
+  {
+    "id": "TC002",
+    "title": "validate risk assessment and explanations",
+    "description": "POST /api/v1/risk/assess-risk with a complete valid profile and verify the response contains a risk score, risk band, and explainable barrier contributions. Submit missing or malformed features and out-of-range numeric values, verifying the documented 422 or 400 validation responses and no prediction."
+  },
+  {
+    "id": "TC003",
+    "title": "validate document analysis",
+    "description": "POST /api/v1/documents/analyze with a supported readable document and verify OCR extraction, document insights, and pre-screening findings. Verify corrupted or unreadable files return 400 and unsupported formats return 415 without analysis output."
+  },
+  {
+    "id": "TC004",
+    "title": "validate nearby kiosk search",
+    "description": "GET /api/v1/kiosks/nearby with a valid district or pincode and verify the response lists matching kiosks with contact details and distances. Submit missing or invalid location filters and verify a 400 response with filter validation errors."
+  },
+  {
+    "id": "TC005",
+    "title": "validate kiosk token booking",
+    "description": "POST /api/v1/kiosks/book-token with valid kiosk and citizen details and verify a successful response contains an immutable appointment token and QR pass details. Submit incomplete booking data and verify a 422 response with validation errors."
+  },
+  {
+    "id": "TC006",
+    "title": "validate kiosk appointment tracking",
+    "description": "GET /api/v1/kiosks/track/{reference_id} with a valid booking reference and verify the current token or appointment status is returned. Use an unknown reference ID and verify a 404 response."
+  },
+  {
+    "id": "TC007",
+    "title": "validate multilingual scheme chat",
+    "description": "POST /api/v1/chat with a nonempty welfare question in a supported language and verify the response provides grounded scheme guidance with citations. Submit an empty message or unsupported language and verify a 400 response with input validation errors."
+  },
+  {
+    "id": "TC008",
+    "title": "validate text to speech generation",
+    "description": "POST /api/v1/chat/tts with valid assistant response text and verify synthesized audio is returned. Submit empty or overly long text and verify a 422 response with text-to-speech validation errors."
+  },
+  {
+    "id": "TC009",
+    "title": "validate api setu verification",
+    "description": "POST /api/v1/apisetu/verify with valid verification data and verify the response confirms integration readiness. Submit malformed data or invalid credentials and verify the appropriate 400 or 401 failure response."
+  },
+  {
+    "id": "TC010",
+    "title": "validate api setu gateway status",
+    "description": "GET /api/v1/apisetu/status and verify an available gateway returns 200 with status details. When the gateway is unavailable, verify the endpoint returns 503 with service unavailability information."
+  }
+]

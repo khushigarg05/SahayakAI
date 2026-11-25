@@ -125,11 +125,40 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
     @apply font-sans;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Responsive proportional zoom across device widths */
+  @media (min-width: 640px) {
+    html {
+      font-size: 16.5px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 17.5px; /* ~110% zoom for laptops */
+    }
+  }
+
+  @media (min-width: 1280px) {
+    html {
+      font-size: 18.5px; /* ~115% zoom for standard desktop */
+    }
+  }
+
+  @media (min-width: 1536px) {
+    html {
+      font-size: 19.5px; /* ~122% zoom for wide/Retina displays */
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen;
   }
 }
 

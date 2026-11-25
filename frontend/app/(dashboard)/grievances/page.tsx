@@ -6,17 +6,20 @@ import {
   Send, 
   AlertCircle, 
   CheckCircle2, 
-  Clock, 
-  ShieldAlert, 
-  ArrowRight,
   Loader2,
   Building2,
-  FileCheck2,
   MapPin
 } from "lucide-react";
 import Link from "next/link";
 import { sendChatMessage } from "@/lib/api";
 import { useLanguage } from "@/context/LanguageContext";
+
+interface GrievanceSolution {
+  category: string;
+  department: string;
+  actionPlan: string;
+  gazette: string;
+}
 
 type AnalysisState = "idle" | "analyzing" | "complete";
 
@@ -24,7 +27,7 @@ export default function GrievanceAnalyzerPage() {
   const { lang, t } = useLanguage();
   const [grievanceText, setGrievanceText] = useState("");
   const [analysisState, setAnalysisState] = useState<AnalysisState>("idle");
-  const [solution, setSolution] = useState<any>(null);
+  const [solution, setSolution] = useState<GrievanceSolution | null>(null);
 
   const handleAnalyze = async () => {
     if (!grievanceText.trim()) return;

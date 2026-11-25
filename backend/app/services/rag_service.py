@@ -88,6 +88,50 @@ SCHEME_KNOWLEDGE_BASE = [
         ),
         "guidelines": "Pradhan Mantri Ujjwala Yojana (PMUY 2.0) provides deposit-free LPG gas connections to adult women from poor rural households. Beneficiaries receive a completely free new LPG connection, free first 14.2 kg LPG cylinder refill, and a free gas stove with zero upfront cost. Eligibility: Adult woman (18 years or older) residing in a rural BPL household with no existing LPG connection in the house. Required documents: Aadhaar card of woman applicant, BPL ration card, Bank Passbook, and active mobile number.",
         "hindi_summary": "प्रधानमंत्री उज्ज्वला योजना के तहत गरीब परिवारों की वयस्क महिलाओं (18+ वर्ष) को मुफ्त गैस कनेक्शन, पहला भरा हुआ सिलेंडर और गैस चूल्हा बिल्कुल फ्री दिया जाता है।"
+    },
+    {
+        "scheme_code": "NFSA-RATION",
+        "scheme_name": "National Food Security Act (NFSA) - Ration Card & PDS Services",
+        "category": "Food Security & Supplies",
+        "keywords": (
+            "ration rashan bpl antyodaya quota dealer fcs khadyan gehu chawal grain name add naya naam sadasya bacha "
+            "राशन राशन_कार्ड बीपीएल अंत्योदय कोटेदार नाम_जोड़ना नया_नाम खाद्यान्न गेहूं चावल"
+        ),
+        "guidelines": "National Food Security Act (NFSA) provides subsidized food grains (Rice, Wheat, Coarse Grains) to Priority Households (PHH) and Antyodaya Anna Yojana (AAY) families. Adding new family members or newborn child: Requires child's birth certificate, parents' Aadhaar cards, and existing ration card submitted via State Food Portal (e.g. fcs.up.gov.in) or nearest CSC Jan Seva Kendra.",
+        "hindi_summary": "राशन कार्ड में नए सदस्य या बच्चे का नाम जोड़ने के लिए बच्चे का जन्म प्रमाण पत्र, माता-पिता का आधार कार्ड और मौजूदा राशन कार्ड की कॉपी नजदीकी CSC जन सेवा केंद्र या राज्य के खाद्य पोर्टल (FCS) पर ऑनलाइन जमा करें।"
+    },
+    {
+        "scheme_code": "UIDAI-AADHAAR",
+        "scheme_name": "Aadhaar Identity Services & Biometric eKYC (UIDAI)",
+        "category": "Identity & Governance",
+        "keywords": (
+            "aadhaar aadhar uidai biometric ekyc mobile link update reprint lost kho gaya sudhar correction "
+            "आधार यूआईडीएआई बायोमेट्रिक मोबाइल_लिंक सुधार खो_गया ईकेवाईसी"
+        ),
+        "guidelines": "Unique Identification Authority of India (UIDAI) governs 12-digit Aadhaar identity cards. Lost Aadhaar without mobile number: Citizen can visit any official Aadhaar Enrolment Centre or CSC Kendra with biometric fingerprint or Iris scan to retrieve and print original e-Aadhaar. Name, address, and mobile number updates can also be done at authorized CSC centers.",
+        "hindi_summary": "अगर आधार कार्ड खो गया है और मोबाइल नंबर लिंक नहीं है, तो नजदीकी CSC जन सेवा केंद्र या आधार सेवा केंद्र पर जाकर बायोमेट्रिक (फिंगरप्रिंट) सत्यापन से तुरंत नया e-Aadhaar निकाल सकते हैं।"
+    },
+    {
+        "scheme_code": "KCC",
+        "scheme_name": "Kisan Credit Card (KCC) Scheme",
+        "category": "Agriculture Finance",
+        "keywords": (
+            "kcc kisan credit card loan byaj fasal bima agriculture credit khatauni bank "
+            "केसीसी किसान_क्रेडिट_कार्ड कृषि_ऋण ब्याज दर 3_लाख"
+        ),
+        "guidelines": "Kisan Credit Card (KCC) provides farmers with timely short-term credit for crops and cultivation expenses up to Rs. 3,00,000 at a subsidized interest rate of 4% per annum (with prompt repayment incentive). Available to all landholder farmers, tenant farmers, and oral lessees through rural commercial and cooperative banks.",
+        "hindi_summary": "किसान क्रेडिट कार्ड (KCC) के तहत किसानों को फसल बुवाई व खाद-बीज के लिए ₹3 लाख तक का सस्ता कृषि ऋण मात्र 4% रियायती ब्याज दर पर मिलता है। नजदीकी ग्रामीण बैंक या CSC से आवेदन करें।"
+    },
+    {
+        "scheme_code": "CPGRAMS-REDRESS",
+        "scheme_name": "Grievance Redressal & Application Rejection Resolution",
+        "category": "Public Grievance",
+        "keywords": (
+            "reject kharij galti samasya shikayat grievance appeal csc sunwai cprograms stall pending atka "
+            "खारिज रिजेक्ट शिकायत गलती समाधान दोबारा_आवेदन सुनवाई"
+        ),
+        "guidelines": "Application Rejection Resolution: When a welfare scheme application is rejected or stalled, the primary causes are NPCI DBT unseeded bank accounts, demographic mismatch between Aadhaar and revenue records, or blurry document scans. Citizens can rectify errors by updating bank DBT seeding, re-uploading certified Tehsildar documents at a CSC Jan Seva Kendra, or lodging a formal grievance on the CPGRAMS portal or SahayakAI Grievance Tracker.",
+        "hindi_summary": "फॉर्म रिजेक्ट होने पर सबसे पहले रिजेक्शन कारण (आधार नाम अंतर, बैंक DBT अनसीडेड या अधूरा दस्तावेज) चेक करें। इसके बाद नजदीकी CSC केंद्र पर जाकर आवश्यक दस्तावेज अपडेट करवाकर दोबारा आवेदन करें या CPGRAMS पर शिकायत दर्ज करें।"
     }
 ]
 
@@ -144,7 +188,7 @@ class RAGChatbotService:
         """Connection-pooled, persistent HTTP client for high-throughput concurrency."""
         if self._client is None or self._client.is_closed:
             self._client = httpx.AsyncClient(
-                timeout=3.5,
+                timeout=12.0,
                 limits=httpx.Limits(max_keepalive_connections=20, max_connections=50)
             )
         return self._client
@@ -167,9 +211,8 @@ class RAGChatbotService:
         if re.search(r"[\u0B80-\u0BFF]", text):
             return "ta"
         # Check Hinglish keywords
-        hinglish_words = ["kya", "kaise", "hai", "mujhe", "chahiye", "umar", "pension", "kitna", "milega", "hoga"]
-        words = text.lower().split()
-        if any(w in words for w in hinglish_words):
+        hinglish_pattern = r"\b(kya|kaise|hai|hain|hu|hoon|ho|mujhe|chahiye|umar|pension|kitna|milega|hoga|bhai|batao|btao|karo|karein|aayega|ayega|dega|mera|meri|mere|aap|tum|kripya|yojana|yojna|khet|kisan|paisa|paise|khatauni|awas|ghar|dadi|dada|ration|rashan|namaste|shuru|madad|bhi|nahi|nhi|dein|de|bol|rha|raha)\b"
+        if re.search(hinglish_pattern, text.lower()):
             return "hi-en"
         return "en"
 
@@ -210,12 +253,70 @@ class RAGChatbotService:
         if cached:
             return cached
 
-        detected_lang = self.detect_language(clean_query) if normalized_lang in ["auto", ""] else normalized_lang
+        script_lang = self.detect_language(clean_query)
+        if script_lang == "hi-en":
+            detected_lang = "hi-en"
+        elif normalized_lang in ["auto", "", "hi", "en"]:
+            detected_lang = script_lang
+        else:
+            detected_lang = normalized_lang
+
+        # Check if greeting (hlo, hi, hello, namaste, etc.)
+        is_greeting = bool(re.match(r"^(hlo|hello|hi|hey|hii|helo|namaste|namaskar|pranam|ram ram|kese ho|kaise ho|help|start|shuru|madad)[\s!.,?]*$", clean_query.lower()))
+        if is_greeting:
+            if detected_lang == "hi-en":
+                greeting_text = (
+                    "Namaste! 🙏 Main aapka SahayakAI Welfare Assistant hoon.\n\n"
+                    "Main sarkari yojanaon me aapki poori madad kar sakta hoon:\n"
+                    "• 🏠 **PMAY Awas Yojana:** Pakka makan banane ke liye ₹1.20 Lakh tak ki sahayata\n"
+                    "• 🌾 **PM-Kisan:** Kisano ko saalana ₹6,000 ki samman nidhi\n"
+                    "• 🏥 **Ayushman Bharat:** ₹5 Lakh tak ka muft hospital ilaj\n"
+                    "• 👴 **Vridhavastha Pension:** 60+ senior citizens ke liye monthly pension\n"
+                    "• 🔥 **Ujjwala Yojana:** Free gas connection aur chulha\n\n"
+                    "Aap kis yojana ya service ke baare me janna chahte hain? Boliye ya type karein!"
+                )
+            elif detected_lang.startswith("hi"):
+                greeting_text = (
+                    "नमस्ते! 🙏 मैं आपका सहायक एआई (SahayakAI) साथी हूँ।\n\n"
+                    "मैं भारत सरकार की प्रमुख योजनाओं में आपकी पूरी मदद कर सकता हूँ:\n"
+                    "• 🏠 **पीएम आवास योजना (PMAY):** पक्का मकान बनाने हेतु ₹1.20 लाख तक की सहायता\n"
+                    "• 🌾 **पीएम-किसान:** किसानों को सालाना ₹6,000 की सम्मान निधि\n"
+                    "• 🏥 **आयुष्मान भारत:** ₹5 लाख तक का मुफ्त अस्पताल इलाज\n"
+                    "• 👴 **वृद्धावस्था पेंशन:** 60+ वरिष्ठ नागरिकों हेतु मासिक पेंशन\n"
+                    "• 🔥 **उज्ज्वला योजना:** मुफ्त गैस कनेक्शन व चूल्हा\n\n"
+                    "आप किस योजना के नियम या पात्रता के बारे में जानना चाहते हैं?"
+                )
+            else:
+                greeting_text = (
+                    "Hello! 🙏 I am your SahayakAI Welfare Companion.\n\n"
+                    "I can assist you with official Government of India welfare schemes:\n"
+                    "• 🏠 **PMAY Housing:** Grants up to ₹1.20 Lakh for permanent pucca houses\n"
+                    "• 🌾 **PM-KISAN:** ₹6,000 yearly direct income support for farmers\n"
+                    "• 🏥 **Ayushman Bharat:** Up to ₹5 Lakhs free cashless health cover\n"
+                    "• 👴 **Old Age Pension:** Monthly DBT pension for senior citizens (60+ yrs)\n"
+                    "• 🔥 **PM Ujjwala 2.0:** Free LPG gas connection for BPL households\n\n"
+                    "Which scheme or service would you like to know more about?"
+                )
+            response_obj = ChatResponse(
+                response=greeting_text,
+                answer=greeting_text,
+                detected_language=detected_lang,
+                matched_scheme="SahayakAI Welfare Assistant",
+                confidence_score=1.0,
+                source_guidelines=[],
+                suggested_action="Apna sawal type karein ya niche diye chips par click karein."
+            )
+            self.query_cache.put(cache_key, response_obj)
+            return response_obj
+
         matched_scheme, score, guidelines = self.search_relevant_scheme(clean_query)
 
-        # 2. Attempt LLM generation if API Key is available
+        # 2. Attempt LLM generation (Groq ultra-fast LPU first, then Gemini fallback)
         llm_answer = None
-        if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ["", "your_gemini_api_key_here"]:
+        if settings.GROQ_API_KEY and settings.GROQ_API_KEY not in ["", "your_groq_api_key_here"]:
+            llm_answer = await self._call_groq_llm(clean_query, matched_scheme, detected_lang)
+
+        if not llm_answer and settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ["", "your_gemini_api_key_here"]:
             llm_answer = await self._call_gemini_llm(clean_query, matched_scheme, detected_lang)
 
         # 3. If LLM is unavailable, offline, or timed out, use verified in-memory synthesizer
@@ -269,6 +370,74 @@ class RAGChatbotService:
             return f"ஆம்! உங்கள் கேள்விப்படி '{scheme['scheme_name']}' பொருந்தும்.\n\n📌 பலன்கள்: {scheme['guidelines'][:200]}...\n\n✅ அடுத்த படி: அருகிலுள்ள சிஎஸ்சி மையத்தில் டோக்கன் பதிவு செய்யலாம்."
         else:
             return f"Yes! Based on your query, '{scheme['scheme_name']}' is applicable.\n\n📌 Key Benefits: {scheme['guidelines'][:250]}...\n\n✅ Next Step: You can assess your risk score and book an appointment token at your nearest CSC Kiosk."
+
+    async def _call_groq_llm(self, query: str, scheme: Optional[dict], lang: str) -> Optional[str]:
+        """Calls Groq Ultra-Fast LPU Inference API with an expert, structured GovTech prompt."""
+        try:
+            is_hinglish = (lang == "hi-en")
+            is_devanagari = (lang == "hi")
+
+            if is_hinglish:
+                lang_instruction = (
+                    "Citizen ne Hinglish (Hindi written in Roman English alphabet like 'kya', 'kaise', 'bhai') me sawal pucha hai. "
+                    "Aapko bhi natural, friendly, conversational Hinglish (Roman script, e.g. 'Aapka form reject ho gaya hai toh tension mat lijiye...') me hi jawab dena hai. "
+                    "Devanagari script mat use karein agar user ne Roman script me pucha hai. Simple Hinglish me baat karein."
+                )
+            elif is_devanagari:
+                lang_instruction = "Jawab saral, spasht aur shuddh Hindi (Devanagari lipi) me dein."
+            else:
+                lang_instruction = "Respond in clear, professional and helpful English."
+
+            system_prompt = (
+                "You are SahayakAI, the official Indian Government Welfare & Citizen Services AI Assistant. "
+                "You provide compassionate, accurate, structured, and easy-to-understand assistance to Indian citizens. "
+                "You can answer questions on all central/state welfare schemes, documents (Aadhaar, Ration Card, Income, Caste certificates), "
+                "banking DBT, form rejections, pensions, Kisan credit, housing, health cover, and public grievances.\n\n"
+                "Formatting Guidelines:\n"
+                "1. Answer the citizen's specific query directly and politely with an appropriate emoji.\n"
+                "2. Provide key benefits or steps using clear bullet points (•).\n"
+                "3. Clearly list required documents under '📋 जरूरी दस्तावेज:' (or '📋 Documents Required:').\n"
+                "4. Provide the exact actionable next step under '👉 अगला कदम:' (or '👉 Next Step:') advising whether to visit their nearest CSC Jan Seva Kendra or an official portal.\n"
+                "5. Keep the tone warm, respectful, and concise (100-150 words). Never output technical/thinking tags."
+            )
+
+            context = ""
+            if scheme:
+                context = (
+                    f"Official Reference Guidelines (Scheme: {scheme['scheme_name']}):\n"
+                    f"{scheme['guidelines']}\n\n"
+                )
+
+            user_message = f"{context}Citizen Question: {query}\n\nLanguage requirement: {lang_instruction}."
+
+            url = "https://api.groq.com/openai/v1/chat/completions"
+            headers = {
+                "Authorization": f"Bearer {settings.GROQ_API_KEY}",
+                "Content-Type": "application/json"
+            }
+            payload = {
+                "model": "openai/gpt-oss-120b",
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_message}
+                ],
+                "temperature": 0.35,
+                "max_tokens": 512
+            }
+
+            client = self._get_http_client()
+            resp = await client.post(url, headers=headers, json=payload, timeout=12.0)
+            if resp.status_code == 200:
+                data = resp.json()
+                content = data["choices"][0]["message"]["content"]
+                if "</think>" in content:
+                    content = content.split("</think>")[-1].strip()
+                return content.strip()
+            else:
+                logger.warning(f"Groq API returned status {resp.status_code}: {resp.text}")
+        except Exception as e:
+            logger.warning(f"Groq LLM call failed or timed out: {e}")
+        return None
 
     async def _call_gemini_llm(self, query: str, scheme: Optional[dict], lang: str) -> Optional[str]:
         """Calls Google Gemini API asynchronously with strict 3.5s timeout via connection pool."""
